@@ -1,1 +1,10 @@
-{"name": "harnessloop-web", "private": true, "version": "0.1.0", "scripts": {"test": "node tests.mjs && node motion-tests.mjs"}}
+{
+  "name": "harnessloop-web",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "python3 build.py",
+    "build:production": "SITE_ENV=production python3 build.py",
+    "test": "node tests.mjs && node motion-tests.mjs && python3 release-tests.py"
+  }
+}
