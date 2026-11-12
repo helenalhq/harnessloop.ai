@@ -48,3 +48,10 @@
 - 中英联系页、全站页脚显示指定邮箱。简报可生成编码安全的邮件草稿链接，不自动发送、不保存输入。
 - 演示增加 tabpanel/ARIA 关联、roving tabindex；候选尚未验证，不再显示绿色成功状态。
 - 自动测试通过；本轮云浏览器确认桌面中文首屏、英文联系页、本地简报生成/复制/编码邮件草稿、390px iframe 首页布局/菜单展开/页面跳转/双语演示/键盘操作。不是物理手机测试。
+
+## V4: evidence-led evolution demo
+Homepage has a bilingual five-stage conceptual animation with a synthetic procurement example. It is not a real run or a claim of measured performance. Candidate A preserves source units; candidate B's inference is rejected for lacking evidence. Release remains conditional on validation and human approval.
+- Stage buttons pause autoplay; Next cycles deterministically; Play resumes.
+- Reduced-motion starts paused and pauses SVG motion. Visibility changes suspend timers.
+- No external animation dependency, no network calls, no input collection.
+- `npm test` includes bilingual/reduced-motion/state-transition tests.
