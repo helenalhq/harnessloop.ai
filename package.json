@@ -5,6 +5,6 @@
   "scripts": {
     "build": "python3 build.py",
     "build:production": "SITE_ENV=production python3 build.py",
-    "test": "node tests.mjs && node motion-tests.mjs && python3 release-tests.py"
+    "test": "node tests.mjs && node motion-tests.mjs && python3 release-tests.py && python3 seo-tests.py"
   }
 }

@@ -1,7 +1,7 @@
 import {readFileSync,existsSync} from 'node:fs';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
-const routes=['','how-it-works','data-factory','research','contact','privacy'];
+const routes=['','how-it-works','data-factory','research','contact','privacy','faq'];
 for(const lang of ['zh','en'])for(const route of routes){const prefix=lang==='en'?'en/':'';const html=readFileSync(`dist/${prefix}${route?route+'/':''}index.html`,'utf8');assert.match(html,new RegExp(`lang="${lang==='zh'?'zh-CN':'en'}"`));assert.match(html,/name="viewport"/);assert.match(html,/name="robots" content="(?:noindex,nofollow|index,follow)"/);assert.match(html,/data-language=/);for(const m of html.matchAll(/(?:href|src)="(\/[^"#]*)"/g)){const p=m[1];assert.ok(existsSync(`dist${p}${p.endsWith('/')?'index.html':''}`),`Broken link: ${p}`);} if(lang==='en'){const body=html.replace(/<a class="language".*?<\/a>/,'');assert.ok(!/[\u4e00-\u9fff]/.test(body),`Chinese in English ${route}`);}}
 const app=readFileSync('dist/assets/app.js','utf8');assert.ok(!/fetch\(|XMLHttpRequest|sendBeacon/.test(app));assert.match(app,/textContent=/);
 for(const lang of ['zh-CN','en']){
@@ -11,8 +11,8 @@ for(const lang of ['zh-CN','en']){
  const ctx={document:{addEventListener(){},documentElement:{lang},querySelector:k=>els.get(k),querySelectorAll:()=>buttons},FormData:class {get(k){return {task:'<script>alert(1)</script>',pain:'formats',criteria:'sources'}[k]}},navigator:{clipboard:{writeText:async()=>{}}},localStorage:{setItem(){}}};
  vm.createContext(ctx);vm.runInContext(app,ctx);vm.runInContext('showStage(2)',ctx);assert.match(els.get('#demo-output').innerHTML,lang==='en'?/15 business days/:/15 个工作日/);assert.equal(buttons[2]['aria-selected'],'true');els.get('#generate-brief').handlers.click();assert.match(els.get('#brief').textContent,/<script>alert/);assert.match(els.get('#brief').textContent,lang==='en'?/Not sent/:/未发送/);const before=els.get('#brief').textContent;els.get('#brief-form').querySelectorAll=()=>[{name:'task',value:'',reportValidity(){return false}}];els.get('#generate-brief').handlers.click();assert.equal(els.get('#brief').textContent,before);
 }
-const language=readFileSync('dist/assets/language.js','utf8');for(const [path,saved,locale,expect] of [['/',null,'zh-CN',false],['/',null,'en-US',true],['/','zh','en-US',false],['/','en','zh-CN',true],['/en/contact/',null,'zh-CN',false]]){let redirected=false;vm.runInNewContext(language,{location:{pathname:path,search:'',hash:'',replace(){redirected=true}},navigator:{language:locale},localStorage:{getItem(){return saved}}});assert.equal(redirected,expect);}
-console.log('PASS: 12 routes, links, localization, preview boundary; bilingual demo + safe local briefs; language default and saved choice.');
+const language=readFileSync('dist/assets/language.js','utf8');for(const [path,saved,locale,expect] of [['/',null,'zh-CN',false],['/',null,'en-US',false],['/','zh','en-US',false],['/','en','zh-CN',false],['/en/contact/',null,'zh-CN',false]]){let redirected=false;vm.runInNewContext(language,{location:{pathname:path,search:'',hash:'',replace(){redirected=true}},navigator:{language:locale},localStorage:{getItem(){return saved}}});assert.equal(redirected,expect);}
+console.log('PASS: 14 routes, links, localization, preview boundary; bilingual demo + safe local briefs; stable language URLs.');
 
 // Revision 3 regression: contact route and footer on all locales; client-side email draft.
 for(const lang of ['', 'en/']) {

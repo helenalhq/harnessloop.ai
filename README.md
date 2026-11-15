@@ -45,8 +45,11 @@ Vercel's build environment must provide Python 3. Verify the actual build log an
 
 ## Release verification (2026-11-12)
 
-Automated checks: 12 locale routes, local links/assets, bilingual content, safe plain-text brief generation, email parameter encoding, language choices, five-stage state machine, reduced motion, no native form fallback, four environment-policy combinations, canonical/hreflang/share metadata, 12 sitemap entries and 404. JavaScript syntax checks pass.
+Automated checks: 14 locale routes, local links/assets, bilingual content, safe plain-text brief generation, email parameter encoding, language choices, five-stage state machine, reduced motion, no native form fallback, four environment-policy combinations, canonical/hreflang/share metadata, 14 sitemap entries and 404. JavaScript syntax checks pass.
 
 Not proven by local tests: Vercel's actual HTTP routing/build environment, production TLS, DNS propagation, final mobile rendering, browser console, screen-reader behavior, mail application behavior or receipt at `contact@harnessloop.ai`. Verify these against the deployed preview/production artifact before announcing the launch.
 
 The privacy text describes the implemented website and user-initiated email flow. It does not invent a legal entity, a retention period or compliance certification. The operator must confirm any legally required identity/contact disclosures and actual business data-handling obligations before launch. Email MX records alone do not prove the specific mailbox exists or receives mail.
+
+## SEO/GEO update (2026-11-15)
+Stable language URLs, bilingual visible FAQ with matching JSON-LD, Organization/WebSite/WebPage entities and a local social preview image. No automatic locale redirection. No claims of guaranteed search ranking, AI citations or FAQ rich results.

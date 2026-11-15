@@ -13,11 +13,11 @@ with tempfile.TemporaryDirectory() as tmp:
   assert ('name="robots" content="index,follow"' in home)==expected, f'Wrong indexing policy: {env}'
   assert ('Disallow: /' in (p/'dist/robots.txt').read_text()) != expected
   for prefix in ('','en/'):
-   for slug in ('','how-it-works/','data-factory/','contact/','research/','privacy/'):
+   for slug in ('','how-it-works/','data-factory/','contact/','research/','privacy/','faq/'):
     html=(p/f'dist/{prefix}{slug}index.html').read_text()
     assert 'rel="canonical"' in html and 'hreflang="zh-CN"' in html and 'hreflang="en"' in html
     assert 'property="og:title"' in html and 'name="twitter:card"' in html
     assert '开发预览' not in html and 'Development preview' not in html
-  assert len(ET.parse(p/'dist/sitemap.xml').getroot())==12
+  assert len(ET.parse(p/'dist/sitemap.xml').getroot())==14
   assert (p/'dist/404.html').exists()
-print('PASS release: safe no-JS contact, four environment modes, 12 SEO routes, sitemap and 404')
+print('PASS release: safe no-JS contact, four environment modes, 14 SEO routes, sitemap and 404')
