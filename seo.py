@@ -30,7 +30,7 @@ def extend(pages,lang):
  title,body=pages['how-it-works'];pages['how-it-works']=(('How an AI Agent Harness Works' if en else 'AI Agent Harness 工作原理与双闭环'),body)
 
 def structured(lang,slug,title,desc):
- base='/en/' if lang=='en' else '/';url=ORIGIN+base+(slug+'/' if slug else '')
+ base='/en/' if lang=='en' else '/';url=ORIGIN+('/zh/' if lang=='zh' and not slug else base+(slug+'/' if slug else ''))
  org={'@type':'Organization','@id':ORIGIN+'/#organization','name':'HarnessLoop','url':ORIGIN,'email':'contact@harnessloop.ai'}
  web={'@type':'WebSite','@id':ORIGIN+'/#website','url':ORIGIN,'name':'HarnessLoop','publisher':{'@id':org['@id']},'inLanguage':['zh-CN','en']}
  page={'@type':'FAQPage' if slug=='faq' else 'WebPage','@id':url+'#webpage','url':url,'name':title+' | HarnessLoop','description':desc,'inLanguage':'en' if lang=='en' else 'zh-CN','isPartOf':{'@id':web['@id']},'about':{'@id':org['@id']}}

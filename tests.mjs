@@ -2,7 +2,7 @@ import {readFileSync,existsSync} from 'node:fs';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 const routes=['','how-it-works','data-factory','research','contact','privacy','faq'];
-for(const lang of ['zh','en'])for(const route of routes){const prefix=lang==='en'?'en/':'';const html=readFileSync(`dist/${prefix}${route?route+'/':''}index.html`,'utf8');assert.match(html,new RegExp(`lang="${lang==='zh'?'zh-CN':'en'}"`));assert.match(html,/name="viewport"/);assert.match(html,/name="robots" content="(?:noindex,nofollow|index,follow)"/);assert.match(html,/data-language=/);for(const m of html.matchAll(/(?:href|src)="(\/[^"#]*)"/g)){const p=m[1];assert.ok(existsSync(`dist${p}${p.endsWith('/')?'index.html':''}`),`Broken link: ${p}`);} if(lang==='en'){const body=html.replace(/<a class="language".*?<\/a>/,'');assert.ok(!/[\u4e00-\u9fff]/.test(body),`Chinese in English ${route}`);}}
+for(const lang of ['zh','en'])for(const route of routes){const prefix=lang==='en'?'en/':(route?'':'zh/');const html=readFileSync(`dist/${prefix}${route?route+'/':''}index.html`,'utf8');assert.match(html,new RegExp(`lang="${lang==='zh'?'zh-CN':'en'}"`));assert.match(html,/name="viewport"/);assert.match(html,/name="robots" content="(?:noindex,nofollow|index,follow)"/);assert.match(html,/data-language=/);for(const m of html.matchAll(/(?:href|src)="(\/[^"#]*)"/g)){const p=m[1];assert.ok(existsSync(`dist${p}${p.endsWith('/')?'index.html':''}`),`Broken link: ${p}`);} if(lang==='en'){const body=html.replace(/<a class="language".*?<\/a>/,'');assert.ok(!/[\u4e00-\u9fff]/.test(body),`Chinese in English ${route}`);}}
 const app=readFileSync('dist/assets/app.js','utf8');assert.ok(!/fetch\(|XMLHttpRequest|sendBeacon/.test(app));assert.match(app,/textContent=/);
 for(const lang of ['zh-CN','en']){
  const els=new Map(), buttons=[0,1,2].map(i=>({dataset:{stage:String(i)},setAttribute(k,v){this[k]=v},addEventListener(){},focus(){}}));
@@ -21,3 +21,8 @@ for(const lang of ['', 'en/']) {
  const demo=readFileSync(`dist/${lang}data-factory/index.html`,'utf8');assert.match(demo,/role="tabpanel"/);assert.equal([...demo.matchAll(/aria-controls="demo-output"/g)].length,3);
 }
 assert.match(app,/encodeURIComponent/);assert.ok(!app.includes("state:'good'"));console.log('PASS: bilingual mailto, local email draft, tab relationships, no unverified success status.');
+
+const config=JSON.parse(readFileSync('vercel.json','utf8'));assert.ok(config.redirects.some(r=>r.source==='/'&&r.destination==='/en/'));
+assert.match(readFileSync('dist/zh/index.html','utf8'),/canonical" href="https:\/\/harnessloop.ai\/zh\/"/);
+assert.match(readFileSync('dist/en/contact/index.html','utf8'),/click Send there/);
+assert.match(readFileSync('dist/contact/index.html','utf8'),/本站不会提交表单或自动发邮件/);

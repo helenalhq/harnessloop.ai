@@ -38,6 +38,11 @@
       ],
       "destination": "https://harnessloop.ai/:path*",
       "permanent": true
+    },
+    {
+      "source": "/",
+      "destination": "/en/",
+      "permanent": false
     }
   ]
 }

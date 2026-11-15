@@ -3,7 +3,7 @@ from pathlib import Path
 from seo import FAQ
 for lang in ('zh','en'):
  base=Path('dist/en' if lang=='en' else 'dist')
- for p in [base/'index.html',*base.glob('*/index.html')]:
+ for p in [base/('index.html' if lang=='en' else 'zh/index.html'),*base.glob('*/index.html')]:
   if p.parent.name=='en':continue
   text=p.read_text()
   ld=json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>',text).group(1))

@@ -19,6 +19,8 @@ def prepare(body,slug,en):
  if slug=='privacy':return privacy(en)
  body=body.replace('在每次反馈中进化。','以验证驱动持续进化。')
  if slug=='contact':
+  explanation=('1. Fill in the fields and generate a local brief. 2. Open an email draft in your email app. 3. Review it and click Send there. This website does not submit or send messages. If no email app is configured, copy the brief into your webmail and send it to contact@harnessloop.ai.' if en else '1. 填写内容并生成本地简报。2. 在邮件客户端打开邮件草稿。3. 检查后在邮件客户端点击发送。本站不会提交表单或自动发邮件。如未配置邮件客户端，请复制简报到网页邮箱，发送至 contact@harnessloop.ai。')
+  body=body.replace('<div class="box"><h3>', '<div class="box"><p class="notice">'+explanation+'</p><h3>',1)
   body=body.replace('<form class="form" id="brief-form">','<div class="form" id="brief-form" role="group" aria-label="'+('Local brief tool' if en else '本地简报工具')+'">').replace('</form>','</div>')
   body=body.replace('type="submit"','type="button" id="generate-brief"')
   body=body.replace('name="task"','name="task" autocomplete="off"').replace('name="pain"','name="pain" autocomplete="off"').replace('name="criteria"','name="criteria" autocomplete="off"')
@@ -29,8 +31,8 @@ def prepare(body,slug,en):
  return body
 
 def metadata(lang,slug,title):
- path=('/en/' if lang=='en' else '/')+(slug+'/' if slug else '')
- zh=ORIGIN+'/'+(slug+'/' if slug else '');en=ORIGIN+'/en/'+(slug+'/' if slug else '')
+ path='/zh/' if lang=='zh' and not slug else ('/en/' if lang=='en' else '/')+(slug+'/' if slug else '')
+ zh=ORIGIN+'/'+(slug+'/' if slug else 'zh/');en=ORIGIN+'/en/'+(slug+'/' if slug else '')
  desc=DESCRIPTIONS[slug][lang=='en'];url=ORIGIN+path
  from seo import structured
- return desc, structured(lang,slug,title,desc)+f'''<link rel="canonical" href="{url}"><link rel="alternate" hreflang="zh-CN" href="{zh}"><link rel="alternate" hreflang="en" href="{en}"><link rel="alternate" hreflang="x-default" href="{zh}"><meta property="og:type" content="website"><meta property="og:site_name" content="HarnessLoop"><meta property="og:title" content="{escape(title)} | HarnessLoop"><meta property="og:description" content="{escape(desc)}"><meta property="og:url" content="{url}"><meta property="og:locale" content="{'en_US' if lang=='en' else 'zh_CN'}"><meta property="og:image" content="{ORIGIN}/assets/social.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="HarnessLoop: Business-specific AI harnesses"><meta name="twitter:image" content="{ORIGIN}/assets/social.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{escape(title)} | HarnessLoop"><meta name="twitter:description" content="{escape(desc)}">'''
+ return desc, structured(lang,slug,title,desc)+f'''<link rel="canonical" href="{url}"><link rel="alternate" hreflang="zh-CN" href="{zh}"><link rel="alternate" hreflang="en" href="{en}"><link rel="alternate" hreflang="x-default" href="{en}"><meta property="og:type" content="website"><meta property="og:site_name" content="HarnessLoop"><meta property="og:title" content="{escape(title)} | HarnessLoop"><meta property="og:description" content="{escape(desc)}"><meta property="og:url" content="{url}"><meta property="og:locale" content="{'en_US' if lang=='en' else 'zh_CN'}"><meta property="og:image" content="{ORIGIN}/assets/social.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="HarnessLoop: Business-specific AI harnesses"><meta name="twitter:image" content="{ORIGIN}/assets/social.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{escape(title)} | HarnessLoop"><meta name="twitter:description" content="{escape(desc)}">'''
