@@ -1,6 +1,6 @@
 # HarnessLoop
 
-A bilingual, static business website. Chinese routes use `/`; English routes use `/en/`. The canonical production origin is **https://harnessloop.ai**. All demonstrations are synthetic, not customer results or live AI runs.
+A bilingual, static business website. Chinese lives at `/zh/` (home) with root-level subpages; English lives under `/en/`. In production the apex path `/` redirects to `/en/`; language switches use stable URLs, never browser sniffing. The canonical production origin is **https://harnessloop.ai**. All demonstrations are synthetic, not customer results or live AI runs.
 
 ## Build and test
 
@@ -39,7 +39,7 @@ Vercel's build environment must provide Python 3. Verify the actual build log an
 - The brief tool is a non-submitting control group, not an HTML form. With JavaScript disabled, its input cannot become a native GET submission or URL query.
 - JavaScript validates inputs and generates plain text locally; copy and mailto are user actions. Mailto opens a draft, never automatically sends it.
 - CSP additionally disallows form submissions and network connections from scripts. There are no analytics, remote fonts, third-party browser scripts or uploads.
-- Language preference is the only application local-storage item.
+- The site stores nothing in browser storage: no cookies, no local storage. Language is chosen through stable URLs and the header link; in-site links keep the chosen language.
 - Motion has pause, manual steps, reduced-motion support and visibility suspension. The mobile menu closes with Escape or an outside click.
 - A static explanatory fallback is supplied when JavaScript is unavailable.
 

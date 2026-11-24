@@ -17,7 +17,7 @@
  let index=0,paused=matchMedia('(prefers-reduced-motion: reduce)').matches,timer;
  const toggle=demo.querySelector('[data-cycle-toggle]');
  function render(){const s=stages[index];['version','state','output','output-note','evidence','story-label','story'].forEach((k,i)=>demo.querySelector('[data-'+k+']').textContent=s[i]);demo.dataset.phase=index;demo.querySelectorAll('[data-cycle-step]').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===index)));}
- function playback(){clearInterval(timer);demo.classList.toggle('is-paused',paused);toggle.textContent=paused?(en?'Play animation':'播放演示'):(en?'Pause animation':'暂停演示');if(!paused&&!document.hidden)timer=setInterval(()=>{index=(index+1)%5;render()},6500);demo.querySelectorAll('svg').forEach(s=>{if(paused)s.pauseAnimations?.();else s.unpauseAnimations?.()});}
+ function playback(){clearInterval(timer);demo.classList.toggle('is-paused',paused);toggle.textContent=paused?(en?'Play animation':'播放演示'):(en?'Pause animation':'暂停演示');if(!paused&&!document.hidden)timer=setInterval(()=>{index=(index+1)%5;render()},9000);demo.querySelectorAll('svg').forEach(s=>{if(paused)s.pauseAnimations?.();else s.unpauseAnimations?.()});}
  demo.querySelectorAll('[data-cycle-step]').forEach(b=>b.addEventListener('click',()=>{paused=true;index=Number(b.dataset.cycleStep);render();playback()}));
  demo.querySelector('[data-cycle-next]').addEventListener('click',()=>{paused=true;index=(index+1)%5;render();playback()});toggle.addEventListener('click',()=>{paused=!paused;playback()});
  document.addEventListener('visibilitychange',playback);matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',e=>{if(e.matches){paused=true;playback()}});render();playback();
