@@ -8,6 +8,7 @@ DESCRIPTIONS={
  '':['为具体业务定制 AI Harness。连接数据、工具、质量标准与人工反馈，以独立验证推动受控改进。','Custom AI harnesses for your business. Connect data, tools, quality standards and human feedback for measured, controlled improvement.'],
  'how-it-works':['了解 HarnessLoop 的运行环与改进环：明确权限、保留证据、验证候选版本，再决定发布。','Explore execution and improvement loops: scoped permissions, traceable evidence, independent validation and controlled releases.'],
  'data-factory':['通过合成采购示例，了解资料抽取、来源定位、质量检查和候选改进如何组成数据与知识工厂。','A synthetic procurement example shows how extraction, source evidence, quality checks and candidate improvements form a data factory.'],
+ 'solutions':['探索货运代理和医学文献情报工作流：保留出处、标记不确定之处，并在关键节点由人复核。','Explore freight forwarding and medical literature intelligence workflows with traceable sources, uncertainty flags and human review.'],
  'research':['HarnessLoop 实践笔记：双闭环设计、失败分类、独立评测与可追溯的版本改进。','HarnessLoop design notes on dual loops, failure classification, independent evaluation and traceable version improvement.'],
  'contact':['联系 HarnessLoop，讨论业务任务与验收标准。使用本地简报工具整理需求，再由你选择是否发送邮件。','Discuss your business task and acceptance criteria with HarnessLoop. Prepare a brief locally and choose whether to email it.'],
  'faq':['关于 AI Agent Harness、自进化工作流、RAG、独立评测和数据工厂的常见问题，了解 HarnessLoop 的合作方式与能力边界。','Answers about AI agent harnesses, controlled self-improvement, RAG, evaluation and data factories. Learn how to start a HarnessLoop project.'],

@@ -13,11 +13,18 @@ with tempfile.TemporaryDirectory() as tmp:
   assert ('name="robots" content="index,follow"' in home)==expected, f'Wrong indexing policy: {env}'
   assert ('Disallow: /' in (p/'dist/robots.txt').read_text()) != expected
   for prefix in ('','en/'):
-   for slug in ('','how-it-works/','data-factory/','contact/','research/','privacy/','faq/'):
+   for slug in ('','how-it-works/','data-factory/','contact/','research/','privacy/','faq/','solutions/'):
     html=(p/f'dist/{prefix}{slug}index.html').read_text()
     assert 'rel="canonical"' in html and 'hreflang="zh-CN"' in html and 'hreflang="en"' in html
     assert 'property="og:title"' in html and 'name="twitter:card"' in html
     assert '开发预览' not in html and 'Development preview' not in html
-  assert len(ET.parse(p/'dist/sitemap.xml').getroot())==14
+  locations = [element.text for element in ET.parse(p/'dist/sitemap.xml').getroot().iter('{http://www.sitemaps.org/schemas/sitemap/0.9}loc')]
+  assert len(locations) == (16 if expected else 14) and len(set(locations)) == len(locations)
+  for slug, other in [('solutions/', 'en/solutions/'), ('en/solutions/', 'solutions/')]:
+   html=(p/f'dist/{slug}index.html').read_text()
+   assert f'<link rel="canonical" href="https://harnessloop.ai/{slug}">' in html
+   assert f'href="https://harnessloop.ai/{other}"' in html
+   assert ('name="robots" content="index,follow"' in html) == expected
+   assert (f'https://harnessloop.ai/{slug}' in locations) == expected
   assert (p/'dist/404.html').exists()
-print('PASS release: safe no-JS contact, four environment modes, 14 SEO routes, sitemap and 404')
+print('PASS release: safe no-JS contact, four environment modes, 16 SEO routes, sitemap and 404')
