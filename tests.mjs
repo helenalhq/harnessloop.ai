@@ -45,6 +45,29 @@ for (const [homePath, solutionPath, otherPath, contactPath, heading, freight, me
 
 
 }
+for (const [base, homePath, homePromise, contactPromise] of [
+  ['/', '/zh/', '把每天重复的工作，做成在你本地运行的助手。', '从一件具体的业务任务开始。'],
+  ['/en/', '/en/', 'Turn recurring work into an assistant that runs on your own computer.', 'Start with one real task.'],
+]) {
+  const home=readFileSync('dist'+homePath+'index.html','utf8');
+  assert.ok(home.includes(homePromise), 'Home should lead with a customer outcome');
+  assert.doesNotMatch(home, /Bring us a real task|从一个真实业务问题开始/, 'Remove the duplicate legacy Home CTA only');
+  assert.ok(home.indexOf('id="hl-home-solutions"') > 0);
+  assert.ok(home.indexOf('id="hl-home-solutions"') < home.indexOf('id="hl-home-method"'), 'Industry examples precede technical proof');
+  for (const [name, id] of [['freight','freight'],['medical','medical']]) {
+    assert.ok(home.includes('/assets/hl-'+name+'-v3.webp'));
+    assert.ok(home.includes('href="'+base+'solutions/#hl-sample-'+id+'"'));
+  }
+  assert.ok(home.includes('data-evolution'), 'Optional legacy demonstration remains available');
+  assert.ok(home.includes('class="hl-nav-contact" href="'+base+'contact/"'));
+  const contact=readFileSync('dist'+base+'contact/index.html','utf8');
+  assert.ok(contact.includes(contactPromise));
+  assert.equal((contact.match(/<li class="hl-engagement-step">/g)||[]).length,3);
+  assert.doesNotMatch(contact, /<form|type="submit"/);
+  for (const id of ['copy-email','brief-form','generate-brief','brief-panel','copy-brief','email-brief','copy-status']) {
+    assert.ok(contact.includes('id="'+id+'"'),'Required local draft control not preserved: '+id);
+  }
+}
 const app=readFileSync('dist/assets/app.js','utf8');assert.ok(!/fetch\(|XMLHttpRequest|sendBeacon/.test(app));assert.match(app,/textContent=/);
 for(const lang of ['zh-CN','en']){
  const els=new Map(), buttons=[0,1,2].map(i=>({dataset:{stage:String(i)},setAttribute(k,v){this[k]=v},addEventListener(){},focus(){}}));

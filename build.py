@@ -2,7 +2,7 @@ from pathlib import Path
 import json
 from release import PRODUCTION, ORIGIN, metadata, prepare
 root=Path(__file__).parent/'dist'
-nav=[('','首页'),('how-it-works','工作原理'),('solutions','解决方案'),('data-factory','数据与知识工厂'),('research','实践与研究'),('contact','关于与合作')]
+nav=[('','首页'),('solutions','解决方案'),('how-it-works','工作原理'),('data-factory','数据与知识工厂'),('research','实践与研究'),('contact','联系合作')]
 def visual():return '''<figure class="visual" aria-label="合成示例：原文中的15个工作日被误提取为15天，需要复核"><figcaption>一份采购资料 · 一个值得留下的修正</figcaption><div class="document"><span class="document-label">原始资料 / 第 4 行</span><p>交货时间为订单确认后<br><mark>15 个工作日。</mark></p><span class="doc-rule"></span><span class="doc-rule short"></span></div><div class="annotation"><span>质量检查</span><p><s>15 天</s> <b>→ 15 个工作日</b></p><small>保留原文单位，而不是猜测。</small></div><div class="visual-foot">合成示例 · 非实时运行 · 候选修改仍需独立验证</div></figure>'''
 def cta():return '''<div class="wrap band"><div><span class="eyebrow">从具体问题开始</span><h2>从一个真实业务问题开始。</h2><p class="lead">先定义什么是好结果，再讨论如何让 AI 做到。</p></div><a class="btn" href="/contact/">讨论你的业务场景 <span>↗</span></a></div>'''
 pages={}
@@ -23,15 +23,22 @@ from seo import extend
 extend(pages,'zh')
 extend(en_pages,'en')
 from solutions import add_solutions
+from business import home_body, contact_body
 add_solutions(pages,'zh')
 add_solutions(en_pages,'en')
 for lang, content in [('zh',pages),('en',en_pages)]:
  for slug,(title,body) in content.items():
+  if not slug: body=home_body(lang)
   body=prepare(body,slug,lang=='en')
+  if slug=='contact': body=contact_body(body,lang)
   base='/' if lang=='zh' else '/en/'
   def url(s):return '/zh/' if lang=='zh' and not s else base+(s+'/' if s else '')
-  en_labels={'':'Home','how-it-works':'Approach','solutions':'Solutions','data-factory':'Data factory','research':'Notes','contact':'About &amp; contact'}
-  links=''.join(f'<a href="{url(s)}"'+(' aria-current="page"' if s==slug else '')+f'>{en_labels[s] if lang=="en" else label}</a>' for s,label in nav)
+  en_labels={'':'Home','how-it-works':'Approach','solutions':'Solutions','data-factory':'Data factory','research':'Notes','contact':'Contact'}
+  def nav_link(s,label):
+   style=' class="hl-nav-contact"' if s=='contact' else ''
+   current=' aria-current="page"' if s==slug else ''
+   return f'<a{style} href="{url(s)}"{current}>{en_labels[s] if lang=="en" else label}</a>'
+  links=''.join(nav_link(s,label) for s,label in nav)
   if lang=='en':body=body.replace('href="/contact/"','href="/en/contact/"').replace('href="/how-it-works/"','href="/en/how-it-works/"').replace('href="/data-factory/"','href="/en/data-factory/"')
   other=('/en/' if lang=='zh' else '/')+(slug+'/' if slug else '')
   if lang=='en' and not slug:other='/zh/'
@@ -39,7 +46,7 @@ for lang, content in [('zh',pages),('en',en_pages)]:
   desc,seo=metadata(lang,slug,title)
   robots='index,follow' if PRODUCTION else 'noindex,nofollow'
   solution_style='<link rel="stylesheet" href="/assets/solutions.css">' if slug=='solutions' else ''
-  html=f'''<!doctype html><html lang="{'zh-CN' if lang=='zh' else 'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{title} | HarnessLoop</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}">{seo}<meta name="generator" content="HarnessLoop static site"><meta name="theme-color" content="#f7f9fb"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/style.css">{solution_style}<script src="/assets/language.js"></script><script defer src="/assets/app.js"></script><script defer src="/assets/evolution.js"></script></head><body><a class="skip" href="#main">{'跳转到主要内容' if lang=='zh' else 'Skip to content'}</a><header><div class="wrap nav"><a class="brand" href="{url('')}" aria-label="HarnessLoop {'首页' if lang=='zh' else 'home'}"><span class="logo" aria-hidden="true"></span>HarnessLoop</a><nav class="navlinks" id="navigation" aria-label="{'主导航' if lang=='zh' else 'Main navigation'}">{links}</nav><div class="navtools">{switch}<button class="menu" aria-label="{'切换导航' if lang=='zh' else 'Toggle navigation'}" aria-expanded="false" aria-controls="navigation">{'菜单' if lang=='zh' else 'Menu'}</button></div></div></header><main id="main">{body}{(cta() if lang=='zh' else en_cta().replace('href="/contact/"','href="/en/contact/"')) if slug not in ['contact','privacy','solutions'] else ''}</main><footer><div class="wrap foot"><div>© 2026 HarnessLoop <span>{'为业务而构建。' if lang=='zh' else 'Built around your work.'}</span></div><div><a class="footer-email" href="mailto:contact@harnessloop.ai">contact@harnessloop.ai</a><br><a href="{url('faq')}">{'常见问题' if lang=='zh' else 'FAQ'}</a> · {'简报在本地生成' if lang=='zh' else 'Briefs are generated locally'} · <a href="{url('privacy')}">{'隐私说明' if lang=='zh' else 'Privacy'}</a></div></div></footer></body></html>'''
+  html=f'''<!doctype html><html lang="{'zh-CN' if lang=='zh' else 'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{title} | HarnessLoop</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}">{seo}<meta name="generator" content="HarnessLoop static site"><meta name="theme-color" content="#fbf6ed"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/style.css">{solution_style}<link rel="stylesheet" href="/assets/business.css"><script src="/assets/language.js"></script><script defer src="/assets/app.js"></script><script defer src="/assets/evolution.js"></script></head><body><a class="skip" href="#main">{'跳转到主要内容' if lang=='zh' else 'Skip to content'}</a><header><div class="wrap nav"><a class="brand" href="{url('')}" aria-label="HarnessLoop {'首页' if lang=='zh' else 'home'}"><span class="logo" aria-hidden="true"></span>HarnessLoop</a><nav class="navlinks" id="navigation" aria-label="{'主导航' if lang=='zh' else 'Main navigation'}">{links}</nav><div class="navtools">{switch}<button class="menu" aria-label="{'切换导航' if lang=='zh' else 'Toggle navigation'}" aria-expanded="false" aria-controls="navigation">{'菜单' if lang=='zh' else 'Menu'}</button></div></div></header><main id="main">{body}{(cta() if lang=='zh' else en_cta().replace('href="/contact/"','href="/en/contact/"')) if slug not in ['','contact','privacy','solutions'] else ''}</main><footer><div class="wrap foot"><div>© 2026 HarnessLoop <span>{'为业务而构建。' if lang=='zh' else 'Built around your work.'}</span></div><div><a class="footer-email" href="mailto:contact@harnessloop.ai">contact@harnessloop.ai</a><br><a href="{url('faq')}">{'常见问题' if lang=='zh' else 'FAQ'}</a> · {'简报在本地生成' if lang=='zh' else 'Briefs are generated locally'} · <a href="{url('privacy')}">{'隐私说明' if lang=='zh' else 'Privacy'}</a></div></div></footer></body></html>'''
   html=html.replace(' <span>↗</span>','').replace('<span>↗</span>','').replace(' ↗','').replace('↗','')
   path=root/('en' if lang=='en' else ('zh' if not slug else ''))/slug/'index.html';path.parent.mkdir(parents=True,exist_ok=True);path.write_text(html)
 (root/'assets/favicon.svg').write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#f7f9fb"/><path d="M14 20h25a13 13 0 0 1 0 26H25a13 13 0 0 1 0-26M14 20v12m0-12h12" fill="none" stroke="#245de4" stroke-width="4"/></svg>')
