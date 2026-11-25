@@ -104,3 +104,11 @@ html[lang^="zh"] .hl-promise,[lang^="zh"] .hl-promise {letter-spacing:-.035em;li
 @media(prefers-reduced-motion:reduce) {
   html:has(.hl-solutions) {scroll-behavior:auto}
 }
+
+/* ISF countdown synthetic card. */
+.hl-sample--isf dl {grid-template-columns:repeat(4,minmax(0,1fr))}
+.hl-sample-note {margin-top:14px;padding-top:12px;border-top:1px solid #e5d7c9;font-size:.82rem;line-height:1.55;color:var(--hl-muted)}
+.hl-sample-note a {color:var(--hl-rust);font-weight:700;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.hl-sample-note a:hover {color:#7a2f1f}
+@media(max-width:850px) {.hl-sample--isf dl {grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:540px) {.hl-sample--isf dl {grid-template-columns:1fr}}

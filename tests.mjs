@@ -1,11 +1,11 @@
 import {readFileSync,existsSync} from 'node:fs';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
-const routes=['','how-it-works','data-factory','research','contact','privacy','faq','solutions'];
+const routes=['','how-it-works','data-factory','research','contact','privacy','faq','solutions','demo'];
 for(const lang of ['zh','en'])for(const route of routes){const prefix=lang==='en'?'en/':(route?'':'zh/');const html=readFileSync(`dist/${prefix}${route?route+'/':''}index.html`,'utf8');assert.match(html,new RegExp(`lang="${lang==='zh'?'zh-CN':'en'}"`));assert.match(html,/name="viewport"/);assert.match(html,/name="robots" content="(?:noindex,nofollow|index,follow)"/);assert.match(html,/data-language=/);for(const m of html.matchAll(/(?:href|src)="(\/[^"#]*)"/g)){const p=m[1];assert.ok(existsSync(`dist${p}${p.endsWith('/')?'index.html':''}`),`Broken link: ${p}`);} if(lang==='en'){const body=html.replace(/<a class="language".*?<\/a>/,'');assert.ok(!/[\u4e00-\u9fff]/.test(body),`Chinese in English ${route}`);}}
 for (const [homePath, solutionPath, otherPath, contactPath, heading, freight, medical] of [
-  ['/zh/', '/solutions/', '/en/solutions/', '/contact/', '解决方案', '货代智能客服助手', '医学文献及情报管理助手'],
-  ['/en/', '/en/solutions/', '/solutions/', '/en/contact/', 'Solutions', 'Freight Forwarding Customer Service Assistant', 'Medical Literature &amp; Intelligence Assistant'],
+  ['/zh/', '/solutions/', '/en/solutions/', '/contact/', '我们构建的示例', '货代智能客服助手', '医学文献及情报管理助手'],
+  ['/en/', '/en/solutions/', '/solutions/', '/en/contact/', 'Examples of what we build', 'Freight Forwarding Customer Service Assistant', 'Medical Literature &amp; Intelligence Assistant'],
 ]) {
   const local = path => readFileSync(`dist${path}index.html`, 'utf8');
   const home = local(homePath);
@@ -33,7 +33,7 @@ for (const [homePath, solutionPath, otherPath, contactPath, heading, freight, me
   assert.doesNotMatch(html, /<form|https?:\/\/[^"]+\.invalid/);
   const examples = [...html.matchAll(/<article class="hl-showcase[^"]*">(.*?)<\/article>/gs)].map(match => match[1]);
   for (const example of examples) {
-    assert.doesNotMatch(example, /\b\d{2}:\d{2}\b|\b[A-Z]{2,}-\d{2,}\b|\b20\d{2}-\d{2}-\d{2}\b|\bworkdays?\b|\bbusiness days?\b|工作日|截点/i,
+    assert.doesNotMatch(example.replace(/https?:\/\/[^"\s]+/g, ''), /\b\d{2}:\d{2}\b|\b[A-Z]{2,}-\d{2,}\b|\b20\d{2}-\d{2}-\d{2}\b|\bworkdays?\b|\bbusiness days?\b|工作日|截点/i,
       'Public examples must not include precise times, dates, record identifiers or operational cutoffs');
   }
   const expected = homePath === '/en/' ? ['No confirmed date', 'Response draft', 'does not establish a change in recommendations']
@@ -46,8 +46,8 @@ for (const [homePath, solutionPath, otherPath, contactPath, heading, freight, me
 
 }
 for (const [base, homePath, homePromise, contactPromise] of [
-  ['/', '/zh/', '把每天重复的工作，做成在你本地运行的助手。', '从一件具体的业务任务开始。'],
-  ['/en/', '/en/', 'Turn recurring work into an assistant that runs on your own computer.', 'Start with one real task.'],
+  ['/', '/zh/', '货代与报关的本地 AI 助手。', '从一件具体的业务任务开始。'],
+  ['/en/', '/en/', 'An AI assistant for small freight forwarders and customs brokers.', 'Start with one real task.'],
 ]) {
   const home=readFileSync('dist'+homePath+'index.html','utf8');
   assert.ok(home.includes(homePromise), 'Home should lead with a customer outcome');
@@ -77,7 +77,7 @@ for(const lang of ['zh-CN','en']){
  vm.createContext(ctx);vm.runInContext(app,ctx);vm.runInContext('showStage(2)',ctx);assert.match(els.get('#demo-output').innerHTML,lang==='en'?/15 business days/:/15 个工作日/);assert.equal(buttons[2]['aria-selected'],'true');els.get('#generate-brief').handlers.click();assert.match(els.get('#brief').textContent,/<script>alert/);assert.match(els.get('#brief').textContent,lang==='en'?/Not sent/:/未发送/);const before=els.get('#brief').textContent;els.get('#brief-form').querySelectorAll=()=>[{name:'task',value:'',reportValidity(){return false}}];els.get('#generate-brief').handlers.click();assert.equal(els.get('#brief').textContent,before);
 }
 const language=readFileSync('dist/assets/language.js','utf8');for(const [path,saved,locale,expect] of [['/',null,'zh-CN',false],['/',null,'en-US',false],['/','zh','en-US',false],['/','en','zh-CN',false],['/en/contact/',null,'zh-CN',false]]){let redirected=false;vm.runInNewContext(language,{location:{pathname:path,search:'',hash:'',replace(){redirected=true}},navigator:{language:locale},localStorage:{getItem(){return saved}}});assert.equal(redirected,expect);}
-console.log('PASS: 16 routes, links, localization, preview boundary; bilingual demo + safe local briefs; stable language URLs.');
+console.log('PASS: 18 routes, links, localization, preview boundary; bilingual demo + safe local briefs; stable language URLs.');
 
 // Revision 3 regression: contact route and footer on all locales; client-side email draft.
 for(const lang of ['', 'en/']) {
@@ -91,3 +91,40 @@ const config=JSON.parse(readFileSync('vercel.json','utf8'));assert.ok(config.red
 assert.match(readFileSync('dist/zh/index.html','utf8'),/canonical" href="https:\/\/harnessloop.ai\/zh\/"/);
 assert.match(readFileSync('dist/en/contact/index.html','utf8'),/click Send there/);
 assert.match(readFileSync('dist/contact/index.html','utf8'),/本站不会提交表单或自动发邮件/);
+
+// Three-act interactive demo: synthetic banner, three acts, approval buttons, audit trail, client-side-only script.
+for (const [path, banner, heading, approve, headers, contactPath] of [
+  ['/demo/', '合成数据 · 交互演示 · 非真实货物', '三幕，看它怎么工作。', '批准发送', ['时间','来源','判断','动作'], '/contact/'],
+  ['/en/demo/', 'Synthetic data · Interactive demo · No real shipments', 'Three acts. Watch how it works.', 'Approve', ['Time','Source','Judgment','Action'], '/en/contact/'],
+]) {
+  const html = readFileSync(`dist${path}index.html`, 'utf8');
+  assert.ok(html.includes('class="hl-demo-banner"'), 'Demo page needs the fixed synthetic-data banner');
+  assert.ok(html.includes(banner));
+  assert.ok(html.includes(`<h1 id="hl-demo-title">${heading}</h1>`));
+  assert.ok(html.includes('<button type="button" class="hl-demo-btn hl-demo-btn--approve" data-demo-action="approve">' + approve + '</button>'));
+  assert.ok(html.includes('<button type="button" class="hl-demo-btn hl-demo-btn--reset" data-demo-action="reset">'));
+  assert.ok(html.includes('id="hl-demo-notice" role="status" aria-live="polite"'));
+  assert.ok(html.includes('id="hl-demo-log"'));
+  assert.ok(html.includes('<table class="hl-demo-log"'));
+  for (const h of headers) assert.ok(html.includes(`<th scope="col">${h}</th>`), `Missing audit column: ${h}`);
+  for (const act of [1, 2, 3]) assert.ok(html.includes(`id="hl-demo-act-${act}"`));
+  assert.ok(html.includes(`href="${contactPath}"`), 'Every act must offer the contact exit in the same language');
+  assert.ok(html.includes('/assets/demo.css') && html.includes('/assets/demo.js'), 'Demo assets must be wired in');
+  assert.doesNotMatch(html, /<form|type="submit"/);
+  assert.ok(html.includes('19 CFR § 113.62') && html.includes('shipper@example.com'), 'Synthetic brief and draft must be present');
+}
+const demoJs=readFileSync('dist/assets/demo.js','utf8');
+assert.ok(!/fetch\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage/.test(demoJs),'Demo must stay client-side with no storage');
+for(const lang of ['zh-CN','en']){
+  const notice={set textContent(v){this.value=v}},log={rows:{length:2},_n:2,getAttribute:k=>'2',appendChild(){this._n++;this.rows.length++},deleteRow(){this._n--;this.rows.length--}};
+  const buttons=[['approve'],['edit'],['reject'],['reset']].map(([action])=>({handlers:{},addEventListener(k,f){this.handlers[k]=f},getAttribute:()=>action}));
+  const ctx={document:{readyState:'complete',documentElement:{lang},getElementById:id=>id==='hl-demo-log'?log:notice,querySelectorAll:()=>buttons,createElement:()=>({textContent:'',appendChild(){}})},Date:class{toLocaleTimeString(){return '08:04:11'}}};
+  vm.createContext(ctx);vm.runInContext(demoJs,ctx);
+  buttons[0].handlers.click();
+  assert.equal(log.rows.length,3,'Approve must append one audit row');
+  assert.match(notice.value,lang==='en'?/Approval simulated/:/已模拟批准/);
+  buttons[3].handlers.click();
+  assert.equal(log.rows.length,2,'Reset must restore the seeded rows');
+  assert.match(notice.value,lang==='en'?/Reset/:/已重置/);
+}
+console.log('PASS: three-act demo page, synthetic labelling, client-side audit trail, language parity.');

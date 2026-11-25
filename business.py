@@ -4,21 +4,29 @@ from refine import system
 
 COPY = {
     'zh': {
-        'tag': '为你的业务定制',
-        'hero': '把每天重复的工作，做成在你本地运行的助手。',
-        'lead': '把要跟进的变化、查过的资料和待复核的结果放在一起。我们先和你选一件值得做好的事，再按你的工具、权限和验收要求配置。',
+        'tag': '本地 AI · 货代与报关',
+        'hero': '货代与报关的本地 AI 助手。',
+        'lead': '草拟回复、跟进每一票货物、盯住每一个申报期限——发出之前，永远先经你审批。跑在你自己的电脑上，数据不出门。一次性部署，无按坐席订阅。',
         'cta': '讨论你的业务场景',
-        'jump': '查看解决方案',
+        'demo_cta': '看一个演示',
+        'brief_cta': '下载晨报样例（PDF）',
+        'pains_kicker': '每个数字都可点击核查',
+        'pains_title': '漏掉一个期限，代价是确定的。',
+        'pains': (
+            ('ISF 申报', '错过 24 小时截止线', 'ISF 须在装船前至少 24 小时申报；逾期未申报，每次违规可被处以 $5,000（美元）定额赔偿金。', '来源：美国海关与边境保护局 · 19 CFR § 113.62', 'https://www.ecfr.gov/current/title-19/chapter-I/part-113/section-113.62'),
+            ('滞期费与滞箱费账单', '只有 30 天争议窗口', '账单须在最后一次收费后 30 个日历日内开出，被收费方有至少 30 个日历日可以争议。往来记录就是证据。', '来源：美国联邦海事委员会 · 最终规则', 'https://www.fmc.gov/articles/fmc-publishes-final-rule-on-detention-and-demurrage-billing-practices/'),
+            ('进口申报', '逾期按日计征滞报金', '自运输工具申报进境之日起第 15 日起按日征收，日征收金额为计税价格的 0.5‰，起征点为人民币 50 元。', '来源：海关总署令第 128 号（2024 年第 273 号令修正）', 'https://www.customs.gov.cn/customs/302249/302266/302267/356554/index.html'),
+        ),
         'deliver': '从输入到交付',
         'flow': (
             ('从现有资料开始', '只接入你批准的来源和工具。'),
             ('把重点整理出来', '得到简报、回复草稿或带出处的记录。'),
             ('重要决定由你复核', '不确定的信息不猜测，对外操作按约定执行。'),
         ),
-        'sector': '业务解决方案',
-        'examples': '先做出团队每天用得上的东西。',
+        'sector': '我们构建的示例',
+        'examples': '同一个方法，两种业务用法。',
         'cards': (
-            ('货运代理', '货代智能客服助手', '少翻系统，少漏重要跟进。一次看清变化、待确认项和可以交给同事复核的回复草稿。','查看示例跟进卡','港口集装箱和起重机'),
+            ('货运代理', '货代智能客服助手', '少翻系统，少漏重要跟进。一次看清变化、待确认项和可复核的回复草稿——每个动作留时间戳与出处，账单有争议时，记录就是证据。','查看示例跟进卡','港口集装箱和起重机'),
             ('医学研究与情报', '医学文献及情报管理助手', '不只知道有新文献，还看得出证据可能改变什么，并能沿出处核对。研究人员决定是否更新简报。','查看示例证据提示','桌上的研究资料与阅读笔记'),
         ),
         'proof': '我们的工作方法',
@@ -40,21 +48,29 @@ COPY = {
         ),
     },
     'en': {
-        'tag': 'BUILT AROUND YOUR WORK',
-        'hero': 'Turn recurring work into an assistant that runs on your own computer.',
-        'lead': 'See what changed, what the sources say and what needs a person’s review. Start with one task, then shape the workflow around your tools, permissions and acceptance criteria.',
+        'tag': 'LOCAL AI · FREIGHT & CUSTOMS',
+        'hero': 'An AI assistant for small freight forwarders and customs brokers.',
+        'lead': 'It drafts replies, tracks follow-ups and watches every deadline — nothing is sent without your review. Runs on your own computer. Your data never leaves your office. One-time setup, no per-seat subscription.',
         'cta': 'Discuss your workflow',
-        'jump': 'Explore the solutions',
+        'demo_cta': 'See a demo',
+        'brief_cta': 'Get a sample morning brief',
+        'pains_kicker': 'EVERY NUMBER, CHECKABLE AT THE SOURCE',
+        'pains_title': 'A missed deadline has a known price.',
+        'pains': (
+            ('ISF FILING', 'Miss the 24-hour deadline', 'ISF must be filed at least 24 hours before lading. Miss it, and liquidated damages of $5,000 apply per violation.', 'Source: U.S. CBP · 19 CFR § 113.62', 'https://www.ecfr.gov/current/title-19/chapter-I/part-113/section-113.62'),
+            ('D&D INVOICES', 'A 30-day window to dispute', 'Carriers must bill within 30 calendar days of the last charge, and you have at least 30 days to dispute. Your records are your evidence.', 'Source: U.S. FMC · final rule on D&D billing', 'https://www.fmc.gov/articles/fmc-publishes-final-rule-on-detention-and-demurrage-billing-practices/'),
+            ('ENTRY ERRORS', 'Up to 4× the unpaid duty', 'Gross negligence under 19 U.S.C. § 1592 means 4× the underpaid duty — or 40% of dutiable value where no revenue is lost.', 'Source: 19 U.S.C. § 1592', 'https://www.law.cornell.edu/uscode/text/19/1592'),
+        ),
         'deliver': 'From input to review',
         'flow': (
             ('Start with your sources', 'Use only the information and tools you approve.'),
             ('Get something your team can use', 'A brief, a response draft or a record with sources.'),
             ('Keep people in charge', 'Flag uncertainty. External actions follow agreed rules.'),
         ),
-        'sector': 'BUSINESS SOLUTIONS',
-        'examples': 'Start with something your team can use.',
+        'sector': 'EXAMPLES OF WHAT WE BUILD',
+        'examples': 'One approach, two kinds of work.',
         'cards': (
-            ('Freight forwarding', 'Freight Forwarding Customer Service Assistant', 'Spend less time switching between systems and miss fewer follow-ups. See what changed, what to check and what reply is ready for review.','See a sample follow-up card','Container cranes and stacks at a freight terminal'),
+            ('Freight forwarding', 'Freight Forwarding Customer Service Assistant', 'Spend less time switching between systems and miss fewer follow-ups. See what changed, what to check and what reply is ready for review — every action keeps a timestamp and its source, so when a bill is disputed, your record is your evidence.','See a sample follow-up card','Container cranes and stacks at a freight terminal'),
             ('Medical research and intelligence', 'Medical Literature & Intelligence Assistant', 'Go beyond new-paper alerts. See what evidence may change, trace it to its source, and let researchers decide whether to update the brief.','See a sample evidence alert','Research papers and reading notes on a desk'),
         ),
         'proof': 'HOW WE WORK',
@@ -82,9 +98,15 @@ def home_body(lang):
     c = COPY[lang]
     prefix = '/en/' if lang == 'en' else '/'
     contact = prefix + 'contact/'
+    demo = prefix + 'demo/'
+    brief = '/assets/sample-brief-zh.pdf' if lang == 'zh' else '/assets/sample-brief.pdf'
     flow = ''.join(
         f'<li><span aria-hidden="true">{n:02}</span><div><strong>{escape(label)}</strong><p>{escape(description)}</p></div></li>'
         for n, (label, description) in enumerate(c['flow'], 1)
+    )
+    pains = ''.join(
+        f'''<article class="hl-pain-card"><p class="hl-pain-index">{n:02} · {escape(domain)}</p><h3>{escape(pain)}</h3><p>{escape(detail)}</p><a class="hl-pain-source" href="{url}" target="_blank" rel="noopener noreferrer">{escape(source)} <span aria-hidden="true">→</span></a></article>'''
+        for n, (domain, pain, detail, source, url) in enumerate(c['pains'], 1)
     )
     cards = []
     for asset, (industry, title, detail, link, alt) in zip(('freight', 'medical'), c['cards']):
@@ -103,10 +125,15 @@ def home_body(lang):
         <div class="wrap hl-biz-hero-grid"><div>
           <p class="hl-biz-kicker">{escape(c['tag'])}</p><h1 id="hl-home-title">{escape(c['hero'])}</h1>
           <p class="hl-biz-lead">{escape(c['lead'])}</p><div class="hl-biz-actions">
-            <a class="hl-biz-button" href="{contact}">{escape(c['cta'])} <span aria-hidden="true">→</span></a>
-            <a class="hl-biz-secondary" href="#hl-home-solutions">{escape(c['jump'])} <span aria-hidden="true">↓</span></a>
+            <a class="hl-biz-button" href="{demo}">{escape(c['demo_cta'])} <span aria-hidden="true">→</span></a>
+            <a class="hl-biz-secondary" href="{brief}">{escape(c['brief_cta'])} <span aria-hidden="true">↓</span></a>
+            <a class="hl-biz-text" href="{contact}">{escape(c['cta'])} <span aria-hidden="true">→</span></a>
           </div></div><aside class="hl-home-flow"><h2>{escape(c['deliver'])}</h2><ol>{flow}</ol></aside>
         </div>
+      </section>
+      <section class="wrap hl-home-pains" aria-labelledby="hl-home-pains-title">
+        <p class="hl-biz-kicker">{escape(c['pains_kicker'])}</p><h2 id="hl-home-pains-title">{escape(c['pains_title'])}</h2>
+        <div class="hl-pain-cards">{pains}</div>
       </section>
       <section class="wrap hl-home-solutions" id="hl-home-solutions" aria-labelledby="hl-home-examples-title">
         <p class="hl-biz-kicker">{escape(c['sector'])}</p><h2 id="hl-home-examples-title">{escape(c['examples'])}</h2>

@@ -4,7 +4,7 @@ from html import escape
 
 COPY = {
     'zh': {
-        'title': '解决方案',
+        'title': '我们构建的示例',
         'eyebrow': '从业务任务出发',
         'promise': '你描述业务场景，我们为你构建在本地运行的 Harness。',
         'jump': '看两个方案',
@@ -32,12 +32,13 @@ COPY = {
             ('货代智能客服助手', '少翻系统，少漏重要跟进。把变化、需要关注的事项和原因放在一处，先看重点，再决定怎么处理。',
              ('汇总获准查看的货运动态，突出新变化和还需要跟进的事项。',
               '关键信息缺失时，标明哪里需要核实、为什么不能直接答复。',
-              '根据已确认的信息整理下一步或拟好回复，由工作人员核对、修改并决定是否发出。'),
+              '根据已确认的信息整理下一步或拟好回复，由工作人员核对、修改并决定是否发出。',
+              '留痕即证据：每次查找、核对与草拟都记录时间与出处。FMC 规则下，滞期费与滞箱费账单只有 30 个日历日争议窗口——记录完整，才拿得出手。'),
              '示例跟进卡（合成）',
              (('日期尚未确认', '一条货运更新没有确认日期，暂不能对外承诺时间。'),
               ('回复草稿', '我们正在核实日期，确认后会更新。'),
               ('处理状态', '仅为草稿，待人工复核，未发送。'))),
-            ('医学文献及情报管理助手', '不只知道有新文献，还能看清新增证据可能改变什么、每条结论能追到哪里。',
+            ('医学文献及情报管理助手', '不只知道有新文献，还能看清新增证据可能改变什么、每条结论能追到哪里。同一个 Harness，换一个领域——同一套受治理的流程。',
              ('按主题跟踪获准查阅的文献、指南和研究登记来源。',
               '对照已有简报，标出哪些结论可能需要更新、哪些暂不变、哪些仍不确定；保留来源链接、发布日期和原文位置。',
               '由研究人员核对原文与证据强度，再决定是否更新简报。用于研究与情报，不提供临床建议。'),
@@ -46,9 +47,16 @@ COPY = {
               ('证据边界', '不能据此判断建议是否改变。'),
               ('下一步', '核对全文和研究方法后，再决定是否更新简报。'))),
         ),
+        'src_label': '出处',
+        'isf': {
+            'title': 'ISF 申报倒计时（合成示例）',
+            'rows': (('船名', 'VESSEL XX'), ('预计装船', '11 月 26 日'), ('申报截止', '装船前 24 小时'), ('状态', '待补文件 · 未申报')),
+            'note': '合成示例：非实时运行。ISF 须经 ABI/ACE 电子申报（美国海关与边境保护局要求）；我们做草拟、核对与期限看护，不代做申报。',
+            'src': '19 CFR § 113.62',
+        },
     },
     'en': {
-        'title': 'Solutions',
+        'title': 'Examples of what we build',
         'eyebrow': 'START WITH THE WORK',
         'promise': 'Tell us how you work. We build a Harness that runs on your own computer or workstation.',
         'jump': 'Explore the solutions',
@@ -76,12 +84,13 @@ COPY = {
             ('Freight Forwarding Customer Service Assistant', 'Spend less time switching between systems and miss fewer follow-ups. See what changed, what needs attention and why.',
              ('Bring together authorized shipment updates and surface changes and open follow-ups.',
               'Show what needs checking when a key detail is missing, and why it matters before responding.',
-              'Suggest a next step or draft a reply from confirmed information. Staff review it, make any edits and decide whether to send it.'),
+              'Suggest a next step or draft a reply from confirmed information. Staff review it, make any edits and decide whether to send it.',
+              'Keep the evidence: every lookup, check and draft keeps its timestamp and source. Under the FMC rule, a D&D bill leaves you a 30-calendar-day window to dispute — a clean record is what you bring.'),
              'Sample follow-up card (synthetic)',
              (('No confirmed date', 'A shipment update does not include a confirmed date, so there is no date to promise.'),
               ('Response draft', 'We’re checking the date and will update you once it’s confirmed.'),
               ('Status', 'Draft only. Awaiting staff review; not sent.'))),
-            ('Medical Literature & Intelligence Assistant', 'Go beyond alerts about new papers. See what new evidence may change and trace each conclusion to its source.',
+            ('Medical Literature & Intelligence Assistant', 'Go beyond alerts about new papers. See what new evidence may change and trace each conclusion to its source. The same harness, a different domain — built on the same governed pipeline.',
              ('Track approved literature, guideline publishers and study registries by topic.',
               'Compare with previous briefs. Flag conclusions that may need updating, those that remain unchanged and questions still open. Keep the source link, publication date and relevant passage.',
               'Researchers verify the sources and the strength of the evidence before updating the brief. For research and intelligence, not clinical advice.'),
@@ -90,6 +99,13 @@ COPY = {
               ('Evidence limit', 'The abstract alone does not establish a change in recommendations.'),
               ('Next step', 'Check the full text and methods before deciding whether to update the brief.'))),
         ),
+        'src_label': 'Source',
+        'isf': {
+            'title': 'ISF countdown (synthetic example)',
+            'rows': (('Vessel', 'VESSEL XX'), ('Est. lading', 'NOV 26'), ('Filing deadline', '24 hours before lading'), ('Status', 'Documents pending · not filed')),
+            'note': 'Synthetic example: not a live run. ISF must be filed electronically via ABI/ACE (per U.S. CBP). We draft, check and watch deadlines; we do not file.',
+            'src': '19 CFR § 113.62',
+        },
     },
 }
 
@@ -113,12 +129,20 @@ def add_solutions(pages, lang):
         f'<span><strong>{escape(label)}</strong><small>{escape(detail)}</small></span></li>'
         for icon, (label, detail) in zip(('sources', 'device', 'review'), diagram_steps)
     )
+    isf = data['isf']
+    isf_rows = ''.join(f'<div><dt>{escape(label)}</dt><dd>{escape(value)}</dd></div>' for label, value in isf['rows'])
+    isf_html = f'''<section class="hl-sample hl-sample--isf" aria-labelledby="hl-sample-isf">
+            <div class="hl-sample-title"><span class="hl-sample-icon">{_icon('device')}</span><h4 id="hl-sample-isf">{escape(isf['title'])}</h4></div>
+            <dl>{isf_rows}</dl>
+            <p class="hl-sample-note">{escape(isf['note'])} {escape(data['src_label'])}：<a href="https://www.ecfr.gov/current/title-19/chapter-I/part-113/section-113.62" target="_blank" rel="noopener noreferrer">{escape(isf['src'])}</a>{'。' if lang == 'zh' else '.'}</p>
+          </section>'''
     showcases = []
     for i, (title, summary, steps, sample, rows) in enumerate(data['cards']):
         asset = ('freight', 'medical')[i]
         items = ''.join(f'<li>{escape(step)}</li>' for step in steps)
         notes = ''.join(f'<div><dt>{escape(label)}</dt><dd>{escape(value)}</dd></div>' for label, value in rows)
         alt = escape(data['alts'][i])
+        extra = isf_html if i == 0 else ''
         showcases.append(f'''<article class="hl-showcase hl-showcase--{asset}">
           <div class="hl-showcase-pair">
             <div class="hl-showcase-copy">
@@ -134,6 +158,7 @@ def add_solutions(pages, lang):
             <div class="hl-sample-title"><span class="hl-sample-icon">{_icon('sources')}</span><h4 id="hl-sample-{asset}">{escape(sample)}</h4></div>
             <dl>{notes}</dl>
           </section>
+          {extra}
         </article>''')
     steps = ''.join(
         f'<li><span class="hl-run-number">{i:02}</span><h3>{escape(heading)}</h3><p>{escape(detail)}</p></li>'
