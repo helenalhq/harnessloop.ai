@@ -16,7 +16,10 @@ document.querySelectorAll('.hl-video-frame > video[data-play]').forEach((video) 
   button.addEventListener('click', () => {
     video.controls = true;
     frame.classList.add('is-playing');
-    video.play();
+    /* Pausing or navigating during startup can reject play() with AbortError.
+       Media failures are handled by the video/source error listeners below. */
+    const playback = video.play();
+    if (playback) playback.catch(() => {});
   });
   video.addEventListener('play', () => frame.classList.add('is-playing'));
   video.addEventListener('loadeddata', () => frame.classList.remove('is-failed'));

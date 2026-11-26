@@ -11,7 +11,7 @@ for (const [homePath, solutionPath, otherPath, contactPath, heading, freight, me
   const home = local(homePath);
   assert.ok(home.includes(`href="${solutionPath}"`), `Missing Solutions navigation from ${homePath}`);
   const html = local(solutionPath);
-  assert.ok(html.includes(homePath === '/en/' ? 'Tell us how you work. We build a Harness that runs on your own computer or workstation.' : '你描述业务场景，我们为你构建在本地运行的 Harness。'));
+  assert.ok(html.includes(homePath === '/en/' ? 'Tell us how you work. We build an assistant that runs on your own computer or workstation.' : '你描述业务场景，我们为你构建在本地运行的私有助手。'));
   assert.ok(html.includes(`<h1 id="hl-solutions-title">${heading}</h1>`));
   assert.ok(html.includes(`<h3>${freight}</h3>`));
   assert.ok(html.includes(`<h3>${medical}</h3>`));
@@ -21,15 +21,10 @@ for (const [homePath, solutionPath, otherPath, contactPath, heading, freight, me
   assert.ok(html.includes('id="hl-workflow-diagram"'));
   assert.ok(html.includes('href="#hl-showcases"') && html.includes('id="hl-showcases"'));
   assert.ok(html.includes('id="hl-local-run"'));
-  let imageCount = 0;
-  for (const image of html.matchAll(/<img src="(\/assets\/hl-(?:freight|medical)-v3\.webp)" width="(\d+)" height="(\d+)" loading="lazy" alt="([^"]+)"/g)) {
-    const file = readFileSync('dist' + image[1]);
-    assert.equal(file.subarray(8, 12).toString(), 'WEBP');
-    assert.ok(file.length < 250_000, 'Illustrations must be optimized WebP images');
-    assert.ok(Number(image[2]) >= 640 && Number(image[3]) >= 400, 'Intrinsic image dimensions prevent layout shifts');
-    imageCount++;
-  }
-  assert.equal(imageCount, 2);
+  assert.doesNotMatch(html, /<img src="\/assets\/hl-(?:freight|medical)-v3\.webp"/, 'Do not replace useful product output with decorative scene images');
+  assert.equal((html.match(/<details class="hl-example-details">/g) || []).length, 2, 'Each example keeps its longer processing detail available on demand');
+  assert.ok(html.includes('class="hl-example-anchors"') && html.includes('class="hl-regulatory-evidence"'), 'Example anchors and regulatory evidence stay easy to reach');
+  assert.equal((html.match(/<section class="hl-sample" aria-labelledby="hl-sample-(?:freight|medical)"/g) || []).length, 2, 'Both synthetic outputs lead their examples');
   assert.doesNotMatch(html, /<form|https?:\/\/[^"]+\.invalid/);
   const examples = [...html.matchAll(/<article class="hl-showcase[^"]*">(.*?)<\/article>/gs)].map(match => match[1]);
   for (const example of examples) {
@@ -50,7 +45,7 @@ for (const [base, homePath, homePromise, contactPromise] of [
   ['/en/', '/en/', 'An AI assistant of your own, built around your work.', 'Start with one real task.'],
 ]) {
   const home=readFileSync('dist'+homePath+'index.html','utf8');
-  assert.ok(home.includes(homePromise), 'Home should lead with a customer outcome');
+  assert.ok(home.replace('<span class="hl-no-break">AI 助手</span>', 'AI 助手').includes(homePromise), 'Home should lead with a customer outcome');
   assert.doesNotMatch(home, /Bring us a real task|从一个真实业务问题开始/, 'Remove the duplicate legacy Home CTA only');
   assert.ok(home.indexOf('id="hl-home-solutions"') > 0);
   assert.ok(home.indexOf('id="hl-home-solutions"') < home.indexOf('id="hl-home-method"'), 'Industry examples precede technical proof');
@@ -131,7 +126,7 @@ assert.match(app,/encodeURIComponent/);assert.ok(!app.includes("state:'good'"));
 const config=JSON.parse(readFileSync('vercel.json','utf8'));assert.ok(config.redirects.some(r=>r.source==='/'&&r.destination==='/en/'));
 assert.match(config.headers[0].headers.find(h=>h.key==='Content-Security-Policy').value,/media-src https:\/\/github\.com /,'Only GitHub media is allowed through the CSP');
 assert.match(readFileSync('dist/zh/index.html','utf8'),/canonical" href="https:\/\/harnessloop.ai\/zh\/"/);
-assert.match(readFileSync('dist/en/contact/index.html','utf8'),/Review it there, then click Send\./);
+assert.match(readFileSync('dist/en/contact/index.html','utf8'),/The email link opens a draft in your mail app; you review and send it\./);
 assert.match(readFileSync('dist/contact/index.html','utf8'),/本站不会提交表单或自动发邮件/);
 
 // Three-act interactive demo: synthetic banner, three acts, approval buttons, audit trail, client-side-only script.
@@ -150,7 +145,9 @@ for (const [path, banner, heading, approve, headers, contactPath] of [
   assert.ok(html.includes('<table class="hl-demo-log"'));
   for (const h of headers) assert.ok(html.includes(`<th scope="col">${h}</th>`), `Missing audit column: ${h}`);
   for (const act of [1, 2, 3]) assert.ok(html.includes(`id="hl-demo-act-${act}"`));
-  assert.ok(html.includes(`href="${contactPath}"`), 'Every act must offer the contact exit in the same language');
+  assert.ok(html.includes(`href="${contactPath}"`), 'The decision point and final band must offer a same-language contact exit');
+  assert.equal((html.match(/class="hl-demo-exit"/g) || []).length, 1, 'Do not repeat the same contact link after every act');
+  assert.ok(html.includes('class="hl-demo-review"'), 'Act two must explain the source–assistant–human review boundary');
   assert.ok(html.includes('/assets/demo.css') && html.includes('/assets/demo.js'), 'Demo assets must be wired in');
   assert.doesNotMatch(html, /<form|type="submit"/);
   assert.ok(html.includes('19 CFR § 113.62') && html.includes('shipper@example.com'), 'Synthetic brief and draft must be present');

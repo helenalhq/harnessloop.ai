@@ -11,6 +11,7 @@
   border-bottom: 3px solid #a8543c;
 }
 .hl-demo-hero .wrap { padding-block: clamp(30px, 4.6vw, 56px); }
+.hl-demo-hero .eyebrow { color: #efb396; }
 .hl-demo-hero h1 {
   font-size: clamp(1.9rem, 4.1vw, 3.4rem); letter-spacing: -.04em; line-height: 1.08;
   margin-top: 6px; max-width: 17ch; text-wrap: balance;
@@ -172,4 +173,56 @@ a.hl-demo-chip:hover { border-color: #b58a76; color: #5d271d; }
     font-size: .72rem; font-weight: 700; color: #7a3b2a; white-space: nowrap;
   }
   .hl-demo-log td:nth-child(4) { grid-column: 1 / -1; grid-row: 3; color: var(--ink); font-weight: 600; }
+}
+
+/* Readable demo type, full-size controls and the act-two review boundary. */
+body .hl-demo-banner {font-size:.875rem;line-height:1.5}
+body .hl-demo-acts a {min-height:44px;font-size:.875rem;padding:9px 15px}
+body .hl-demo-act .hl-demo-lead {font-size:1rem;line-height:1.65}
+body .hl-demo-brief-meta {font-size:.875rem;line-height:1.55}
+body .hl-demo-stats span {font-size:.875rem}
+body .hl-demo-ship strong {font-size:1rem}
+body .hl-demo-ship p {font-size:.9375rem;line-height:1.55}
+body .hl-demo-chip {display:inline-flex;align-items:center;min-height:36px;font-size:.8125rem;line-height:1.4}
+body a.hl-demo-chip {min-height:44px}
+body .hl-demo-note {font-size:.9375rem;line-height:1.65}
+.hl-demo-act2-grid {display:grid;grid-template-columns:minmax(0,1.45fr) minmax(270px,.55fr);gap:24px;align-items:start;margin-top:20px}
+body .hl-demo-follow {max-width:none;margin-top:0}
+body .hl-demo-draft-head {font-size:.875rem;line-height:1.55}
+body .hl-demo-draft-fields dt {font-size:.875rem}
+body .hl-demo-draft-fields dd,body .hl-demo-draft p {font-size:1rem;line-height:1.65}
+body .hl-demo-btn {min-height:44px;font-size:.9375rem}
+body .hl-demo-btn--reset {min-height:44px;font-size:.875rem;padding-inline:10px}
+body .hl-demo-notice {font-size:.9375rem;line-height:1.6}
+.hl-demo-review {padding:25px 23px;border:1px solid #4d342b;border-radius:10px;background:#2c211d;color:#fff5ec;box-shadow:0 13px 35px #4b2e1c12}
+.hl-demo-review>p {margin:0 0 10px;color:#eab095;font-size:12px;font-weight:700;letter-spacing:.09em}
+.hl-demo-review h3 {margin:0;font-size:clamp(23px,2.4vw,31px);line-height:1.2;letter-spacing:-.025em;text-wrap:balance}
+.hl-demo-review ol {margin:22px 0 0;padding:0;list-style:none}
+.hl-demo-review li {padding:15px 0;border-top:1px solid #665048}
+.hl-demo-review li:last-child {padding-bottom:0}
+.hl-demo-review li strong {display:block;margin-bottom:5px;color:#efb396;font-size:13px;letter-spacing:.04em}
+.hl-demo-review li span {display:block;color:#f0ddd1;font-size:15px;line-height:1.6}
+body .hl-demo-log th {font-size:.8125rem}
+body .hl-demo-log td {font-size:.9375rem;line-height:1.55}
+body .hl-demo-final p {font-size:1rem;line-height:1.65}
+@media(max-width:950px) {
+  .hl-demo-act2-grid {grid-template-columns:1fr}
+  .hl-demo-review ol {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+  .hl-demo-review li {padding-bottom:15px}
+  .hl-demo-review li:last-child {padding-bottom:15px}
+}
+@media(max-width:650px) {
+  .hl-demo-review ol {display:block}
+  .hl-demo-review li,body .hl-demo-review li:last-child {padding:15px 0}
+  .hl-demo-review li:last-child {padding-bottom:0}
+}
+@media(max-width:540px) {
+  body .hl-demo-stats span {font-size:.875rem;line-height:1.45}
+  body .hl-demo-ship p,body .hl-demo-note,body .hl-demo-btn,body .hl-demo-notice,body .hl-demo-log td {font-size:1rem}
+  body .hl-demo-chip {font-size:.875rem}
+  body .hl-demo-draft-head {font-size:.9375rem}
+  body .hl-demo-draft-fields dt {font-size:.9375rem}
+  .hl-demo-review li strong {font-size:14px}
+  .hl-demo-review li span {font-size:16px}
+  body .hl-demo-log td:nth-child(3) {font-size:1rem}
 }

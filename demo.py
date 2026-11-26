@@ -42,6 +42,11 @@ def add_demo(pages, lang):
               'The daily brief lays out status, anomalies and sources at a glance. The red and amber rows are the three anomalies; only BK-20431 has a draft waiting for you.')
         a2 = ('ACT TWO · THE FOLLOW-UP CARD', 'Ready to send? You decide.',
               'The customer asks for an estimated departure and the date is not confirmed. The assistant drafts the reply — and does not send it. Approve, edit or reject: your click.')
+        review = ('THE REVIEW BOUNDARY', 'A draft is not an action.', (
+            ('Source', 'The carrier has not confirmed a departure date.'),
+            ('Assistant', 'Drafts a cautious holding reply; never invents an ETD.'),
+            ('You', 'Nothing is sent until you approve it in your mail client.'),
+        ))
         a3 = ('ACT THREE · THE AUDIT TRAIL', 'Every action leaves a four-part record.',
               'Time, source, judgment, action — who did what, based on what, when. When a bill is disputed, this is your evidence. Clicking the buttons in act two appends a demo row to this table.')
         brief_mast = ('Morning brief · Synthetic example', 'NO. 004')
@@ -74,6 +79,11 @@ def add_demo(pages, lang):
               '每天生成的晨报把状态、异常和来源一次性摆出来。红色与黄色的三行就是那 3 处异常；只有 BK-20431 有一封草稿等你审批。')
         a2 = ('第二幕 · 跟进卡', '要发出去吗？你说了算。',
               '客户催问预计开船时间，而日期还没确认。助手写好草稿，但不发送——批准、编辑还是拒绝，由你点。')
+        review = ('复核边界', '草稿不等于已执行。', (
+            ('来源', '船公司尚未确认开船日期。'),
+            ('助手', '只起草谨慎的跟进回复，不编造预计开船时间。'),
+            ('你', '在你的邮件客户端里批准之前，不会发出任何内容。'),
+        ))
         a3 = ('第三幕 · 留痕', '每个动作，留下四元组记录。',
               '时间、来源、判断、动作——谁在什么时候基于什么做了什么。账单有争议时，这就是你的证据。点击第二幕的按钮，会给这张表追加一条演示记录。')
         brief_mast = ('晨报 · 合成示例', 'NO. 004')
@@ -106,6 +116,7 @@ def add_demo(pages, lang):
     stats_html = ''.join(f'<div><b>{number}</b><span>{name}</span></div>' for number, name in stats)
     acts_html = ''.join(f'<a href="#hl-demo-act-{i}"><span aria-hidden="true">{number}</span>{name}</a>' for i, (number, name) in enumerate(acts, 1))
     buttons_html = ''.join(f'<button type="button" class="hl-demo-btn hl-demo-btn--{action}" data-demo-action="{action}">{label}</button>' for action, label in buttons)
+    review_html = ''.join(f'<li><strong>{label}</strong><span>{detail}</span></li>' for label, detail in review[2])
     draft_fields = ''.join(f'<div><dt>{key}</dt><dd>{value}</dd></div>' for key, value in draft_rows)
     seed_html = ''.join(f'<tr><td>{time}</td><td>{source}</td><td>{judgment}</td><td>{action}</td></tr>' for time, source, judgment, action in seed)
     headers_html = ''.join(f'<th scope="col">{header}</th>' for header in log_headers)
@@ -128,19 +139,23 @@ def add_demo(pages, lang):
           <div class="hl-demo-ships">{ships}</div>
         </div>
         {a1_note_para}
-        <div class="hl-demo-exit"><a class="hl-biz-text" href="{contact}">{exit_text} <span aria-hidden="true">→</span></a></div>
       </section>
       <section class="wrap hl-demo-act" id="hl-demo-act-2" aria-labelledby="hl-demo-a2-title">
         <p class="hl-biz-kicker">{a2[0]}</p><h2 id="hl-demo-a2-title">{a2[1]}</h2><p class="hl-demo-lead">{a2[2]}</p>
-        <div class="hl-demo-follow">
-          <div class="hl-demo-follow-head"><strong>{a2_head[0]}</strong><span class="tag">{a2_head[1]}</span></div>
-          <div class="hl-demo-draft">
-            <div class="hl-demo-draft-head"><span>{draft_label}</span><span>{('Visible only in your email client' if en else '只在你的邮件客户端里可见')}</span></div>
-            <dl class="hl-demo-draft-fields">{draft_fields}</dl>
-            <p>{draft_body}</p>
+        <div class="hl-demo-act2-grid">
+          <div class="hl-demo-follow">
+            <div class="hl-demo-follow-head"><strong>{a2_head[0]}</strong><span class="tag">{a2_head[1]}</span></div>
+            <div class="hl-demo-draft">
+              <div class="hl-demo-draft-head"><span>{draft_label}</span><span>{('Visible only in your email client' if en else '只在你的邮件客户端里可见')}</span></div>
+              <dl class="hl-demo-draft-fields">{draft_fields}</dl>
+              <p>{draft_body}</p>
+            </div>
+            <div class="hl-demo-actions">{buttons_html}</div>
+            <p class="hl-demo-notice" id="hl-demo-notice" role="status" aria-live="polite">{notice_default}</p>
           </div>
-          <div class="hl-demo-actions">{buttons_html}</div>
-          <p class="hl-demo-notice" id="hl-demo-notice" role="status" aria-live="polite">{notice_default}</p>
+          <aside class="hl-demo-review" aria-label="{review[0]}">
+            <p>{review[0]}</p><h3>{review[1]}</h3><ol>{review_html}</ol>
+          </aside>
         </div>
         <div class="hl-demo-exit"><a class="hl-biz-text" href="{contact}">{exit_text} <span aria-hidden="true">→</span></a></div>
       </section>
@@ -153,7 +168,6 @@ def add_demo(pages, lang):
           </table>
         </div>
         {a3_note_para}
-        <div class="hl-demo-exit"><a class="hl-biz-text" href="{contact}">{exit_text} <span aria-hidden="true">→</span></a></div>
       </section>
       <section class="hl-demo-final"><div class="wrap hl-demo-final-grid"><div>
         <h2>{final_h}</h2><p>{final_p}</p>

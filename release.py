@@ -32,12 +32,9 @@ def prepare(body,slug,en):
  if slug=='privacy':return privacy(en)
  body=body.replace('在每次反馈中进化。','以验证驱动持续进化。')
  if slug=='contact':
-  # Three short numbered steps read faster than one run-on paragraph; the limits stay visible below them.
-  steps_en=['Fill in the fields and generate a local brief.','Open the email draft in your email app.','Review it there, then click Send.']
-  steps_zh=['填写内容，生成本地简报。','在邮件客户端打开邮件草稿。','检查无误后，在邮件客户端点击发送。']
-  steps=''.join('<li>'+step+'</li>' for step in (steps_en if en else steps_zh))
-  limit=('This website does not submit or send messages. If no email app is configured, copy the brief into your webmail and send it to contact@harnessloop.ai.' if en else '本站不会提交表单或自动发邮件。如未配置邮件客户端，请复制简报到网页邮箱，发送至 contact@harnessloop.ai。')
-  explanation=f'<strong>{"Three steps" if en else "如何联系"}</strong><ol>{steps}</ol><span class="notice-note">{limit}</span>'
+  # The direct email address is primary; the optional brief never submits or sends anything.
+  limit=('This page does not submit or send messages. The email link opens a draft in your mail app; you review and send it.' if en else '本站不会提交表单或自动发邮件。邮件链接只会在你的邮件客户端打开草稿，由你检查并发送。')
+  explanation=f'<strong>{"Your email stays under your control" if en else "邮件由你检查并发送"}</strong><span class="notice-note">{limit}</span>'
   body=body.replace('<div class="box"><h3>', '<div class="box"><div class="notice notice-steps">'+explanation+'</div><h3>',1)
   body=body.replace('<form class="form" id="brief-form">','<div class="form" id="brief-form" role="group" aria-label="'+('Local brief tool' if en else '本地简报工具')+'">').replace('</form>','</div>')
   body=body.replace('type="submit"','type="button" id="generate-brief"')

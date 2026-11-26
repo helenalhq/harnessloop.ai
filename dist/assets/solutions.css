@@ -113,3 +113,57 @@ html[lang^="zh"] .hl-solutions-hero h1,[lang^="zh"] .hl-solutions-hero h1 {lette
 .hl-sample-note a:hover {color:#7a2f1f}
 @media(max-width:850px) {.hl-sample--isf dl {grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:540px) {.hl-sample--isf dl {grid-template-columns:1fr}}
+
+/* Output first: the sample is the hero of each complete example. */
+.hl-solutions .hl-solutions-hero {padding:clamp(54px,7vw,92px) 0 30px}
+.hl-solutions .hl-solutions-hero p {font-size:clamp(17px,1.5vw,21px)}
+.hl-solutions .hl-showcase-intro>p {font-size:17px}
+.hl-example-anchors {display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 48px}
+.hl-example-anchors a {display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:10px 16px;border:1px solid #d5bdab;border-radius:5px;background:#fffaf3;color:#743122;font-size:16px;font-weight:700;text-decoration:none}
+.hl-example-anchors a:hover {border-color:#8b3929;background:#f5e6d9}
+.hl-solutions .hl-showcase {margin:0 0 clamp(64px,8vw,96px);scroll-margin-top:105px}
+.hl-solutions .hl-showcase-pair {grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(30px,4vw,54px);align-items:start}
+.hl-solutions .hl-showcase-copy h3 {font-size:clamp(30px,3.2vw,44px);line-height:1.15;letter-spacing:-.035em;text-wrap:balance}
+.hl-solutions .hl-showcase-copy>p {font-size:17px;line-height:1.65}
+.hl-solutions .hl-showcase .hl-sample {margin-top:0;width:100%}
+.hl-solutions .hl-showcase .hl-sample dl {grid-template-columns:1fr;gap:8px}
+.hl-solutions .hl-showcase .hl-sample dl>div {display:grid;grid-template-columns:minmax(105px,.32fr) minmax(0,1fr);align-items:start;gap:18px;padding:15px 17px}
+.hl-solutions .hl-sample dt {font-size:14px;line-height:1.55}
+.hl-solutions .hl-sample dd {font-size:16px;line-height:1.6}
+.hl-example-details {margin-top:22px;border-top:1px solid #d8c2b1;border-bottom:1px solid #d8c2b1}
+.hl-example-details>summary,.hl-regulatory-evidence>summary {position:relative;min-height:54px;padding:17px 40px 17px 0;color:#743122;font-size:16px;font-weight:700;line-height:1.5;cursor:pointer;list-style:none}
+.hl-example-details>summary::-webkit-details-marker,.hl-regulatory-evidence>summary::-webkit-details-marker {display:none}
+.hl-example-details>summary:after,.hl-regulatory-evidence>summary:after {content:'+';position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:23px;font-weight:400}
+.hl-example-details[open]>summary:after,.hl-regulatory-evidence[open]>summary:after {content:'−'}
+.hl-example-details .hl-feature-list {padding:0 0 18px}
+.hl-regulatory-evidence {margin:0 0 clamp(70px,9vw,112px);border:1px solid #d8c2b1;border-radius:10px;background:#f7eee4;overflow:hidden}
+.hl-regulatory-evidence>summary {padding:20px 58px 20px 24px;font-size:16px}
+.hl-regulatory-evidence>summary:after {right:24px}
+.hl-regulatory-evidence[open]>summary {border-bottom:1px solid #d8c2b1;background:#efdfd1}
+.hl-regulatory-body {padding:24px}
+.hl-solutions .hl-regulatory-body .hl-pain-grid {margin:0}
+.hl-solutions .hl-regulatory-body .hl-pain-card {padding:22px;background:#fffaf3}
+.hl-solutions .hl-regulatory-body .hl-pain-card p {font-size:16px;line-height:1.65}
+.hl-solutions .hl-regulatory-body .hl-pain-card h3 {font-size:20px}
+.hl-solutions .hl-regulatory-body .hl-pain-source {font-size:15px;line-height:1.55}
+.hl-solutions .hl-feature-list li {font-size:16px;line-height:1.6}
+.hl-solutions .hl-sample-note {font-size:14px;line-height:1.65}
+.hl-solutions .hl-regulatory-body .hl-isf-card {margin-top:24px}
+@media(max-width:1000px) {
+  .hl-solutions .hl-showcase-pair {grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:28px}
+  .hl-solutions .hl-showcase .hl-sample dl>div {grid-template-columns:1fr;gap:6px}
+  .hl-solutions .hl-regulatory-body .hl-pain-grid {grid-template-columns:1fr}
+}
+@media(max-width:780px) {
+  .hl-solutions .hl-showcase-pair {grid-template-columns:1fr;gap:25px}
+  .hl-solutions .hl-showcase-copy h3 {max-width:24ch}
+  .hl-solutions .hl-showcase .hl-sample dl>div {grid-template-columns:minmax(105px,.32fr) minmax(0,1fr)}
+  .hl-example-anchors {margin-bottom:38px}
+}
+@media(max-width:480px) {
+  .hl-solutions .hl-showcase .hl-sample dl>div {grid-template-columns:1fr;gap:6px;padding:14px}
+  .hl-solutions .hl-sample dd {font-size:16px}
+  .hl-solutions .hl-showcase-copy>p,.hl-example-details>summary {font-size:16px}
+  .hl-regulatory-evidence>summary {padding-left:18px;font-size:16px}
+  .hl-regulatory-body {padding:16px}
+}

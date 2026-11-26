@@ -62,7 +62,8 @@ COPY = {
         'contact_tag': '联系合作',
         'contact_title': '从一件具体的业务任务开始。',
         'contact_lead': '告诉我们你希望助手做什么、哪一步最费时，以及仍需由谁判断。初次联系请只用不含敏感信息的描述。',
-        'engagement': '怎么开始',
+        'engagement': '来信之后怎么推进',
+        'brief_toggle': '不知道怎样描述？整理一份本地需求简报',
         'contact_steps': (
             ('描述任务', '说清目前怎么做、问题在哪，以及希望得到什么输出。'),
             ('一起确认范围', '约定能用的资料、设备和权限，哪些步骤必须人工复核，以及如何验收。'),
@@ -128,7 +129,8 @@ COPY = {
         'contact_tag': 'CONTACT',
         'contact_title': 'Start with one real task.',
         'contact_lead': 'Tell us what you need the assistant to do, what takes the most time and where a person needs to decide. Keep initial enquiries free of sensitive information.',
-        'engagement': 'How to start',
+        'engagement': 'What happens after you write',
+        'brief_toggle': 'Not sure how to describe it? Prepare a local brief',
         'contact_steps': (
             ('Describe the task', 'Tell us how it works today, where it breaks down and what output you need.'),
             ('Agree on scope', 'Define allowed sources, devices, permissions, review steps and acceptance criteria.'),
@@ -167,10 +169,6 @@ def home_body(lang):
         f'<li><span aria-hidden="true">{n:02}</span><div><strong>{escape(label)}</strong><p>{escape(description)}</p></div></li>'
         for n, (label, description) in enumerate(c['flow'], 1)
     )
-    pains = ''.join(
-        f'''<article class="hl-pain-card"><p class="hl-pain-index">{n:02} · {escape(domain)}</p><h3>{escape(pain)}</h3><p>{escape(detail)}</p><a class="hl-pain-source" href="{url}" target="_blank" rel="noopener noreferrer">{escape(source)} <span aria-hidden="true">→</span></a></article>'''
-        for n, (domain, pain, detail, source, url) in enumerate(c['pains'], 1)
-    )
     cards = []
     for asset, (industry, headline, pain, nodes, sample, delivery) in zip(('freight', 'medical'), c['cards']):
         target = prefix + 'solutions/#hl-sample-' + asset
@@ -201,20 +199,19 @@ def home_body(lang):
           <p class="hl-video-note">{escape(c['video_note'])} {github_link}</p>
         </div>
 '''
+    hero = escape(c['hero'])
+    if lang == 'zh':
+        hero = hero.replace('AI 助手', '<span class="hl-no-break">AI 助手</span>')
     return f'''<div class="hl-business hl-home">
       <section class="hl-biz-hero" aria-labelledby="hl-home-title">
         <div class="wrap hl-biz-hero-grid"><div>
-          <p class="hl-biz-kicker">{escape(c['tag'])}</p><h1 id="hl-home-title">{escape(c['hero'])}</h1>
+          <p class="hl-biz-kicker">{escape(c['tag'])}</p><h1 id="hl-home-title">{hero}</h1>
           <p class="hl-biz-lead">{escape(c['lead'])}</p><div class="hl-biz-actions">
             <a class="hl-biz-button" href="{demo}">{escape(c['demo_cta'])} <span aria-hidden="true">→</span></a>
             <a class="hl-biz-secondary" href="{contact}">{escape(c['cta'])} <span aria-hidden="true">→</span></a>
           </div></div>{player}</div>
       </section>
       <section class="wrap hl-home-flow" aria-labelledby="hl-home-flow-title"><p class="hl-biz-kicker" id="hl-home-flow-title">{escape(c['deliver'])}</p><ol>{flow}</ol></section>
-      <section class="wrap hl-home-pains" aria-labelledby="hl-home-pains-title">
-        <p class="hl-biz-kicker">{escape(c['pains_kicker'])}</p><h2 id="hl-home-pains-title">{escape(c['pains_title'])}</h2>
-        <div class="hl-pain-cards">{pains}</div>
-      </section>
       <section class="wrap hl-home-solutions" id="hl-home-solutions" aria-labelledby="hl-home-examples-title">
         <p class="hl-biz-kicker">{escape(c['sector'])}</p><h2 id="hl-home-examples-title">{escape(c['examples'])}</h2>
         <p class="hl-home-lead">{escape(c['examples_lead'])}</p>
@@ -258,9 +255,9 @@ def contact_body(prepared, lang):
       </div></section>
       <section class="wrap hl-contact-grid" aria-label="{escape(c['engagement'])}">
         <div class="hl-engagement">
-          <h2>{escape(c['engagement'])}</h2><ol>{steps}</ol>
           <div class="contact-address">{email}</div>
+          <h2>{escape(c['engagement'])}</h2><ol>{steps}</ol>
         </div>
-        <div class="box hl-contact-brief">{tool}</div>
+        <details class="box hl-contact-brief"><summary>{escape(c['brief_toggle'])}</summary><div class="hl-contact-brief-body">{tool}</div></details>
       </section>{suffix}
     </div>'''

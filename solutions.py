@@ -6,14 +6,17 @@ COPY = {
     'zh': {
         'title': '我们构建的示例',
         'eyebrow': '从业务任务出发',
-        'promise': '你描述业务场景，我们为你构建在本地运行的 Harness。',
-        'jump': '看两个方案',
-        'showcases': '同一个方法，两种业务用法',
+        'promise': '你描述业务场景，我们为你构建在本地运行的私有助手。',
+        'jump': '看两个示例',
+        'showcases': '先看输出，再看它怎么工作。',
+        'details': '查看助手如何处理',
+        'evidence': '查看货代示例背后的官方规则',
+        'anchors': ('货代客户跟进', '医学文献简报'),
         'industries': ('货运代理', '医学研究与情报'),
         'alts': ('集装箱与起重机组成的港口作业场景', '桌面上的研究资料与阅读笔记'),
         'diagram': ('本地工作流', '方案示意', (
             ('授权资料', '你允许访问的信息和工具'),
-            ('本地 Harness', '在配置的设备上运行'),
+            ('你的助手', '在你配置的电脑或工作站运行'),
             ('待复核结果', '简报或草稿，并附来源依据'),
         )),
         'run_kicker': '从设计到交付',
@@ -33,12 +36,12 @@ COPY = {
              ('汇总获准查看的货运动态，突出新变化和还需要跟进的事项。',
               '关键信息缺失时，标明哪里需要核实、为什么不能直接答复。',
               '根据已确认的信息整理下一步或拟好回复，由工作人员核对、修改并决定是否发出。',
-              '留痕即证据：每次查找、核对与草拟都记录时间与出处。FMC 规则下，滞期费与滞箱费账单只有 30 个日历日争议窗口——记录完整，才拿得出手。'),
+              '每次查找、核对与草拟都记录时间与出处，方便复核和后续查询。'),
              '示例跟进卡（合成）',
              (('日期尚未确认', '一条货运更新没有确认日期，暂不能对外承诺时间。'),
               ('回复草稿', '我们正在核实日期，确认后会更新。'),
               ('处理状态', '仅为草稿，待人工复核，未发送。'))),
-            ('医学文献及情报管理助手', '不只知道有新文献，还能看清新增证据可能改变什么、每条结论能追到哪里。同一个 Harness，换一个领域——同一套受治理的流程。',
+            ('医学文献及情报管理助手', '不只知道有新文献，还能看清新增证据可能改变什么、每条结论能追到哪里。研究人员保留最终判断。',
              ('按主题跟踪获准查阅的文献、指南和研究登记来源。',
               '对照已有简报，标出哪些结论可能需要更新、哪些暂不变、哪些仍不确定；保留来源链接、发布日期和原文位置。',
               '由研究人员核对原文与证据强度，再决定是否更新简报。用于研究与情报，不提供临床建议。'),
@@ -58,14 +61,17 @@ COPY = {
     'en': {
         'title': 'Examples of what we build',
         'eyebrow': 'START WITH THE WORK',
-        'promise': 'Tell us how you work. We build a Harness that runs on your own computer or workstation.',
-        'jump': 'Explore the solutions',
-        'showcases': 'One approach, two kinds of work',
+        'promise': 'Tell us how you work. We build an assistant that runs on your own computer or workstation.',
+        'jump': 'Explore the examples',
+        'showcases': 'See the output first. Then see how it works.',
+        'details': 'How the assistant handles it',
+        'evidence': 'Official rules behind the freight example',
+        'anchors': ('Freight follow-up', 'Medical literature brief'),
         'industries': ('FREIGHT FORWARDING', 'MEDICAL RESEARCH & INTELLIGENCE'),
         'alts': ('Container terminal with cranes and cargo containers', 'Research papers and reading notes laid out on a desk'),
         'diagram': ('Local workflow', 'Illustrated workflow', (
             ('Authorized sources', 'Information and tools you approve'),
-            ('Local Harness', 'Runs on your configured device'),
+            ('Your assistant', 'Runs on your configured computer or workstation'),
             ('Output for review', 'A brief or draft with source evidence'),
         )),
         'run_kicker': 'FROM DESIGN TO DELIVERY',
@@ -85,12 +91,12 @@ COPY = {
              ('Bring together authorized shipment updates and surface changes and open follow-ups.',
               'Show what needs checking when a key detail is missing, and why it matters before responding.',
               'Suggest a next step or draft a reply from confirmed information. Staff review it, make any edits and decide whether to send it.',
-              'Keep the evidence: every lookup, check and draft keeps its timestamp and source. Under the FMC rule, a D&D bill leaves you a 30-calendar-day window to dispute — a clean record is what you bring.'),
+              'Every lookup, check and draft keeps its timestamp and source for review and later reference.'),
              'Sample follow-up card (synthetic)',
              (('No confirmed date', 'A shipment update does not include a confirmed date, so there is no date to promise.'),
               ('Response draft', 'We’re checking the date and will update you once it’s confirmed.'),
               ('Status', 'Draft only. Awaiting staff review; not sent.'))),
-            ('Medical Literature & Intelligence Assistant', 'Go beyond alerts about new papers. See what new evidence may change and trace each conclusion to its source. The same harness, a different domain — built on the same governed pipeline.',
+            ('Medical Literature & Intelligence Assistant', 'Go beyond alerts about new papers. See what new evidence may change and trace each conclusion to its source. Researchers keep the final judgment.',
              ('Track approved literature, guideline publishers and study registries by topic.',
               'Compare with previous briefs. Flag conclusions that may need updating, those that remain unchanged and questions still open. Keep the source link, publication date and relevant passage.',
               'Researchers verify the sources and the strength of the evidence before updating the brief. For research and intelligence, not clinical advice.'),
@@ -141,23 +147,28 @@ def add_solutions(pages, lang):
         asset = ('freight', 'medical')[i]
         items = ''.join(f'<li>{escape(step)}</li>' for step in steps)
         notes = ''.join(f'<div><dt>{escape(label)}</dt><dd>{escape(value)}</dd></div>' for label, value in rows)
-        alt = escape(data['alts'][i])
-        extra = isf_html if i == 0 else ''
-        showcases.append(f'''<article class="hl-showcase hl-showcase--{asset}">
+        extra = ''
+        if i == 0:
+            from business import COPY as HOME_COPY
+            pain_cards = ''.join(
+                f'''<article class="hl-pain-card"><p class="hl-pain-index">{n:02} · {escape(domain)}</p><h3>{escape(pain)}</h3><p>{escape(detail)}</p><a class="hl-pain-source" href="{url}" target="_blank" rel="noopener noreferrer">{escape(source)} <span aria-hidden="true">→</span></a></article>'''
+                for n, (domain, pain, detail, source, url) in enumerate(HOME_COPY[lang]['pains'], 1)
+            )
+            extra = f'''<details class="hl-regulatory-evidence"><summary>{escape(data['evidence'])}</summary>
+              <div class="hl-regulatory-body"><div class="hl-pain-cards">{pain_cards}</div>{isf_html}</div>
+            </details>'''
+        showcases.append(f'''<article class="hl-showcase hl-showcase--{asset}" id="hl-example-{asset}">
           <div class="hl-showcase-pair">
             <div class="hl-showcase-copy">
               <p class="hl-kicker"><span>{i + 1:02}</span>{escape(data['industries'][i])}</p>
               <h3>{escape(title)}</h3><p class="hl-showcase-summary">{escape(summary)}</p>
-              <ul class="hl-feature-list">{items}</ul>
+              <details class="hl-example-details"><summary>{escape(data['details'])}</summary><ul class="hl-feature-list">{items}</ul></details>
             </div>
-            <div class="hl-showcase-image">
-              <img src="/assets/hl-{asset}-v3.webp" width="1260" height="840" loading="lazy" alt="{alt}">
-            </div>
+            <section class="hl-sample" aria-labelledby="hl-sample-{asset}">
+              <div class="hl-sample-title"><span class="hl-sample-icon">{_icon('sources')}</span><h4 id="hl-sample-{asset}">{escape(sample)}</h4></div>
+              <dl>{notes}</dl>
+            </section>
           </div>
-          <section class="hl-sample" aria-labelledby="hl-sample-{asset}">
-            <div class="hl-sample-title"><span class="hl-sample-icon">{_icon('sources')}</span><h4 id="hl-sample-{asset}">{escape(sample)}</h4></div>
-            <dl>{notes}</dl>
-          </section>
           {extra}
         </article>''')
     steps = ''.join(
@@ -167,6 +178,10 @@ def add_solutions(pages, lang):
     title = data['title']
     arrow = _icon('arr')
     showcase_html = ''.join(showcases)
+    anchors = ''.join(
+        f'<a href="#hl-example-{asset}"><span>{i + 1:02}</span>{escape(label)}</a>'
+        for i, (asset, label) in enumerate(zip(('freight', 'medical'), data['anchors']))
+    )
     body = f'''<div class="hl-solutions">
       <section class="hl-solutions-hero" aria-labelledby="hl-solutions-title">
         <div class="wrap hl-hero-grid">
@@ -188,6 +203,7 @@ def add_solutions(pages, lang):
       </section>
       <section class="wrap hl-showcases" id="hl-showcases" aria-labelledby="hl-showcases-title">
         <h2 id="hl-showcases-title">{escape(data['showcases'])}</h2>
+        <nav class="hl-example-anchors" aria-label="{escape(data['showcases'])}">{anchors}</nav>
         {showcase_html}
       </section>
       <section class="hl-run" id="hl-local-run" aria-labelledby="hl-run-title">

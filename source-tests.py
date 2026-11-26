@@ -20,21 +20,21 @@ for path in documents:
 
 # (source key, page, language, phrase that must stay next to the source link)
 QUOTES = (
-    ('isf', 'home', 'zh', '装船前至少 24 小时申报'),
-    ('isf', 'home', 'zh', '$5,000'),
-    ('isf', 'home', 'en', 'at least 24 hours before lading'),
-    ('isf', 'home', 'en', 'USD 5,000'),
+    ('isf', 'solutions', 'zh', '装船前至少 24 小时申报'),
+    ('isf', 'solutions', 'zh', '$5,000'),
+    ('isf', 'solutions', 'en', 'at least 24 hours before lading'),
+    ('isf', 'solutions', 'en', 'USD 5,000'),
     ('isf', 'demo', 'zh', '装货港代码'),
-    ('dd', 'home', 'zh', '30 个日历日'),
-    ('dd', 'home', 'en', '30 calendar days'),
-    ('usc1592', 'home', 'en', '4×'),
-    ('usc1592', 'home', 'en', '40% of dutiable value'),
-    ('customs128', 'home', 'zh', '0.5‰'),
-    ('customs128', 'home', 'zh', '第 15 日起'),
-    ('customs128', 'home', 'zh', '人民币 50 元'),
+    ('dd', 'solutions', 'zh', '30 个日历日'),
+    ('dd', 'solutions', 'en', '30 calendar days'),
+    ('usc1592', 'solutions', 'en', '4×'),
+    ('usc1592', 'solutions', 'en', '40% of dutiable value'),
+    ('customs128', 'solutions', 'zh', '0.5‰'),
+    ('customs128', 'solutions', 'zh', '第 15 日起'),
+    ('customs128', 'solutions', 'zh', '人民币 50 元'),
 )
 PAGES = {
-    'home': {'zh': 'dist/zh/index.html', 'en': 'dist/en/index.html'},
+    'solutions': {'zh': 'dist/solutions/index.html', 'en': 'dist/en/solutions/index.html'},
     'demo': {'zh': 'dist/demo/index.html', 'en': 'dist/en/demo/index.html'},
 }
 urls = {source['key']: source['url'] for source in SOURCES}
