@@ -57,7 +57,7 @@ COPY = {
         'pains_kicker': 'EVERY NUMBER, CHECKABLE AT THE SOURCE',
         'pains_title': 'A missed deadline has a known price.',
         'pains': (
-            ('ISF FILING', 'Miss the 24-hour deadline', 'ISF must be filed at least 24 hours before lading. Miss it, and liquidated damages of $5,000 apply per violation.', 'Source: U.S. CBP · 19 CFR § 113.62', 'https://www.ecfr.gov/current/title-19/chapter-I/part-113/section-113.62'),
+            ('ISF FILING', 'Miss the 24-hour deadline', 'ISF must be filed at least 24 hours before lading. Miss it, and liquidated damages of USD 5,000 apply per violation.', 'Source: U.S. CBP · 19 CFR § 113.62', 'https://www.ecfr.gov/current/title-19/chapter-I/part-113/section-113.62'),
             ('D&D INVOICES', 'A 30-day window to dispute', 'Carriers must bill within 30 calendar days of the last charge, and you have at least 30 days to dispute. Your records are your evidence.', 'Source: U.S. FMC · final rule on D&D billing', 'https://www.fmc.gov/articles/fmc-publishes-final-rule-on-detention-and-demurrage-billing-practices/'),
             ('ENTRY ERRORS', 'Up to 4× the unpaid duty', 'Gross negligence under 19 U.S.C. § 1592 means 4× the underpaid duty — or 40% of dutiable value where no revenue is lost.', 'Source: 19 U.S.C. § 1592', 'https://www.law.cornell.edu/uscode/text/19/1592'),
         ),

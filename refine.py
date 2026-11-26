@@ -17,7 +17,11 @@ def enhance(pages, en=False):
   body=body.replace('本页仅在浏览器中生成简报，不发送、不保存。正式联系入口将在确认后接入。','先在这里整理需求，再复制到邮件中。本表单不发送、不保存输入内容。')
   block='<div class="contact-address"><span class="eyebrow">联系 HARNESSLOOP</span><a href="mailto:contact@harnessloop.ai">contact@harnessloop.ai</a><button class="copychip" type="button" id="copy-email" data-email="contact@harnessloop.ai">复制邮箱</button><p>告诉我们任务是什么、难在哪里，以及怎样才算做好。我们会在 24 小时内回复。请只使用不含敏感信息的示例。</p></div>'
  body=body.replace('<section class="wrap two"', '<div class="wrap">'+block+'</div><section class="wrap two"',1)
- body=body.replace('<p id="copy-status"', '<a class="textlink brief-email" id="email-brief" href="mailto:contact@harnessloop.ai">'+('Open email draft' if en else '打开邮件草稿')+'</a><p class="micro">'+('You review and send the email yourself. Opening your email app does not send it.' if en else '由你检查并发送邮件。打开邮件客户端不会自动发送。')+'</p><p id="copy-status"')
+ # The email draft is the primary next step; copying is the fallback for machines without a mail app.
+ note='You review and send the email yourself. Opening your email app does not send it. No mail app? Copy the brief into your webmail.' if en else '由你检查并发送邮件。打开邮件客户端不会自动发送。没有配置邮件客户端时，可复制简报到网页邮箱。'
+ actions='<div class="hl-brief-actions"><a class="btn brief-email" id="email-brief" href="mailto:contact@harnessloop.ai">'+('Open the email draft' if en else '打开邮件草稿')+'</a><button class="btn secondary" id="copy-brief" type="button">'
+ assert body.count('<button class="btn secondary" id="copy-brief" type="button">')==1 and body.count('<p id="copy-status"')==1
+ body=body.replace('<button class="btn secondary" id="copy-brief" type="button">',actions,1).replace('<p id="copy-status"','</div><p class="micro">'+note+'</p><p id="copy-status"',1)
  pages['contact']=(title,body)
  title,body=pages['data-factory']
  body=body.replace('id="demo-output" aria-live="polite"','id="demo-output" role="tabpanel" aria-labelledby="stage-0" aria-live="polite" tabindex="0"')

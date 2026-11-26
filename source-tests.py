@@ -23,7 +23,7 @@ QUOTES = (
     ('isf', 'home', 'zh', '装船前至少 24 小时申报'),
     ('isf', 'home', 'zh', '$5,000'),
     ('isf', 'home', 'en', 'at least 24 hours before lading'),
-    ('isf', 'home', 'en', '$5,000'),
+    ('isf', 'home', 'en', 'USD 5,000'),
     ('isf', 'demo', 'zh', '装货港代码'),
     ('dd', 'home', 'zh', '30 个日历日'),
     ('dd', 'home', 'en', '30 calendar days'),

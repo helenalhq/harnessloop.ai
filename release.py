@@ -33,8 +33,8 @@ def prepare(body,slug,en):
  body=body.replace('在每次反馈中进化。','以验证驱动持续进化。')
  if slug=='contact':
   # Three short numbered steps read faster than one run-on paragraph; the limits stay visible below them.
-  steps_en=['Fill in the three fields and generate a local brief.','Open the email draft in your email app.','Review it there, then click Send.']
-  steps_zh=['填写三项内容，生成本地简报。','在邮件客户端打开邮件草稿。','检查无误后，在邮件客户端点击发送。']
+  steps_en=['Fill in the fields and generate a local brief.','Open the email draft in your email app.','Review it there, then click Send.']
+  steps_zh=['填写内容，生成本地简报。','在邮件客户端打开邮件草稿。','检查无误后，在邮件客户端点击发送。']
   steps=''.join('<li>'+step+'</li>' for step in (steps_en if en else steps_zh))
   limit=('This website does not submit or send messages. If no email app is configured, copy the brief into your webmail and send it to contact@harnessloop.ai.' if en else '本站不会提交表单或自动发邮件。如未配置邮件客户端，请复制简报到网页邮箱，发送至 contact@harnessloop.ai。')
   explanation=f'<strong>{"Three steps" if en else "如何联系"}</strong><ol>{steps}</ol><span class="notice-note">{limit}</span>'

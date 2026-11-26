@@ -92,7 +92,6 @@ html[lang^="zh"] .hl-biz-hero h1,[lang^="zh"] .hl-biz-hero h1 {letter-spacing:-.
 .hl-contact-brief :is(input,textarea) {background:#fffcf8;border-color:#bfa897}
 .hl-contact-brief .btn {background:#8b3929;color:#fff5eb}
 .hl-contact-brief .btn.secondary {border:1px solid #8b3929;color:#6e2d20;background:#fff8ed}
-.hl-contact-brief .brief-email {color:#7e3526}
 
 @media(max-width:850px) {
   body>header .navlinks {align-items:flex-start;background:#fbf6ed}
@@ -144,3 +143,60 @@ html[lang^="zh"] .hl-biz-hero h1,[lang^="zh"] .hl-biz-hero h1 {letter-spacing:-.
 .sysgrid {grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:850px) {.sysgrid {grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:580px) {.sysgrid {grid-template-columns:minmax(0,1fr);gap:22px}}
+
+/* Questions beside answers, at reading size. */
+.hl-faq-item {display:grid;grid-template-columns:minmax(0,330px) minmax(0,1fr);gap:8px clamp(24px,4vw,64px);align-items:start;margin-bottom:18px}
+.hl-faq-item h2 {font-size:1.25rem;line-height:1.35;letter-spacing:-.01em;margin:0}
+.hl-faq-item p {font-size:1.05rem;line-height:1.7;margin:0;max-width:68ch}
+.hl-faq-more a {display:inline-flex;align-items:center;min-height:44px}
+@media(max-width:850px) {.hl-faq-item {grid-template-columns:minmax(0,1fr)}}
+
+/* The brief's next step: open the draft, or copy as the fallback. */
+.hl-brief-actions {display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.hl-brief-actions .btn {margin-top:0}
+.hl-brief-actions+.micro {margin-top:14px}
+
+/* Comfortable targets and line lengths on every page. */
+.language {display:inline-flex;align-items:center;min-height:44px}
+body>footer {font-size:.9rem}
+body>footer .foot span {display:inline-block;padding-block:9px}
+body>footer .foot a {display:inline-flex;align-items:center;min-height:44px}
+body>header .brand {min-height:44px}
+.hl-pain-source {display:inline-block;padding-bottom:8px}
+main :is(.lead,.notice,.article details p) {max-width:75ch}
+@media(max-width:850px) {
+  :is(.menu,.cycle-controls button) {min-height:44px}
+  .cycle-controls button {min-width:44px}
+}
+/* Phones: nothing a visitor reads is smaller than 16px. */
+@media(max-width:580px) {
+  :is(.box p,.box li,.step p,.sysgrid p,.article p,.notice,.contact-address p,.lead,.sectionhead>p,.service-row p,.card p,.band .lead,.def-gloss,.result-row,.tabs button,.article summary,.form label,.hl-intro,.hl-pain-card>p:not(.hl-pain-index),.notice-steps li) {font-size:16px}
+  :is(.eyebrow,.hl-demo-follow dd,.hl-pain-index) {font-size:.85rem}
+  .hl-faq-item h2 {font-size:1.2rem}
+}
+
+/* Inline links that are the only way to reach something get a full-height target. */
+:is(.hl-biz-text,.hl-pain-source,.hl-sample a,.textlink) {display:inline-block;padding-block:8px}
+:is(.hl-pain-source,.hl-sample a) {padding-block:6px}
+.hl-biz-actions .hl-biz-text {margin-block:-8px}
+.article summary {padding-block:10px;min-height:44px}
+body :is(.hl-demo-acts a,.hl-demo-chip,.hl-demo-btn) {min-height:44px}
+@media(max-width:580px) {
+  :is(.hl-engagement-step p,.hl-showcase-copy li) {font-size:16px}
+  .copychip {font-size:.9rem}
+}
+
+/* Second pass on phones: the last reading text, and the last small targets. */
+@media(max-width:580px) {
+  :is(.micro,.hl-biz-lead,.hl-home-flow p,.hl-demo-lead,.hl-sample-note,.notice-steps .notice-note,.brief) {font-size:1rem}
+  body .hl-demo-act .hl-demo-lead {font-size:1rem}
+  body .hl-demo-final p {font-size:1rem}
+  .hl-home-flow strong {font-size:1rem}
+  .hl-home-card-content :is(p:not(.hl-biz-kicker)) {font-size:1rem}
+  .hl-sample dd {font-size:.95rem}
+  :is(.hl-run-steps,.hl-deliverables) p {font-size:1rem}
+  body :is(.hl-demo-log td,.hl-demo-note,.hl-demo-banner) {font-size:.9rem}
+  :is(.hl-biz-kicker,.hl-kicker) {font-size:.85rem}
+}
+.language {min-width:44px;justify-content:center}
+:is(.copychip,.hl-home-proof summary,.hl-pain-source,.hl-sample a,.textlink) {min-height:44px}

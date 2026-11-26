@@ -30,9 +30,9 @@ def extend(pages,lang):
  en=lang=='en'
  title='Questions & answers' if en else '常见问题'
  body='<div class="wrap subhero"><span class="eyebrow">'+('GUIDE' if en else '概念与合作指南')+'</span><h1>'+title+'</h1><p class="lead">'+('Local operation, data boundaries, filing compliance, pricing and delivery: how an engagement works.' if en else '本地运行、数据边界、申报合规、收费与交付：关于合作方式的常见问题。')+'</p></div><section class="wrap">'
- for q,a in FAQ[lang]:body+='<article class="box" style="margin-bottom:24px"><h2>'+escape(q)+'</h2><p>'+escape(a)+'</p></article>'
+ for q,a in FAQ[lang]:body+='<article class="box hl-faq-item"><h2>'+escape(q)+'</h2><p>'+escape(a)+'</p></article>'
  base='/en/' if en else '/'
- body+='<p><a href="'+base+'how-it-works/">'+('Explore our approach' if en else '了解工作原理')+'</a> · <a href="'+base+'data-factory/">'+('See the synthetic data-factory demonstration' if en else '查看数据工厂合成演示')+'</a></p></section>'
+ body+='<p class="hl-faq-more"><a href="'+base+'how-it-works/">'+('Explore our approach' if en else '了解工作原理')+'</a> · <a href="'+base+'data-factory/">'+('See the synthetic data-factory demonstration' if en else '查看数据工厂合成演示')+'</a></p></section>'
  pages['faq']=(title,body)
  title,body=pages[''];pages['']=(('Local AI for Freight Forwarding & Customs' if en else '货代与报关的本地 AI 助手'),body)
  title,body=pages['how-it-works'];pages['how-it-works']=(('How an AI Agent Harness Works' if en else 'AI Agent Harness 工作原理与双闭环'),body)

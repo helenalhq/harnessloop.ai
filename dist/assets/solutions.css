@@ -25,9 +25,10 @@
 .hl-kicker {display:flex;align-items:center;gap:10px;font-size:.75rem;font-weight:700;letter-spacing:.085em;color:var(--hl-rust)}
 .hl-hero-kicker {color:#f0a181;margin-bottom:18px}
 .hl-hero-kicker:before {content:"";width:28px;height:1px;background:#df9679}
-.hl-solutions-hero h1 {font-size:clamp(1.3rem,2.25vw,1.85rem);font-weight:600;color:#efd5c4;letter-spacing:-.025em;margin-bottom:15px}
-.hl-promise {font-size:clamp(2.15rem,4.65vw,4.8rem);font-weight:700;letter-spacing:-.045em;line-height:1.05;text-wrap:balance;max-width:19ch}
-html[lang^="zh"] .hl-promise,[lang^="zh"] .hl-promise {letter-spacing:-.035em;line-height:1.2;max-width:14em}
+.hl-solutions-hero h1 {font-size:clamp(2.3rem,4.8vw,4.1rem);font-weight:700;color:#fff4e7;letter-spacing:-.04em;line-height:1.04;margin-bottom:18px;text-wrap:balance}
+.hl-promise {font-size:clamp(1.25rem,1.9vw,1.65rem);font-weight:400;line-height:1.45;color:#f0ddd1;max-width:44ch}
+html[lang^="zh"] .hl-promise,[lang^="zh"] .hl-promise {letter-spacing:0;line-height:1.6;max-width:40em}
+html[lang^="zh"] .hl-solutions-hero h1,[lang^="zh"] .hl-solutions-hero h1 {letter-spacing:-.03em;line-height:1.14}
 .hl-intro {max-width:57ch;color:#efdbcf;font-size:clamp(.96rem,1.35vw,1.13rem);line-height:1.65;margin-top:23px}
 .hl-actions {display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:30px}
 .hl-action {display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 17px;min-height:48px;font-weight:700;font-size:.9rem;border-radius:6px;border:1px solid transparent;line-height:1.25;text-decoration:none}
@@ -89,7 +90,7 @@ html[lang^="zh"] .hl-promise,[lang^="zh"] .hl-promise {letter-spacing:-.035em;li
 @media(max-width:850px) {
   .hl-hero-grid,.hl-showcase-pair {grid-template-columns:minmax(0,1fr);gap:27px}
   .hl-hero-grid {padding-block:54px}
-  .hl-promise {font-size:clamp(2.1rem,7.4vw,3.7rem)}
+  .hl-promise {font-size:1.2rem}
   .hl-showcase--medical :is(.hl-showcase-copy,.hl-showcase-image) {grid-row:auto;grid-column:auto}
   .hl-showcase-image,.hl-workflow {width:min(100%,630px)}
   .hl-run-steps {grid-template-columns:1fr;gap:12px}
