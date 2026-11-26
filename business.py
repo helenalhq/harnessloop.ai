@@ -29,6 +29,11 @@ COPY = {
             ('货运代理', '货代智能客服助手', '少翻系统，少漏重要跟进。一次看清变化、待确认项和可复核的回复草稿——每个动作留时间戳与出处，账单有争议时，记录就是证据。','查看示例跟进卡','港口集装箱和起重机'),
             ('医学研究与情报', '医学文献及情报管理助手', '不只知道有新文献，还看得出证据可能改变什么，并能沿出处核对。研究人员决定是否更新简报。','查看示例证据提示','桌上的研究资料与阅读笔记'),
         ),
+        'video_kicker': '看它怎么工作',
+        'video_title': '55 秒，看一个早晨怎么过。',
+        'video_label': 'HarnessLoop 演示视频（中文，55 秒）',
+        'video_note': '动画演示，含配音；使用合成数据，不含真实货物。',
+        'video_link': '在 GitHub 上打开',
         'proof': '我们的工作方法',
         'method': '先看结果，再决定要不要扩大范围。',
         'method_detail': '用约定样本验证输出是否有出处、未知是否被标出、复核交接是否可用。不把演示当客户成果。',
@@ -73,6 +78,11 @@ COPY = {
             ('Freight forwarding', 'Freight Forwarding Customer Service Assistant', 'Spend less time switching between systems and miss fewer follow-ups. See what changed, what to check and what reply is ready for review — every action keeps a timestamp and its source, so when a bill is disputed, your record is your evidence.','See a sample follow-up card','Container cranes and stacks at a freight terminal'),
             ('Medical research and intelligence', 'Medical Literature & Intelligence Assistant', 'Go beyond new-paper alerts. See what evidence may change, trace it to its source, and let researchers decide whether to update the brief.','See a sample evidence alert','Research papers and reading notes on a desk'),
         ),
+        'video_kicker': 'WATCH IT WORK',
+        'video_title': 'One morning, in 55 seconds.',
+        'video_label': 'HarnessLoop demo video (English, 55 seconds)',
+        'video_note': 'Animated walkthrough with voice-over, using synthetic data (no real shipments).',
+        'video_link': 'Open on GitHub',
         'proof': 'HOW WE WORK',
         'method': 'Check the result before expanding the scope.',
         'method_detail': 'Use agreed examples to verify sources, uncertainty flags and review handoffs. A demonstration is not a customer result.',
@@ -92,6 +102,11 @@ COPY = {
         ),
     },
 }
+
+
+# The walkthrough videos are public release assets of the HarnessLoop media repository.
+VIDEO_RELEASE = 'https://github.com/helenalhq/media/releases/tag/v1.0'
+VIDEO = {lang: f'https://github.com/helenalhq/media/releases/download/v1.0/demo-55s-{lang}.mp4' for lang in ('zh', 'en')}
 
 
 def home_body(lang):
@@ -120,6 +135,13 @@ def home_body(lang):
         </article>''')
     industries = ''.join(cards)
     demonstration = system(lang == 'en')
+    # Nothing is downloaded from GitHub until the visitor presses play.
+    video = f'''<section class="wrap hl-home-video" id="hl-home-video" aria-labelledby="hl-home-video-title">
+        <p class="hl-biz-kicker">{escape(c['video_kicker'])}</p><h2 id="hl-home-video-title">{escape(c['video_title'])}</h2>
+        <div class="hl-video-frame"><video controls playsinline preload="none" width="1920" height="1080" poster="/assets/demo-poster-{lang}.webp" aria-label="{escape(c['video_label'])}"><source src="{VIDEO[lang]}" type="video/mp4">{escape(c['video_link'])}</video></div>
+        <p class="hl-video-note">{escape(c['video_note'])} <a href="{VIDEO_RELEASE}" target="_blank" rel="noopener noreferrer">{escape(c['video_link'])} <span aria-hidden="true">→</span></a></p>
+      </section>
+'''
     return f'''<div class="hl-business hl-home">
       <section class="hl-biz-hero" aria-labelledby="hl-home-title">
         <div class="wrap hl-biz-hero-grid"><div>
@@ -134,6 +156,7 @@ def home_body(lang):
         <p class="hl-biz-kicker">{escape(c['pains_kicker'])}</p><h2 id="hl-home-pains-title">{escape(c['pains_title'])}</h2>
         <div class="hl-pain-cards">{pains}</div>
       </section>
+      {video}
       <section class="wrap hl-home-solutions" id="hl-home-solutions" aria-labelledby="hl-home-examples-title">
         <p class="hl-biz-kicker">{escape(c['sector'])}</p><h2 id="hl-home-examples-title">{escape(c['examples'])}</h2>
         <div class="hl-home-cards">{industries}</div>

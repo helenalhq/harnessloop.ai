@@ -62,6 +62,8 @@ BANNED_PATTERNS = (
 OTHER_EXTERNAL = {
     'https://vercel.com/legal/privacy-policy': 'hosting privacy notice linked from the privacy page',
     'https://github.com/rsi-gear/gear': 'research reference, labelled as not a partnership',
+    # Home-page walkthrough video: our own public release asset. Keep public, or the player breaks.
+    'https://github.com/helenalhq/media/releases/tag/v1.0': 'HarnessLoop demo video, described as synthetic',
 }
 
 

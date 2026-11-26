@@ -59,6 +59,15 @@ for (const [base, homePath, homePromise, contactPromise] of [
     assert.ok(home.includes('href="'+base+'solutions/#hl-sample-'+id+'"'));
   }
   assert.ok(home.includes('data-evolution'), 'Optional legacy demonstration remains available');
+  // The walkthrough video streams from GitHub only on play; its poster is ours.
+  const video=home.match(/<video ([^>]*)><source src="([^"]+)" type="video\/mp4">/);
+  assert.ok(video,'Home page needs the walkthrough video');
+  assert.equal(video[2],'https://github.com/helenalhq/media/releases/download/v1.0/demo-55s-'+(base==='/en/'?'en':'zh')+'.mp4');
+  for(const attr of ['controls','playsinline','preload="none"']) assert.ok(video[1].includes(attr),'Video must stay user-initiated: '+attr);
+  assert.doesNotMatch(video[1],/autoplay|muted/,'The video has a voice-over and starts only on request');
+  const poster=video[1].match(/poster="(\/[^"]+)"/);assert.ok(existsSync('dist'+poster[1]),'Video poster must ship with the site');
+  assert.ok(home.includes('href="https://github.com/helenalhq/media/releases/tag/v1.0" target="_blank" rel="noopener noreferrer"'),'Offer the GitHub copy as fallback');
+  assert.ok(/合成数据|synthetic data/.test(home),'The video uses synthetic data and must say so');
   assert.ok(home.includes('class="hl-nav-contact" href="'+base+'contact/"'));
   const contact=readFileSync('dist'+base+'contact/index.html','utf8');
   assert.ok(contact.includes(contactPromise));
@@ -88,6 +97,7 @@ for(const lang of ['', 'en/']) {
 assert.match(app,/encodeURIComponent/);assert.ok(!app.includes("state:'good'"));console.log('PASS: bilingual mailto, local email draft, tab relationships, no unverified success status.');
 
 const config=JSON.parse(readFileSync('vercel.json','utf8'));assert.ok(config.redirects.some(r=>r.source==='/'&&r.destination==='/en/'));
+assert.match(config.headers[0].headers.find(h=>h.key==='Content-Security-Policy').value,/media-src https:\/\/github\.com /,'Only GitHub media is allowed through the CSP');
 assert.match(readFileSync('dist/zh/index.html','utf8'),/canonical" href="https:\/\/harnessloop.ai\/zh\/"/);
 assert.match(readFileSync('dist/en/contact/index.html','utf8'),/Review it there, then click Send\./);
 assert.match(readFileSync('dist/contact/index.html','utf8'),/本站不会提交表单或自动发邮件/);

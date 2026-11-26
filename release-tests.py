@@ -9,6 +9,8 @@ with tempfile.TemporaryDirectory() as tmp:
   subprocess.run(['python3','build.py'],cwd=p,env=clean,check=True)
   contact=(p/'dist/contact/index.html').read_text()
   assert '<form' not in contact, 'Local brief must not have native form submission fallback'
+  privacy=(p/'dist/en/privacy/index.html').read_text()+(p/'dist/privacy/index.html').read_text()
+  assert 'GitHub' in privacy and 'GitHub' in (p/'dist/en/index.html').read_text(), 'The GitHub-hosted video must be disclosed where it is used'
   home=(p/'dist/index.html').read_text()
   assert ('name="robots" content="index,follow"' in home)==expected, f'Wrong indexing policy: {env}'
   assert ('Disallow: /' in (p/'dist/robots.txt').read_text()) != expected
