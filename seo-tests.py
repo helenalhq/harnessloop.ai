@@ -9,6 +9,11 @@ for lang in ('zh','en'):
   ld=json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>',text).group(1))
   assert len(ld['@graph'])==3
   assert 'og:image' in text and 'summary_large_image' in text
+  # The browser tab, the social preview and the structured data must all carry the same page title.
+  title=re.search(r'<title>(.*?)</title>',text).group(1)
+  assert f'<meta property="og:title" content="{title}">' in text, f'{p}: og:title differs from <title>'
+  assert f'<meta name="twitter:title" content="{title}">' in text
+  assert all(node.get('name')==title.replace('&amp;','&') for node in ld['@graph'] if node['@type'] in ('WebPage','FAQPage')), f'{p}: structured-data name differs from <title>'
  html=(base/'faq/index.html').read_text()
  graph=json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>',html).group(1))['@graph']
  assert graph[-1]['@type']=='FAQPage'

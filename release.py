@@ -14,6 +14,17 @@ DESCRIPTIONS={
  'contact':['联系 HarnessLoop，讨论业务任务与验收标准。使用本地简报工具整理需求，再由你选择是否发送邮件。','Discuss your business task and acceptance criteria with HarnessLoop. Prepare a brief locally and choose whether to email it.'],
  'faq':['关于本地运行、数据边界、申报合规、收费与交付的常见问题。','Local operation, data boundaries, filing compliance, pricing and delivery: questions and answers.'],
  'privacy':['了解 HarnessLoop 网站的本地简报、语言偏好、托管访问日志与邮件联系的数据处理范围。','Learn about local briefs, language preferences, hosting access logs and email contact on the HarnessLoop website.']}
+# Search-result titles, [Chinese, English]. They name the page's subject, not only its nav label.
+TITLES={
+ '':['货代与报关的本地 AI 助手','Local AI for Freight Forwarding & Customs'],
+ 'demo':['交互演示：晨报、审批与留痕','Interactive Demo: Brief, Approval, Audit Trail'],
+ 'solutions':['货代与医学文献 AI 助手示例','Examples: Freight & Medical Literature AI Assistants'],
+ 'how-it-works':['工作原理：运行环与改进环','How It Works: Run Loop and Improvement Loop'],
+ 'data-factory':['数据与知识工厂：合成示例演示','Data & Knowledge Factory: A Synthetic Walkthrough'],
+ 'research':['实践笔记：设计方法与证据','Field Notes: Design Methods and Evidence'],
+ 'contact':['联系合作','Contact HarnessLoop'],
+ 'privacy':['隐私说明','Privacy Notice'],
+ 'faq':['常见问题：本地运行、收费与交付','FAQ: Local Operation, Pricing and Delivery']}
 def privacy(en):
  if en:return '''<div class="wrap subhero"><span class="eyebrow">PRIVACY</span><h1>Your information, in context.</h1><p class="micro">Updated 15 November 2026</p><h2>What this website does</h2><p class="lead">HarnessLoop is an informational website with synthetic demonstrations. It has no user accounts, payment processing or file uploads. Service scope and data handling for a client project are agreed separately before any project data is provided.</p><h2>A brief stays in your browser</h2><p>The brief tool generates text in the current page. It does not submit your input to a server, save it in cookies or local storage, or retain it after refresh or a language switch. Copying uses your browser clipboard. The email link opens your mail application with a draft; you decide whether to send it.</p><h2>Local storage and hosting</h2><p>This website stores nothing in your browser: no cookies and no local storage. Chinese and English pages have stable URLs; use the language link in the header to switch, and in-site links keep your language. This website does not include analytics trackers, advertising scripts, third-party fonts or an external form service. Hosting providers may process network and request information to serve and secure the website. For Vercel’s practices, see <a href="https://vercel.com/legal/privacy-policy" rel="noopener noreferrer" target="_blank">Vercel’s privacy notice</a>.</p><h2>When you email</h2><p>Messages you choose to send to contact@harnessloop.ai pass through email providers and are available to the recipient to review and respond to your enquiry. Email is separate from the local brief tool. Please do not send medical records, personal sensitive information, credentials or confidential client data. Agree a suitable data-sharing process before supplying project materials.</p><h2>Questions and requests</h2><p>For questions about this website or information you have sent, contact <a href="mailto:contact@harnessloop.ai">contact@harnessloop.ai</a>. Include only the information needed to identify your enquiry.</p></div>'''
  return '''<div class="wrap subhero"><span class="eyebrow">隐私说明</span><h1>清楚说明，<br>信息在哪里处理。</h1><p class="micro">更新于 2026 年 11 月 15 日</p><h2>本站的范围</h2><p class="lead">HarnessLoop 是业务介绍与合成演示网站，不提供用户账号、支付或文件上传。客户项目的服务范围与数据处理方式，应在提供项目数据前另行约定。</p><h2>简报只在浏览器中生成</h2><p>简报工具在当前页面中生成文字，不向服务器提交输入，不写入 Cookie 或本地存储，刷新或切换语言后不保留。复制功能使用浏览器剪贴板。邮件链接会在邮件客户端中打开草稿，是否发送由你决定。</p><h2>本地存储与托管</h2><p>本站不在你的浏览器中保存任何数据：没有 Cookie，也没有本地存储。中英文页面各有固定网址，通过页首语言链接切换，站内链接会保持你的语言。本站没有接入分析追踪、广告脚本、第三方字体或外部表单服务。托管服务商可能为提供网站和保障安全处理网络及访问请求信息。Vercel 的处理方式见其<a href="https://vercel.com/legal/privacy-policy" rel="noopener noreferrer" target="_blank">隐私说明</a>。</p><h2>当你主动发送邮件</h2><p>主动发送到 contact@harnessloop.ai 的邮件会经过邮件服务商处理，收件方可阅读并用于了解和回复你的咨询。这与本地简报工具是不同的处理过程。请勿发送病历、个人敏感信息、密码或客户机密；提供项目资料前，请先约定适当的数据交换方式。</p><h2>问题与请求</h2><p>如对本站或已发送的信息有疑问，请联系 <a href="mailto:contact@harnessloop.ai">contact@harnessloop.ai</a>，仅提供定位咨询所需的信息。</p></div>'''
@@ -21,14 +32,18 @@ def prepare(body,slug,en):
  if slug=='privacy':return privacy(en)
  body=body.replace('在每次反馈中进化。','以验证驱动持续进化。')
  if slug=='contact':
-  explanation=('1. Fill in the fields and generate a local brief. 2. Open an email draft in your email app. 3. Review it and click Send there. This website does not submit or send messages. If no email app is configured, copy the brief into your webmail and send it to contact@harnessloop.ai.' if en else '1. 填写内容并生成本地简报。2. 在邮件客户端打开邮件草稿。3. 检查后在邮件客户端点击发送。本站不会提交表单或自动发邮件。如未配置邮件客户端，请复制简报到网页邮箱，发送至 contact@harnessloop.ai。')
-  body=body.replace('<div class="box"><h3>', '<div class="box"><p class="notice">'+explanation+'</p><h3>',1)
+  # Three short numbered steps read faster than one run-on paragraph; the limits stay visible below them.
+  steps_en=['Fill in the three fields and generate a local brief.','Open the email draft in your email app.','Review it there, then click Send.']
+  steps_zh=['填写三项内容，生成本地简报。','在邮件客户端打开邮件草稿。','检查无误后，在邮件客户端点击发送。']
+  steps=''.join('<li>'+step+'</li>' for step in (steps_en if en else steps_zh))
+  limit=('This website does not submit or send messages. If no email app is configured, copy the brief into your webmail and send it to contact@harnessloop.ai.' if en else '本站不会提交表单或自动发邮件。如未配置邮件客户端，请复制简报到网页邮箱，发送至 contact@harnessloop.ai。')
+  explanation=f'<strong>{"How it works" if en else "如何联系"}</strong><ol>{steps}</ol><span class="notice-note">{limit}</span>'
+  body=body.replace('<div class="box"><h3>', '<div class="box"><div class="notice notice-steps">'+explanation+'</div><h3>',1)
   body=body.replace('<form class="form" id="brief-form">','<div class="form" id="brief-form" role="group" aria-label="'+('Local brief tool' if en else '本地简报工具')+'">').replace('</form>','</div>')
   body=body.replace('type="submit"','type="button" id="generate-brief"')
   body=body.replace('name="task"','name="task" autocomplete="off"').replace('name="pain"','name="pain" autocomplete="off"').replace('name="criteria"','name="criteria" autocomplete="off"')
   body+='<noscript><p class="wrap notice">'+('JavaScript is unavailable. The brief tool is disabled; use the email address above to contact us. Nothing entered here is submitted.' if en else 'JavaScript 不可用，简报工具无法运行。请使用上方邮箱联系；这里填写的内容不会提交。')+'</p></noscript>'
  if slug=='data-factory':
-  body=body.replace('id="demo-output"','id="demo-output"')
   body+='<noscript><p class="wrap notice">'+('Static example: the source says “15 business days”, but the baseline extracts “15 days”. A candidate keeps the original unit; independent validation is still required.' if en else '静态示例：原文为“15 个工作日”，基线误提取为“15 天”。候选版本保留原始单位，但仍需独立验证。')+'</p></noscript>'
  return body
 

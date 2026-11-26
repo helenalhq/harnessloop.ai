@@ -50,7 +50,7 @@ COPY = {
         'src_label': '出处',
         'isf': {
             'title': 'ISF 申报倒计时（合成示例）',
-            'rows': (('船名', 'VESSEL XX'), ('预计装船', '11 月 26 日'), ('申报截止', '装船前 24 小时'), ('状态', '待补文件 · 未申报')),
+            'rows': (('船名', 'VESSEL ZZ'), ('预计装船', '11 月 26 日'), ('申报截止', '装船前 24 小时'), ('状态', '待补文件 · 未申报')),
             'note': '合成示例：非实时运行。ISF 须经 ABI/ACE 电子申报（美国海关与边境保护局要求）；我们做草拟、核对与期限看护，不代做申报。',
             'src': '19 CFR § 113.62',
         },
@@ -102,7 +102,7 @@ COPY = {
         'src_label': 'Source',
         'isf': {
             'title': 'ISF countdown (synthetic example)',
-            'rows': (('Vessel', 'VESSEL XX'), ('Est. lading', 'NOV 26'), ('Filing deadline', '24 hours before lading'), ('Status', 'Documents pending · not filed')),
+            'rows': (('Vessel', 'VESSEL ZZ'), ('Est. lading', 'NOV 26'), ('Filing deadline', '24 hours before lading'), ('Status', 'Documents pending · not filed')),
             'note': 'Synthetic example: not a live run. ISF must be filed electronically via ABI/ACE (per U.S. CBP). We draft, check and watch deadlines; we do not file.',
             'src': '19 CFR § 113.62',
         },

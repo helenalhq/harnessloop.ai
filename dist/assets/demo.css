@@ -146,6 +146,30 @@ a.hl-demo-chip:hover { border-color: #b58a76; color: #5d271d; }
   .hl-demo-ship .hl-demo-chip { grid-column: 2; justify-self: start; }
 }
 @media (max-width: 540px) {
-  .hl-demo-stats { grid-template-columns: 1fr; }
+  .hl-demo-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hl-demo-stats div { padding: 11px 12px; }
+  .hl-demo-stats b { font-size: 1.2rem; }
+  .hl-demo-stats span { font-size: .72rem; }
   .hl-demo-draft-fields div { grid-template-columns: 1fr; gap: 1px; }
+  /* Four columns do not fit a phone; each record becomes a card so the action column
+     is never hidden behind a horizontal scroll. */
+  .hl-demo-log { min-width: 0; }
+  .hl-demo-log thead {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap;
+  }
+  .hl-demo-log tr {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 3px 12px;
+    padding: 11px 14px; border-top: 1px solid #efe3d5;
+  }
+  .hl-demo-log tbody tr:first-child { border-top: 0; }
+  .hl-demo-log td { border: 0; padding: 0; }
+  .hl-demo-log td:nth-child(1) { grid-column: 1; grid-row: 1; }
+  .hl-demo-log td:nth-child(2) { grid-column: 1; grid-row: 2; }
+  .hl-demo-log td:nth-child(3) {
+    grid-column: 2; grid-row: 1 / 3; align-self: start;
+    border: 1px solid #d9bfae; border-radius: 999px; padding: 1px 9px;
+    font-size: .72rem; font-weight: 700; color: #7a3b2a; white-space: nowrap;
+  }
+  .hl-demo-log td:nth-child(4) { grid-column: 1 / -1; grid-row: 3; color: var(--ink); font-weight: 600; }
 }

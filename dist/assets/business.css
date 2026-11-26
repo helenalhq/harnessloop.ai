@@ -84,6 +84,7 @@ html[lang^="zh"] .hl-biz-hero h1,[lang^="zh"] .hl-biz-hero h1 {letter-spacing:-.
 .hl-engagement-step p {color:var(--muted);font-size:.93rem;line-height:1.5}
 .hl-contact .contact-address {background:#f3e7dc;border-color:#bd8b75;margin-top:18px}
 .hl-contact .contact-address a {color:#8b3929;overflow-wrap:anywhere}
+.hl-contact .contact-address>a {font-size:clamp(24px,4.6vw,42px);letter-spacing:-.02em}
 .hl-contact-brief {min-width:0;border-radius:9px;box-shadow:0 12px 39px #4b2e1c12}
 .hl-contact-brief h3 {margin-top:12px}
 .hl-contact-brief p {margin-block:10px;line-height:1.53}
@@ -126,3 +127,15 @@ html[lang^="zh"] .hl-biz-hero h1,[lang^="zh"] .hl-biz-hero h1 {letter-spacing:-.
 .hl-pain-source:hover {color:#5d271d}
 .foot-pricing {color:#f0c9b7;font-size:.86rem;line-height:1.5}
 @media(max-width:850px) {.hl-pain-cards {grid-template-columns:minmax(0,1fr)}}
+/* Legacy pages reuse the first palette. Keep their bands in the warm business palette. */
+.light { background: #f1e6da; border-color: #dfd2c2 }
+.contact-address .copychip {
+  border: 1px solid #a9896f; border-radius: 5px; background: transparent; color: #5d2f22;
+  font: inherit; font-size: .84rem; font-weight: 700; padding: 9px 14px; margin: 6px 0 0; min-height: 42px;
+}
+.contact-address .copychip:hover { border-color: #5d2f22; color: #3d1c13; background: #ffffff66 }
+/* Contact steps: three short lines, then the limits. */
+.notice-steps strong {font-size:.86rem}
+.notice-steps ol {margin:6px 0 0;padding:0 0 0 1.35em;list-style:decimal;display:grid;gap:3px}
+.notice-steps li {font-size:.86rem;line-height:1.55}
+.notice-steps .notice-note {display:block;margin-top:8px;padding-top:8px;border-top:1px solid #d9bfae;font-size:.8rem;line-height:1.55}

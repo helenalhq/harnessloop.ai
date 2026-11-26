@@ -15,16 +15,16 @@ def _ships(en):
             ('warn', 'BK-20415 · Invoice #D-1104', 'D&amp;D dispute window — 12 days left; 5 records archived', 'FMC final rule', fmc),
             ('warn', 'BK-20431', 'Customer asks for the ETD — date unconfirmed; a reply draft waits for your review', 'Unknown flagged, not guessed', None),
             ('ok', 'BK-20388', 'Document check — 14 fields aligned to their source lines; no anomalies', 'Checked', None),
-            ('warn', 'BK-20375', 'Duty pre-classification — suggestion ready; confirm to archive', 'Human review', None),
-            ('ok', 'BK-20361', 'Customer billing question — reply drafted, awaiting approval', 'Draft pending', None),
+            ('ok', 'BK-20375', 'Duty pre-classification — suggestion reviewed and archived; nothing to do', 'Archived', None),
+            ('ok', 'BK-20361', 'Booking confirmation — space confirmed; documents complete', 'Confirmed', None),
         )
     return (
         ('alert', 'VESSEL ZZ · PO-11892', 'ISF 申报 — 距截止 4 小时 20 分，缺 2 项：收货人税号、装货港代码', '19 CFR § 113.62', ecfr),
         ('warn', 'BK-20415 · 账单 #D-1104', '滞期费与滞箱费争议窗口 — 还剩 12 天，已归档 5 份往来记录', 'FMC 最终规则', fmc),
         ('warn', 'BK-20431', '客户催问预计开船时间 — 日期未确认，回复草稿已生成，等你审批', '不猜测 · 标出未知', None),
         ('ok', 'BK-20388', '单据核对 — 14 个字段已对齐来源行，无异常', '已核对', None),
-        ('warn', 'BK-20375', '关税预归类 — 建议已生成，确认后归档', '待人工复核', None),
-        ('ok', 'BK-20361', '客户账单疑问 — 回复草稿已生成，待审批', '草稿待审批', None),
+        ('ok', 'BK-20375', '关税预归类 — 建议已复核并归档，无需跟进', '已归档', None),
+        ('ok', 'BK-20361', '订舱确认 — 舱位已确认，资料齐全', '已确认', None),
     )
 
 
@@ -39,7 +39,7 @@ def add_demo(pages, lang):
         lead = 'Act one: a morning brief lays out six items and their anomalies at a glance. Act two: a reply draft with an unconfirmed date — approve, edit or reject, it is your click. Act three: the four-part record every action leaves behind. Read-only, no backend, no data collection.'
         acts = (('01', 'Brief'), ('02', 'Follow-up'), ('03', 'Audit trail'))
         a1 = ('ACT ONE · THE MORNING BRIEF', 'Every morning, the anomalies surface.',
-              'The daily brief lays out status, anomalies and sources at a glance. Every row below is synthetic; the red and amber dots are the ones that need your eye.')
+              'The daily brief lays out status, anomalies and sources at a glance. The red and amber rows are the three anomalies; only BK-20431 has a draft waiting for you.')
         a2 = ('ACT TWO · THE FOLLOW-UP CARD', 'Ready to send? You decide.',
               'The customer asks for an estimated departure and the date is not confirmed. The assistant drafts the reply — and does not send it. Approve, edit or reject: your click.')
         a3 = ('ACT THREE · THE AUDIT TRAIL', 'Every action leaves a four-part record.',
@@ -47,7 +47,7 @@ def add_demo(pages, lang):
         brief_mast = ('Morning brief · Synthetic example', 'NO. 004')
         brief_meta = ('Wednesday, 25 November 2026', 'Runs locally; data never leaves your device')
         stats = (('6', 'items summarized'), ('3', 'anomalies flagged'), ('1', 'draft awaiting approval'))
-        a1_note = 'Even the green rows keep their sources — every line opens into a checkable record.'
+        a1_note = 'The green rows keep their sources too. Here they are static rows; in a live brief, every row opens to show its source and the original passage.'
         a2_head = ('Follow-up card · BK-20431', 'Date unconfirmed')
         draft_label = 'Draft email · Not sent'
         draft_rows = (('From', 'You (not sent)'), ('To', 'shipper@example.com'), ('Subject', 'Re: BK-20431 estimated departure'))
@@ -71,7 +71,7 @@ def add_demo(pages, lang):
         lead = '第一幕：晨报把 6 项状态和异常一次性摆出来。第二幕：一封日期未确认的回复草稿，批准、编辑或拒绝由你点。第三幕：每个动作留下的四元组记录。全程只读、无后端、不收集数据。'
         acts = (('01', '晨报'), ('02', '跟进卡'), ('03', '留痕'))
         a1 = ('第一幕 · 晨报', '一早，异常自己浮出来。',
-              '每天生成的晨报把状态、异常和来源一次性摆出来。下面每一行都是合成数据；红点与黄点就是需要你看一眼的地方。')
+              '每天生成的晨报把状态、异常和来源一次性摆出来。红色与黄色的三行就是那 3 处异常；只有 BK-20431 有一封草稿等你审批。')
         a2 = ('第二幕 · 跟进卡', '要发出去吗？你说了算。',
               '客户催问预计开船时间，而日期还没确认。助手写好草稿，但不发送——批准、编辑还是拒绝，由你点。')
         a3 = ('第三幕 · 留痕', '每个动作，留下四元组记录。',
@@ -79,7 +79,7 @@ def add_demo(pages, lang):
         brief_mast = ('晨报 · 合成示例', 'NO. 004')
         brief_meta = ('2026 年 11 月 25 日 · 星期三', '本地运行，数据未离开你的设备')
         stats = (('6 项', '状态汇总'), ('3 处', '异常标记'), ('1 封', '草稿待审批'))
-        a1_note = '绿色行同样保留出处——每一行都能展开成一条可核查的记录。'
+        a1_note = '绿色行同样保留出处。演示里它们是静态行；真实晨报中，每一行都可以点开，看到出处与原文位置。'
         a2_head = ('跟进卡 · BK-20431', '日期未确认')
         draft_label = '草稿邮件 · 未发送'
         draft_rows = (('发件人', '你（未发送）'), ('收件人', 'shipper@example.com'), ('主题', 'Re: BK-20431 预计开船时间'))
@@ -97,6 +97,8 @@ def add_demo(pages, lang):
         exit_text = '讨论你的业务场景'
         cta = '讨论你的业务场景'
 
+    # The three flagged rows are exactly the three anomalies and the single draft in the
+    # stats above; keep the counts, the dots and the seed audit rows in step.
     ships = ''.join(
         f'''<div class="hl-demo-ship"><span class="dot dot--{status}" aria-hidden="true"></span><div><strong>{label}</strong><p>{detail}</p></div>{f'<a class="hl-demo-chip" href="{url}" target="_blank" rel="noopener noreferrer">{chip} <span aria-hidden="true">→</span></a>' if url else f'<span class="hl-demo-chip">{chip}</span>'}</div>'''
         for status, label, detail, chip, url in _ships(en)

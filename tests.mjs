@@ -89,7 +89,7 @@ assert.match(app,/encodeURIComponent/);assert.ok(!app.includes("state:'good'"));
 
 const config=JSON.parse(readFileSync('vercel.json','utf8'));assert.ok(config.redirects.some(r=>r.source==='/'&&r.destination==='/en/'));
 assert.match(readFileSync('dist/zh/index.html','utf8'),/canonical" href="https:\/\/harnessloop.ai\/zh\/"/);
-assert.match(readFileSync('dist/en/contact/index.html','utf8'),/click Send there/);
+assert.match(readFileSync('dist/en/contact/index.html','utf8'),/Review it there, then click Send\./);
 assert.match(readFileSync('dist/contact/index.html','utf8'),/本站不会提交表单或自动发邮件/);
 
 // Three-act interactive demo: synthetic banner, three acts, approval buttons, audit trail, client-side-only script.
@@ -112,6 +112,11 @@ for (const [path, banner, heading, approve, headers, contactPath] of [
   assert.ok(html.includes('/assets/demo.css') && html.includes('/assets/demo.js'), 'Demo assets must be wired in');
   assert.doesNotMatch(html, /<form|type="submit"/);
   assert.ok(html.includes('19 CFR § 113.62') && html.includes('shipper@example.com'), 'Synthetic brief and draft must be present');
+  // The brief's headline counts must match the rows a visitor can count: 3 anomalies, 1 draft awaiting approval.
+  assert.match(html, /<div class="hl-demo-stats"><div><b>6/, 'The brief summarizes six items');
+  assert.equal((html.match(/<span class="dot dot--(alert|warn)"/g) || []).length, 3, 'Exactly three rows may carry an anomaly dot: the stats say 3');
+  assert.equal((html.match(/<span class="dot dot--ok"/g) || []).length, 3, 'The remaining three rows are normal');
+  assert.equal((html.match(/<strong>BK-\d+<\/strong><p>[^<]*(草稿|draft)/g) || []).length, 1, 'Only one row offers a draft: the stats say 1');
 }
 const demoJs=readFileSync('dist/assets/demo.js','utf8');
 assert.ok(!/fetch\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage/.test(demoJs),'Demo must stay client-side with no storage');
