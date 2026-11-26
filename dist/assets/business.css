@@ -320,7 +320,7 @@ body :is(.tabs button,.cycle-controls button) {min-height:44px;min-width:44px}
 .hl-approach-loops {padding:24px 0 clamp(55px,7vw,88px)}
 .hl-approach-loop-head h2 {max-width:23ch;margin:14px 0 18px;font-size:clamp(30px,3.6vw,48px);line-height:1.15;letter-spacing:-.035em;text-wrap:balance}
 .hl-approach-loop-head .lead {max-width:65ch}
-.hl-dual-loop {margin:32px 0 0;border:1px solid #d8c4b3;border-radius:14px;overflow:hidden;background:#f7eee4;box-shadow:0 20px 60px #4327180d}
+.hl-dual-loop {margin:32px auto 0;border:1px solid #d8c4b3;border-radius:14px;overflow:hidden;background:#f7eee4;box-shadow:0 20px 60px #4327180d}
 .hl-dual-loop>figcaption {display:flex;justify-content:space-between;align-items:center;gap:12px 24px;padding:18px 24px;background:#2c211d;color:#fff5ec;font-size:15px;font-weight:650}
 .hl-dual-loop>figcaption span:last-child {color:#eab095;font-size:12px;letter-spacing:.08em;font-weight:700}
 .hl-loop-grid {display:grid;grid-template-columns:minmax(0,1fr) 122px minmax(0,1fr);align-items:stretch;padding:24px}
