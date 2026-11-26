@@ -54,18 +54,24 @@ for (const [base, homePath, homePromise, contactPromise] of [
   assert.doesNotMatch(home, /Bring us a real task|从一个真实业务问题开始/, 'Remove the duplicate legacy Home CTA only');
   assert.ok(home.indexOf('id="hl-home-solutions"') > 0);
   assert.ok(home.indexOf('id="hl-home-solutions"') < home.indexOf('id="hl-home-method"'), 'Industry examples precede technical proof');
-  // Each example answers the same four questions in the same order, and shows a labelled sample.
-  const sections=home.split('class="hl-home-card"').slice(1);
+  // Each example is scannable: one pain, a three-node visual, one delivery line and a labelled output.
+  const sections=home.split('<article class="hl-home-card ').slice(1);
   assert.equal(sections.length,2,'Two examples on the home page');
-  const labels=base==='/en/'?['THE PAIN','THE ASSISTANT','WHAT YOU RECEIVE','HOW IT IMPROVES']:['痛点','助手做什么','你拿到什么','怎么变好'];
+  const labels=base==='/en/'?['APPROVED SOURCES','YOUR ASSISTANT','YOU APPROVE']:['授权资料','你的助手','你来审批'];
   for (const [name, id] of [['freight','freight'],['medical','medical']]) {
     const card=sections.shift().split('</article>')[0];
-    assert.deepEqual([...card.matchAll(/<dt>([^<]+)<\/dt>/g)].map((m) => m[1]).slice(-4),labels,name+' example: pain, harness, delivery, improvement');
-    assert.ok(/合成示例|synthetic sample/.test(card),'The home sample must say it is synthetic');
-    assert.ok(/独立(?:验证|样本)|independent (?:validation|examples)/.test(card),'Say how the next version is earned: '+name);
-    assert.ok(/装在|installed on/.test(card),'Say where the deliverable runs: '+name);
+    assert.deepEqual([...card.matchAll(/<small>([^<]+)<\/small>/g)].map((m) => m[1]).slice(0,3),labels,name+' example: sources, assistant, approval');
+    assert.equal((card.match(/<li class="hl-example-node /g)||[]).length,3,name+' has a visual three-step flow');
+    assert.ok(/合成示例|SYNTHETIC/.test(card),'The home output must say it is synthetic');
+    assert.ok(card.includes('class="hl-example-sample"'),'Show a concise output state: '+name);
+    assert.ok(/你的电脑|研究员工作站|On your computer|On the workstation/.test(card),'Say where the deliverable runs: '+name);
     assert.ok(card.includes('href="'+base+'solutions/#hl-sample-'+id+'"'));
+    assert.ok(!card.includes('hl-home-facts'),'Do not bring back the dense four-row explanation');
   }
+  const improvements=base==='/en/'?['Your correction','Independent validation','Your approval','Next version']:['你的纠正','独立验证','你批准','下一版'];
+  assert.equal((home.match(/class="hl-home-improve"/g)||[]).length,1,'Explain the shared improvement loop once');
+  for(const step of improvements) assert.ok(home.includes('<li>'+step+'</li>'),'Missing improvement step: '+step);
+  assert.doesNotMatch(home,/One method\. Two jobs that share nothing else|方法只有一个，业务可以完全不同/);
   assert.ok(home.includes('data-evolution'), 'Optional legacy demonstration remains available');
   // The walkthrough video streams from GitHub only on play; its poster is ours.
   const video=home.match(/<video ([^>]*)><source src="([^"]+)" type="video\/mp4">/);

@@ -1,7 +1,6 @@
 """Business-first landing and contact layout. Contact controls are reused, not reimplemented."""
 from html import escape
 from refine import system
-from solutions import COPY as SOLUTIONS
 
 COPY = {
     'zh': {
@@ -24,32 +23,32 @@ COPY = {
             ('我们定制，装到你的电脑', '接入你批准的资料和工具，用你自己的模型账号。'),
             ('它在业务里运行，也会变好', '每次纠正成为候选改进，经独立验证和你批准后进入下一版。'),
         ),
-        'sector': '示例 · 同一个做法，两种不相干的业务',
-        'examples': '方法只有一个，业务可以完全不同。',
-        'examples_lead': '同一套做法，换一个行业照样成立：你描述任务，我们把助手配到你的业务里，交到你自己手上，让它接着变好。',
-        'row_labels': ('痛点', '助手做什么', '你拿到什么', '怎么变好'),
+        'sector': '两个例子 · 同一种定制方法',
+        'examples': '业务不同，助手也该不同。',
+        'examples_lead': '你把任务讲清楚，我们按你的资料、流程和审批方式定制。',
+        'node_labels': ('授权资料', '你的助手', '你来审批'),
+        'delivery_label': '你拿到什么',
+        'improve_label': '它怎么变好',
+        'improve_steps': ('你的纠正', '独立验证', '你批准', '下一版'),
         'cards': (
-            ('货运代理', '客户在催一票日期未定的货，而信息散在三个系统里。', (
-                '邮件、船公司网站、表格各有一半信息。跟漏一次，要么错过申报，要么一张账单过了争议期。',
-                '助手汇总你授权查看的货运动态，标出缺什么、为什么现在不能答复，并起草回复。员工核对、修改后决定是否发出。',
-                '装在你电脑上的客服助手、回复模板，以及每次运行的记录和出处。',
-                '被退回的草稿成为候选改进；在独立样本上验证没有退化、并经人工批准后，才替换现行版本。',
-            )),
-            ('医学研究与情报', '每周都有新文献，没人确定哪一篇会改变简报里的结论。', (
-                '靠人工追踪来源、逐条比对旧简报；一个结论要改，得回头找原文和页码。',
-                '助手按主题跟踪你授权的文献和指南，对照现有简报，标出哪些结论可能要改、哪些不变、哪些还不确定，并附出处与原文位置。',
-                '装在研究人员工作站上的文献助手、简报模板，以及运行和复核记录。研究员决定是否更新简报；不提供临床建议。',
-                '研究员纠正过的判断成为候选改进；独立验证通过后才进入下一版。',
-            )),
+            ('货代 · 客户跟进', '客户在催，船期还没确认。',
+             '邮件、船司门户、表格，各有一段答案。',
+             ('邮件 / 门户 / 表格', '汇总 / 核对 / 草拟', '回复草稿'),
+             '日期未确认 · 草稿未发送',
+             '你的电脑：客服助手 + 回复模板 + 运行记录'),
+            ('医学研究 · 情报简报', '新文献来了，结论要不要改？',
+             '人工追来源、对简报、找原文，费时又难追溯。',
+             ('文献 / 指南 / 旧简报', '对照 / 标注 / 溯源', '证据提示'),
+             '仅读到摘要 · 需核对全文',
+             '研究员工作站：文献助手 + 简报模板 + 复核记录'),
         ),
-        'sample_title': '它给出的东西长这样（合成示例）',
-        'card_link': '看完整示例',
-        'tail': '你的业务不在上面？方法是同一个：',
+        'synthetic': '合成示例',
+        'card_link': '看完整示例与输出',
+        'tail': '你的业务不在上面？',
         'tail_link': '从一项具体任务开始',
         'video_label': 'HarnessLoop 演示视频（中文，55 秒）',
         'video_note': '动画演示，含配音；使用合成数据，不含真实货物。',
         'video_link': '在 GitHub 上打开',
-        'card_index': '示例',
         'video_play': '播放 55 秒视频',
         'video_failed': '视频暂时无法加载。',
         'proof': '我们的工作方法',
@@ -90,32 +89,32 @@ COPY = {
             ('We build it, you run it', 'On your own computer, with the sources and tools you approve and your own model account.'),
             ('It works, and it improves', 'Each correction becomes a candidate change that reaches the next version only after independent validation and your approval.'),
         ),
-        'sector': 'EXAMPLES · ONE APPROACH, TWO UNRELATED JOBS',
-        'examples': 'One method. Two jobs that share nothing else.',
-        'examples_lead': 'The same approach holds in an industry that shares nothing with the first: describe the task, we fit an assistant to your work and hand it to you, and it keeps improving from there.',
-        'row_labels': ('THE PAIN', 'THE ASSISTANT', 'WHAT YOU RECEIVE', 'HOW IT IMPROVES'),
+        'sector': 'TWO BUSINESSES · ONE TAILORED APPROACH',
+        'examples': 'Different business. A different assistant.',
+        'examples_lead': 'You describe the task. We tailor the assistant to your sources, workflow and approvals.',
+        'node_labels': ('APPROVED SOURCES', 'YOUR ASSISTANT', 'YOU APPROVE'),
+        'delivery_label': 'WHAT YOU RECEIVE',
+        'improve_label': 'HOW IT IMPROVES',
+        'improve_steps': ('Your correction', 'Independent validation', 'Your approval', 'Next version'),
         'cards': (
-            ('Freight forwarding', 'A customer is chasing a shipment whose date is unconfirmed, and the facts sit in three systems.', (
-                'Email, carrier portals and spreadsheets each hold part of the picture. One missed follow-up means a missed filing or an invoice that is past its dispute window.',
-                'The assistant pulls together the shipment updates you allow, shows what is missing and why no answer can be given yet, then drafts the reply. Staff check it, edit it and decide whether to send.',
-                'A customer-service assistant installed on your computer, reply templates, and a record with sources for every run.',
-                'Every rejected draft becomes a candidate change. It replaces the working version only after passing independent examples and a human approval.',
-            )),
-            ('Medical research and intelligence', 'New papers every week, and nobody is sure which one changes the brief.', (
-                'Sources are tracked by hand and old briefs compared line by line; changing one conclusion means finding the original passage again.',
-                'The assistant tracks the journals and guidelines you allow by topic, compares them with the brief, and marks which conclusions may change, which hold and which stay uncertain, each with its source and place in the text.',
-                'A literature assistant installed on a researcher’s workstation, brief templates, and run and review records. Researchers decide whether to update the brief; it gives no clinical advice.',
-                'Judgements a researcher corrected become candidate changes, and reach the next version only after independent validation.',
-            )),
+            ('Freight · Customer follow-up', 'The customer wants a date. You don’t have one yet.',
+             'The answer is split across email, carrier portals and spreadsheets.',
+             ('Email / portals / sheets', 'Gather / check / draft', 'Reply draft'),
+             'Date unconfirmed · Not sent',
+             'On your computer: assistant + reply templates + run records'),
+            ('Medical research · Intelligence briefs', 'A new paper is out. Does the brief change?',
+             'Tracking sources, comparing briefs and finding passages by hand.',
+             ('Papers / guidance / briefs', 'Compare / flag / cite', 'Evidence alert'),
+             'Abstract only · Review full text',
+             'On the workstation: assistant + brief templates + review records'),
         ),
-        'sample_title': 'What it hands back (synthetic sample)',
-        'card_link': 'See the full example',
-        'tail': 'Your work is not on this list? The method is the same:',
+        'synthetic': 'SYNTHETIC',
+        'card_link': 'See the full example and output',
+        'tail': 'Your work is not on this list?',
         'tail_link': 'Start with one task',
         'video_label': 'HarnessLoop demo video (English, 55 seconds)',
         'video_note': 'Animated walkthrough with voice-over, using synthetic data (no real shipments).',
         'video_link': 'Open on GitHub',
-        'card_index': 'EXAMPLE',
         'video_play': 'Play the 55-second video',
         'video_failed': 'The video could not be loaded.',
         'proof': 'HOW WE WORK',
@@ -144,6 +143,20 @@ VIDEO_RELEASE = 'https://github.com/helenalhq/media/releases/tag/v1.0'
 VIDEO = {lang: f'https://github.com/helenalhq/media/releases/download/v1.0/demo-55s-{lang}.mp4' for lang in ('zh', 'en')}
 
 
+def _example_icon(name):
+    paths = {
+        'freight': '<path d="M3 15h18l-2 4H6z M6 15V8h12v7 M9 8V5h6v3 M9 11h.01 M12 11h.01 M15 11h.01"/>',
+        'medical': '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5z M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"/>',
+        'sources': '<path d="M8 3h8l4 4v10H8z M16 3v5h4 M8 21H4V7h4 M11 12h6 M11 15h5"/>',
+        'assistant': '<path d="m12 3 1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7z M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/>',
+        'output': '<path d="M6 3h8l4 4v14H6z M14 3v5h4 M9 15l2 2 4-5"/>',
+        'device': '<rect x="4" y="4" width="16" height="12" rx="2"/><path d="M2 20h20 M9 20l1-4h4l1 4"/>',
+        'loop': '<path d="M20 7h-5V2 M4 17h5v5 M5.1 9a8 8 0 0 1 13.2-3L20 7 M4 17l1.7 1A8 8 0 0 0 18.9 15"/>',
+        'arrow': '<path d="M4 12h16m-6-6 6 6-6 6"/>',
+    }
+    return f'<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">{paths[name]}</svg>'
+
+
 def home_body(lang):
     c = COPY[lang]
     prefix = '/en/' if lang == 'en' else '/'
@@ -159,19 +172,26 @@ def home_body(lang):
         for n, (domain, pain, detail, source, url) in enumerate(c['pains'], 1)
     )
     cards = []
-    labels = c['row_labels']
-    for n, (asset, (industry, headline, rows)) in enumerate(zip(('freight', 'medical'), c['cards']), 1):
+    for asset, (industry, headline, pain, nodes, sample, delivery) in zip(('freight', 'medical'), c['cards']):
         target = prefix + 'solutions/#hl-sample-' + asset
-        # The small sample repeats the one on the examples page, so the two never drift apart.
-        sample = ''.join(f'<div><dt>{escape(label)}</dt><dd>{escape(value)}</dd></div>' for label, value in SOLUTIONS[lang]['cards'][n - 1][4])
-        facts = ''.join(f'<div><dt>{escape(label)}</dt><dd>{escape(text)}</dd></div>' for label, text in zip(labels, rows))
-        cards.append(f'''<article class="hl-home-card">
-          <div class="hl-home-card-content"><p class="hl-biz-kicker">{c['card_index']} {n:02} · {escape(industry)}</p><h3>{escape(headline)}</h3>
-            <div class="hl-home-sample"><p class="hl-home-sample-title">{escape(c['sample_title'])}</p><dl>{sample}</dl></div>
-            <dl class="hl-home-facts">{facts}</dl>
-            <a class="hl-biz-text" href="{target}">{escape(c['card_link'])} <span aria-hidden="true">→</span></a></div>
+        steps = []
+        for i, (label, value) in enumerate(zip(c['node_labels'], nodes)):
+            icon = ('sources', 'assistant', 'output')[i]
+            arrow = '' if i == 0 else f'<span class="hl-example-arrow" aria-hidden="true">{_example_icon("arrow")}</span>'
+            result = '' if i < 2 else f'<span class="hl-example-sample"><b>{escape(c["synthetic"])}</b>{escape(sample)}</span>'
+            steps.append(f'''<li class="hl-example-node hl-example-node--{i}">{arrow}<span class="hl-example-node-icon">{_example_icon(icon)}</span>
+              <small>{escape(label)}</small><strong>{escape(value)}</strong>{result}</li>''')
+        cards.append(f'''<article class="hl-home-card hl-home-card--{asset}" aria-labelledby="hl-home-example-{lang}-{asset}">
+          <div class="hl-home-card-content">
+            <div class="hl-home-card-heading"><span class="hl-home-card-icon">{_example_icon(asset)}</span><p class="hl-biz-kicker">{escape(industry)}</p></div>
+            <h3 id="hl-home-example-{lang}-{asset}">{escape(headline)}</h3><p class="hl-home-card-pain">{escape(pain)}</p>
+            <ol class="hl-example-flow">{''.join(steps)}</ol>
+            <p class="hl-home-delivery">{_example_icon('device')}<span><small>{escape(c['delivery_label'])}</small><strong>{escape(delivery)}</strong></span></p>
+            <a class="hl-biz-text" href="{target}">{escape(c['card_link'])} <span aria-hidden="true">→</span></a>
+          </div>
         </article>''')
     industries = ''.join(cards)
+    improvements = ''.join(f'<li>{escape(step)}</li>' for step in c['improve_steps'])
     demonstration = system(lang == 'en')
     # Nothing is downloaded from GitHub until the visitor presses play.
     github_link = f'''<a href="{VIDEO_RELEASE}" target="_blank" rel="noopener noreferrer">{escape(c['video_link'])} <span aria-hidden="true">→</span></a>'''
@@ -199,6 +219,7 @@ def home_body(lang):
         <p class="hl-biz-kicker">{escape(c['sector'])}</p><h2 id="hl-home-examples-title">{escape(c['examples'])}</h2>
         <p class="hl-home-lead">{escape(c['examples_lead'])}</p>
         <div class="hl-home-cards">{industries}</div>
+        <div class="hl-home-improve"><span class="hl-home-improve-icon">{_example_icon('loop')}</span><div><p>{escape(c['improve_label'])}</p><ol>{improvements}</ol></div></div>
         <p class="hl-home-tail">{escape(c['tail'])} <a href="{contact}">{escape(c['tail_link'])} <span aria-hidden="true">→</span></a></p>
       </section>
       <section class="hl-home-method" id="hl-home-method" aria-labelledby="hl-home-method-title">
