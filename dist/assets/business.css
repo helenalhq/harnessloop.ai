@@ -53,14 +53,27 @@ html[lang^="zh"] .hl-biz-hero h1,[lang^="zh"] .hl-biz-hero h1 {letter-spacing:-.
 .hl-business h2 {line-height:1.15;letter-spacing:-.032em}
 .hl-home-solutions h2,.hl-home-method h2,.hl-biz-final h2 {font-size:clamp(1.7rem,3.4vw,3.05rem);text-wrap:balance}
 .hl-home-cards {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(15px,3vw,32px);margin-top:20px}
-.hl-home-card {min-width:0;border:1px solid #dfcdbd;border-radius:10px;overflow:hidden;background:#fff9ef;box-shadow:0 13px 35px #4b2e1c0d}
-.hl-home-card-photo {display:block;aspect-ratio:2/1;overflow:hidden;background:#e2c7b1}
-.hl-home-card-photo:focus-visible {outline-offset:-5px}
-.hl-home-card-photo img {display:block;width:100%;height:100%;object-fit:cover}
-.hl-home-card-content {padding:clamp(15px,2.5vw,26px)}
-.hl-home-card-content .hl-biz-kicker {margin-bottom:8px}
-.hl-home-card-content h3 {font-size:clamp(1.22rem,2vw,1.8rem);letter-spacing:-.025em;line-height:1.16;text-wrap:balance}
-.hl-home-card-content :is(p:not(.hl-biz-kicker)) {margin-block:10px 14px;color:var(--muted);font-size:.94rem;line-height:1.58}
+.hl-home-card {min-width:0;border:1px solid #dfcdbd;border-radius:12px;background:#fff9ef;box-shadow:0 13px 35px #4b2e1c0d}
+.hl-home-card-content {display:flex;flex-direction:column;flex:1;padding:clamp(17px,2.6vw,28px)}
+.hl-home-card-content .hl-biz-kicker {margin-bottom:10px}
+.hl-home-card-content h3 {font-size:clamp(1.2rem,1.75vw,1.56rem);letter-spacing:-.025em;line-height:1.2;text-wrap:balance}
+.hl-home-lead {color:var(--muted);font-size:clamp(1rem,1.35vw,1.15rem);line-height:1.58;margin-top:14px;max-width:66ch;text-wrap:pretty}
+/* Each example answers four questions in the same order: pain, harness, delivery, improvement. */
+.hl-home-sample {margin-top:18px;padding:14px 15px;border:1px solid #e3d4c5;border-radius:8px;background:#f3e8db}
+.hl-home-sample-title {margin-bottom:10px;color:#8b3929;font-size:.8rem;font-weight:700;line-height:1.4}
+.hl-home-sample dl,.hl-home-facts {margin:0;min-width:0}
+.hl-home-sample dl {display:grid;gap:7px}
+.hl-home-sample dl>div {display:grid;grid-template-columns:minmax(76px,auto) minmax(0,1fr);gap:10px}
+.hl-home-sample dt {color:var(--muted);font-size:.85rem;font-weight:700;line-height:1.5}
+.hl-home-sample dd {margin:0;color:var(--ink);font-size:.9rem;line-height:1.5;overflow-wrap:anywhere}
+.hl-home-facts {display:grid;gap:12px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.hl-home-facts>div {display:grid;grid-template-columns:minmax(104px,138px) minmax(0,1fr);gap:14px}
+.hl-home-facts dt {color:var(--accent);font-size:.76rem;font-weight:700;letter-spacing:.03em;line-height:1.75}
+.hl-home-facts dd {margin:0;color:var(--ink);font-size:.94rem;line-height:1.58}
+.hl-home-card .hl-biz-text {align-self:flex-start;margin-top:auto;padding-top:18px}
+.hl-home-tail {margin-top:clamp(20px,3vw,30px);color:var(--muted);font-size:1rem;line-height:1.6}
+.hl-home-tail a {display:inline-flex;align-items:center;min-height:44px;margin-block:-13px;color:var(--accent);font-weight:700;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.hl-home-tail a:hover {color:#5d271d}
 .hl-biz-text {color:var(--accent);font-size:.92rem;font-weight:700;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
 .hl-biz-text:hover {color:#5d271d}
 .hl-home-method {background:#f1e5d8;border-block:1px solid var(--line)}
@@ -98,7 +111,6 @@ html[lang^="zh"] .hl-biz-hero h1,[lang^="zh"] .hl-biz-hero h1 {letter-spacing:-.
 }
 @media(max-width:580px) {
   .hl-home-cards {grid-template-columns:minmax(0,1fr)}
-  .hl-home-card-photo {aspect-ratio:16/9}
 }
 @media(max-width:370px) {
   .hl-biz-actions {gap:9px}
@@ -185,7 +197,9 @@ body :is(.hl-demo-acts a,.hl-demo-chip,.hl-demo-btn) {min-height:44px}
   :is(.micro,.hl-biz-lead,.hl-home-flow p,.hl-demo-lead,.hl-sample-note,.notice-steps .notice-note,.brief) {font-size:1rem}
   body .hl-demo-act .hl-demo-lead {font-size:1rem}
   body .hl-demo-final p {font-size:1rem}
-  .hl-home-card-content :is(p:not(.hl-biz-kicker)) {font-size:1rem}
+  .hl-home-facts :is(dt,dd),.hl-home-sample :is(dt,dd) {font-size:1rem}
+  .hl-home-facts>div,.hl-home-sample dl>div {grid-template-columns:minmax(0,1fr);gap:3px}
+  .hl-home-facts dt {letter-spacing:0}
   .hl-sample dd {font-size:.95rem}
   :is(.hl-run-steps,.hl-deliverables) p {font-size:1rem}
   body :is(.hl-demo-log td,.hl-demo-note,.hl-demo-banner) {font-size:.9rem}

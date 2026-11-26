@@ -46,17 +46,25 @@ for (const [homePath, solutionPath, otherPath, contactPath, heading, freight, me
 
 }
 for (const [base, homePath, homePromise, contactPromise] of [
-  ['/', '/zh/', '货代与报关的本地 AI 助手。', '从一件具体的业务任务开始。'],
-  ['/en/', '/en/', 'An AI assistant for small freight forwarders and customs brokers.', 'Start with one real task.'],
+  ['/', '/zh/', '一个属于你自己的 AI 助手，按你的业务定制。', '从一件具体的业务任务开始。'],
+  ['/en/', '/en/', 'An AI assistant of your own, built around your work.', 'Start with one real task.'],
 ]) {
   const home=readFileSync('dist'+homePath+'index.html','utf8');
   assert.ok(home.includes(homePromise), 'Home should lead with a customer outcome');
   assert.doesNotMatch(home, /Bring us a real task|从一个真实业务问题开始/, 'Remove the duplicate legacy Home CTA only');
   assert.ok(home.indexOf('id="hl-home-solutions"') > 0);
   assert.ok(home.indexOf('id="hl-home-solutions"') < home.indexOf('id="hl-home-method"'), 'Industry examples precede technical proof');
+  // Each example answers the same four questions in the same order, and shows a labelled sample.
+  const sections=home.split('class="hl-home-card"').slice(1);
+  assert.equal(sections.length,2,'Two examples on the home page');
+  const labels=base==='/en/'?['THE PAIN','THE ASSISTANT','WHAT YOU RECEIVE','HOW IT IMPROVES']:['痛点','助手做什么','你拿到什么','怎么变好'];
   for (const [name, id] of [['freight','freight'],['medical','medical']]) {
-    assert.ok(home.includes('/assets/hl-'+name+'-v3.webp'));
-    assert.ok(home.includes('href="'+base+'solutions/#hl-sample-'+id+'"'));
+    const card=sections.shift().split('</article>')[0];
+    assert.deepEqual([...card.matchAll(/<dt>([^<]+)<\/dt>/g)].map((m) => m[1]).slice(-4),labels,name+' example: pain, harness, delivery, improvement');
+    assert.ok(/合成示例|synthetic sample/.test(card),'The home sample must say it is synthetic');
+    assert.ok(/独立(?:验证|样本)|independent (?:validation|examples)/.test(card),'Say how the next version is earned: '+name);
+    assert.ok(/装在|installed on/.test(card),'Say where the deliverable runs: '+name);
+    assert.ok(card.includes('href="'+base+'solutions/#hl-sample-'+id+'"'));
   }
   assert.ok(home.includes('data-evolution'), 'Optional legacy demonstration remains available');
   // The walkthrough video streams from GitHub only on play; its poster is ours.

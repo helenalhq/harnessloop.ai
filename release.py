@@ -5,7 +5,7 @@ ORIGIN='https://harnessloop.ai'
 # Vercel context is authoritative: a Preview must never inherit a production override.
 PRODUCTION=(os.environ.get('VERCEL_ENV')=='production') if 'VERCEL_ENV' in os.environ else os.environ.get('SITE_ENV')=='production'
 DESCRIPTIONS={
- '':['货代与报关的本地 AI 助手：草拟回复、跟进每一票货物、盯住申报期限，发出之前先经你审批。一次性部署，无按坐席订阅。','A local AI assistant for small freight forwarders and customs brokers. It drafts replies, tracks follow-ups and watches deadlines — nothing is sent without your review.'],
+ '':['一个属于你自己的 AI 助手：按你的业务定制，装在你自己的电脑上，用你自己的模型账号。发出之前先经你审批，并从每一次纠正里改进。','An AI assistant of your own: built around your work, running on your own computer with your own model account. Nothing is sent without your review.'],
  'how-it-works':['了解 HarnessLoop 的运行环与改进环：明确权限、保留证据、验证候选版本，再决定发布。','Explore execution and improvement loops: scoped permissions, traceable evidence, independent validation and controlled releases.'],
  'data-factory':['通过合成采购示例，了解资料抽取、来源定位、质量检查和候选改进如何组成数据与知识工厂。','A synthetic procurement example shows how extraction, source evidence, quality checks and candidate improvements form a data factory.'],
  'demo':['三幕交互演示：合成晨报汇总异常、跟进卡审批草稿、四元组留痕记录。只读、无后端、不收集数据。','A three-act interactive demo: a synthetic morning brief, an approval card and a four-part audit trail. Read-only, no backend, no data collection.'],
@@ -16,7 +16,7 @@ DESCRIPTIONS={
  'privacy':['了解 HarnessLoop 网站的本地简报、语言偏好、托管访问日志与邮件联系的数据处理范围。','Learn about local briefs, language preferences, hosting access logs and email contact on the HarnessLoop website.']}
 # Search-result titles, [Chinese, English]. They name the page's subject, not only its nav label.
 TITLES={
- '':['货代与报关的本地 AI 助手','Local AI for Freight Forwarding & Customs'],
+ '':['按你的业务定制的私有 AI 助手','An AI Assistant of Your Own, Built Around Your Work'],
  'demo':['交互演示：晨报、审批与留痕','Interactive Demo: Brief, Approval, Audit Trail'],
  'solutions':['货代与医学文献 AI 助手示例','Examples: Freight & Medical AI Assistants'],
  'how-it-works':['工作原理：运行环与改进环','How It Works: Run Loop and Improvement Loop'],
@@ -51,6 +51,6 @@ def metadata(lang,slug,title):
  path='/zh/' if lang=='zh' and not slug else ('/en/' if lang=='en' else '/')+(slug+'/' if slug else '')
  zh=ORIGIN+'/'+(slug+'/' if slug else 'zh/');en=ORIGIN+'/en/'+(slug+'/' if slug else '')
  desc=DESCRIPTIONS[slug][lang=='en'];url=ORIGIN+path
- share=ORIGIN+('/assets/social-zh.png' if lang=='zh' else '/assets/social.png');alt='HarnessLoop：货代与报关的本地 AI 助手' if lang=='zh' else 'HarnessLoop: Local AI for freight forwarding and customs'
+ share=ORIGIN+('/assets/social-zh.png' if lang=='zh' else '/assets/social.png');alt='HarnessLoop：按你的业务定制的私有 AI 助手' if lang=='zh' else 'HarnessLoop: an AI assistant of your own, built around your work'
  from seo import structured
  return desc, structured(lang,slug,title,desc)+f'''<link rel="canonical" href="{url}"><link rel="alternate" hreflang="zh-CN" href="{zh}"><link rel="alternate" hreflang="en" href="{en}"><link rel="alternate" hreflang="x-default" href="{en}"><meta property="og:type" content="website"><meta property="og:site_name" content="HarnessLoop"><meta property="og:title" content="{escape(title)} | HarnessLoop"><meta property="og:description" content="{escape(desc)}"><meta property="og:url" content="{url}"><meta property="og:locale" content="{'en_US' if lang=='en' else 'zh_CN'}"><meta property="og:image" content="{share}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="{alt}"><meta name="twitter:image" content="{share}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{escape(title)} | HarnessLoop"><meta name="twitter:description" content="{escape(desc)}">'''

@@ -34,7 +34,7 @@ def extend(pages,lang):
  base='/en/' if en else '/'
  body+='<p class="hl-faq-more"><a href="'+base+'how-it-works/">'+('Explore our approach' if en else '了解工作原理')+'</a> · <a href="'+base+'data-factory/">'+('See the synthetic data-factory demonstration' if en else '查看数据工厂合成演示')+'</a></p></section>'
  pages['faq']=(title,body)
- title,body=pages[''];pages['']=(('Local AI for Freight Forwarding & Customs' if en else '货代与报关的本地 AI 助手'),body)
+ title,body=pages[''];pages['']=(('An AI Assistant of Your Own, Built Around Your Work' if en else '按你的业务定制的私有 AI 助手'),body)
  title,body=pages['how-it-works'];pages['how-it-works']=(('How an AI Agent Harness Works' if en else 'AI Agent Harness 工作原理与双闭环'),body)
 
 def structured(lang,slug,title,desc):
