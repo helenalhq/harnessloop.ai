@@ -12,10 +12,10 @@ def enhance(pages, en=False):
  import re
  if en:
   body=re.sub(r'<p>[^<]*(?:contact channel|contact route|contact method)[^<]*</p>','<p>Generate a brief here, then copy it into your email. This form does not send or save your input.</p>',body,flags=re.I)
-  block='<div class="contact-address"><span class="eyebrow">START A CONVERSATION</span><a href="mailto:contact@harnessloop.ai">contact@harnessloop.ai</a><button class="copychip" type="button" id="copy-email" data-email="contact@harnessloop.ai">Copy address</button><p>Tell us what the task is, where it breaks down and what a good result looks like. Please use non-sensitive examples.</p></div>'
+  block='<div class="contact-address"><span class="eyebrow">START A CONVERSATION</span><a href="mailto:contact@harnessloop.ai">contact@harnessloop.ai</a><button class="copychip" type="button" id="copy-email" data-email="contact@harnessloop.ai">Copy address</button><p>Tell us what the task is, where it breaks down and what a good result looks like. We reply within 24 hours. Please use non-sensitive examples.</p></div>'
  else:
   body=body.replace('本页仅在浏览器中生成简报，不发送、不保存。正式联系入口将在确认后接入。','先在这里整理需求，再复制到邮件中。本表单不发送、不保存输入内容。')
-  block='<div class="contact-address"><span class="eyebrow">联系 HARNESSLOOP</span><a href="mailto:contact@harnessloop.ai">contact@harnessloop.ai</a><button class="copychip" type="button" id="copy-email" data-email="contact@harnessloop.ai">复制邮箱</button><p>告诉我们任务是什么、难在哪里，以及怎样才算做好。请只使用不含敏感信息的示例。</p></div>'
+  block='<div class="contact-address"><span class="eyebrow">联系 HARNESSLOOP</span><a href="mailto:contact@harnessloop.ai">contact@harnessloop.ai</a><button class="copychip" type="button" id="copy-email" data-email="contact@harnessloop.ai">复制邮箱</button><p>告诉我们任务是什么、难在哪里，以及怎样才算做好。我们会在 24 小时内回复。请只使用不含敏感信息的示例。</p></div>'
  body=body.replace('<section class="wrap two"', '<div class="wrap">'+block+'</div><section class="wrap two"',1)
  body=body.replace('<p id="copy-status"', '<a class="textlink brief-email" id="email-brief" href="mailto:contact@harnessloop.ai">'+('Open email draft' if en else '打开邮件草稿')+'</a><p class="micro">'+('You review and send the email yourself. Opening your email app does not send it.' if en else '由你检查并发送邮件。打开邮件客户端不会自动发送。')+'</p><p id="copy-status"')
  pages['contact']=(title,body)

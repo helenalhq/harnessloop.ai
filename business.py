@@ -36,7 +36,7 @@ COPY = {
         'demo': '查看数据工厂演示',
         'show_demo': '展开一个合成示例',
         'next': '你想先解决哪件事？',
-        'final_copy': '不需要先共享业务数据。用几句话说清任务、目前的难点，以及怎样才算做好。',
+        'final_copy': '不需要先共享业务数据。用几句话说清任务、目前的难点，以及怎样才算做好。我们会在 24 小时内回复。',
         'contact_tag': '联系合作',
         'contact_title': '从一件具体的业务任务开始。',
         'contact_lead': '告诉我们你希望助手做什么、哪一步最费时，以及仍需由谁判断。初次联系请只用不含敏感信息的描述。',
@@ -80,7 +80,7 @@ COPY = {
         'demo': 'See the data factory demo',
         'show_demo': 'Open a synthetic example',
         'next': 'What would you start with?',
-        'final_copy': 'No need to share business data. Tell us what the task is, what’s difficult today and what a good result would look like.',
+        'final_copy': 'No need to share business data. Tell us what the task is, what’s difficult today and what a good result would look like. We reply within 24 hours.',
         'contact_tag': 'CONTACT',
         'contact_title': 'Start with one real task.',
         'contact_lead': 'Tell us what you need the assistant to do, what takes the most time and where a person needs to decide. Keep initial enquiries free of sensitive information.',
@@ -126,8 +126,7 @@ def home_body(lang):
           <p class="hl-biz-kicker">{escape(c['tag'])}</p><h1 id="hl-home-title">{escape(c['hero'])}</h1>
           <p class="hl-biz-lead">{escape(c['lead'])}</p><div class="hl-biz-actions">
             <a class="hl-biz-button" href="{demo}">{escape(c['demo_cta'])} <span aria-hidden="true">→</span></a>
-            <a class="hl-biz-secondary" href="{brief}">{escape(c['brief_cta'])} <span aria-hidden="true">↓</span></a>
-            <a class="hl-biz-text" href="{contact}">{escape(c['cta'])} <span aria-hidden="true">→</span></a>
+            <a class="hl-biz-secondary" href="{contact}">{escape(c['cta'])} <span aria-hidden="true">→</span></a>
           </div></div><aside class="hl-home-flow"><h2>{escape(c['deliver'])}</h2><ol>{flow}</ol></aside>
         </div>
       </section>
@@ -143,7 +142,8 @@ def home_body(lang):
         <div class="wrap"><p class="hl-biz-kicker">{escape(c['proof'])}</p><h2 id="hl-home-method-title">{escape(c['method'])}</h2>
           <p>{escape(c['method_detail'])}</p>
           <div class="hl-biz-actions"><a class="hl-biz-text" href="{prefix}how-it-works/">{escape(c['approach'])} <span aria-hidden="true">→</span></a>
-          <a class="hl-biz-text" href="{prefix}data-factory/">{escape(c['demo'])} <span aria-hidden="true">→</span></a></div>
+          <a class="hl-biz-text" href="{prefix}data-factory/">{escape(c['demo'])} <span aria-hidden="true">→</span></a>
+          <a class="hl-biz-text" href="{brief}">{escape(c['brief_cta'])} <span aria-hidden="true">↓</span></a></div>
           <details class="hl-home-proof"><summary>{escape(c['show_demo'])}</summary>{demonstration}</details>
         </div>
       </section>

@@ -13,7 +13,7 @@ FAQ={
 ('出错了怎么办？','每台部署保留运行日志与复核记录，问题优先修复；支持方式与响应约定在合作时写入范围。'),
 ('和 SaaS 工具有什么不同？','数据不出门、无订阅费用、流程按你的 SOP 定制；接受远程支持时也只需临时授权。'),
 ('多长时间能上线？','约定样本验证通过后，部署通常两周内完成（不含影子运行期）。具体时间以任务评估为准。'),
-('你们是谁？','一支做业务 AI 执行系统的团队。我们建议从一个具体任务开始合作：contact@harnessloop.ai。')],
+('你们是谁？','HarnessLoop 以单人公司（OPC）的方式运作，你直接与运营它的人沟通。我们建议从一个具体任务开始合作：contact@harnessloop.ai。')],
 'en':[
 ('Where does the assistant run?','On a computer or workstation you choose. Your data stays on your device and network. Remote support, if needed, happens only with your temporary authorization and is logged.'),
 ('Will the AI send emails or change documents on its own?','No. External actions start as drafts and only go out after your approval. Missing or uncertain information is flagged, never guessed.'),
@@ -24,7 +24,7 @@ FAQ={
 ('What happens when something goes wrong?','Every deployment keeps run logs and review records, and issues are fixed as a priority. Support terms are agreed in scope.'),
 ('How is this different from SaaS tools?','Your data stays local, there is no subscription, and the workflow is shaped around your SOP.'),
 ('How long does it take to go live?','After agreed sample verification, deployment typically takes about two weeks, excluding a shadow-running period. Final timing depends on the task assessment.'),
-('Who are you?','A small team building AI execution systems for business. We suggest starting with one concrete task: contact@harnessloop.ai.')]
+('Who are you?','HarnessLoop is run as a one-person company (OPC), so you work directly with the person who runs it. We suggest starting with one concrete task: contact@harnessloop.ai.')]
 }
 def extend(pages,lang):
  en=lang=='en'
