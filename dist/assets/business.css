@@ -27,7 +27,7 @@ body>footer a:focus-visible {outline:2px solid #f0c9b7;outline-offset:5px}
   border-bottom:3px solid #a8543c
 }
 .hl-biz-hero-grid {
-  display:grid;grid-template-columns:minmax(0,1.35fr) minmax(270px,.8fr);gap:clamp(28px,5vw,70px);
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(28px,4.5vw,64px);
   align-items:center;padding-block:clamp(41px,5.5vw,73px)
 }
 .hl-biz-kicker {font-size:.76rem;font-weight:700;letter-spacing:.08em;color:var(--accent);margin-bottom:12px}
@@ -44,12 +44,9 @@ html[lang^="zh"] .hl-biz-hero h1,[lang^="zh"] .hl-biz-hero h1 {letter-spacing:-.
 .hl-biz-button:hover {background:#ffdfcd}
 .hl-biz-secondary {border:1px solid #ae8979;background:#39251e;color:#fff5eb}
 .hl-biz-secondary:hover {background:#533629}
-.hl-home-flow {border:1px solid #9b7461;border-radius:10px;background:#38251edb;padding:clamp(14px,2vw,23px);min-width:0}
-.hl-home-flow h2 {font-size:1.1rem;margin-bottom:13px;color:#fff3e7}
-.hl-home-flow li,.hl-engagement-step {display:grid;grid-template-columns:29px minmax(0,1fr);gap:10px;align-items:start;padding-block:9px;border-top:1px solid #785b4d}
-.hl-home-flow li>span,.hl-engagement-step>span {font-size:.73rem;font-weight:700;letter-spacing:.05em;line-height:1.75;color:#f0ad8c}
-.hl-home-flow strong {font-size:.95rem;color:#fff5ea}
-.hl-home-flow p,.hl-engagement-step p {color:#efd9cc;font-size:.84rem;line-height:1.45;margin-top:3px}
+.hl-engagement-step {display:grid;grid-template-columns:29px minmax(0,1fr);gap:10px;align-items:start;padding-block:9px;border-top:1px solid #785b4d}
+.hl-engagement-step>span {font-size:.73rem;font-weight:700;letter-spacing:.05em;line-height:1.75;color:#f0ad8c}
+.hl-engagement-step p {color:#efd9cc;font-size:.84rem;line-height:1.45;margin-top:3px}
 .hl-business .hl-home-solutions,.hl-business .hl-home-method,
 .hl-business .hl-contact-grid {padding-block:clamp(34px,5.3vw,69px)}
 .hl-home-solutions {scroll-margin-top:100px}
@@ -97,14 +94,11 @@ html[lang^="zh"] .hl-biz-hero h1,[lang^="zh"] .hl-biz-hero h1 {letter-spacing:-.
   body>header .navlinks {align-items:flex-start;background:#fbf6ed}
   .hl-biz-hero-grid,.hl-contact-grid {grid-template-columns:minmax(0,1fr)}
   .hl-biz-hero-grid {padding-block:34px;gap:18px}
-  .hl-home-flow {max-width:580px}
   .hl-biz-hero h1 {font-size:clamp(2.04rem,6.6vw,3.6rem)}
 }
 @media(max-width:580px) {
   .hl-home-cards {grid-template-columns:minmax(0,1fr)}
   .hl-home-card-photo {aspect-ratio:16/9}
-  .hl-home-flow {padding:12px}
-  .hl-home-flow li {padding-block:7px}
 }
 @media(max-width:370px) {
   .hl-biz-actions {gap:9px}
@@ -191,7 +185,6 @@ body :is(.hl-demo-acts a,.hl-demo-chip,.hl-demo-btn) {min-height:44px}
   :is(.micro,.hl-biz-lead,.hl-home-flow p,.hl-demo-lead,.hl-sample-note,.notice-steps .notice-note,.brief) {font-size:1rem}
   body .hl-demo-act .hl-demo-lead {font-size:1rem}
   body .hl-demo-final p {font-size:1rem}
-  .hl-home-flow strong {font-size:1rem}
   .hl-home-card-content :is(p:not(.hl-biz-kicker)) {font-size:1rem}
   .hl-sample dd {font-size:.95rem}
   :is(.hl-run-steps,.hl-deliverables) p {font-size:1rem}
@@ -201,11 +194,57 @@ body :is(.hl-demo-acts a,.hl-demo-chip,.hl-demo-btn) {min-height:44px}
 .language {min-width:44px;justify-content:center}
 :is(.copychip,.hl-home-proof summary,.hl-pain-source,.hl-sample a,.textlink) {min-height:44px}
 
-/* Walkthrough video: poster first, stream only on play. */
-.hl-home-video {padding-block:clamp(18px,3vw,34px)}
-.hl-home-video h2 {font-size:clamp(1.6rem,3.4vw,2.7rem);line-height:1.12;letter-spacing:-.035em;text-wrap:balance}
-.hl-video-frame {max-width:960px;margin-top:22px;border:1px solid var(--line);border-radius:10px;background:#281a15;box-shadow:0 18px 44px #4b2e1c14}
-.hl-video-frame video {display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:9px;background:#281a15}
-.hl-video-note {max-width:960px;margin-top:12px;color:var(--muted);font-size:.92rem}
-.hl-video-note a {display:inline-flex;align-items:center;min-height:44px;margin-block:-13px}
+/* Hero player: our poster first; the file streams from GitHub only after a click. */
+.hl-hero-media {min-width:0}
+.hl-video-frame {position:relative;border-radius:12px;overflow:hidden;background:#1d120e;border:1px solid #ffffff29;box-shadow:0 30px 70px #00000066}
+.hl-video-frame video {display:block;width:100%;height:auto;aspect-ratio:16/9;background:#1d120e}
+.hl-video-play {
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;
+  border:0;padding:0;cursor:pointer;color:#fff8f1;font:inherit;font-size:.95rem;font-weight:700;line-height:1.3;
+  background:linear-gradient(180deg,#0000 50%,#00000080)
+}
+.hl-video-play-icon {
+  display:grid;place-items:center;width:60px;height:60px;border-radius:50%;background:#f3c1a7;color:#2c1a15;
+  box-shadow:0 12px 30px #0009;transition:transform .22s cubic-bezier(.2,.7,.3,1),background-color .2s
+}
+.hl-video-play-icon svg {display:block;margin-left:3px}
+.hl-video-play>span:last-child {padding:6px 13px;border-radius:999px;background:#1d120eb3;color:#fff8f1}
+.hl-video-play:hover .hl-video-play-icon {transform:scale(1.08);background:#ffdfcd}
+.hl-video-play:focus-visible {outline:3px solid #fff;outline-offset:-6px}
+.hl-video-frame:is(.is-playing,.is-failed) .hl-video-play {display:none}
+.hl-video-note {margin-top:12px;color:#e9d3c6;font-size:.9rem;line-height:1.5}
+.hl-video-failed {margin-top:12px;color:#ffd9c9;font-size:.95rem}
+.hl-hero-media :is(.hl-video-note,.hl-video-failed) a {display:inline-flex;align-items:center;min-height:44px;margin-block:-13px;color:#f3c1a7;font-weight:700;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.hl-hero-media a:hover {color:#ffdfcd}
 @media(max-width:580px) {.hl-video-note {font-size:1rem}}
+
+/* The three-step strip now sits on the page background, right under the hero. */
+.hl-home-flow {padding-block:clamp(22px,3.4vw,40px);border-bottom:1px solid var(--line)}
+.hl-home-flow .hl-biz-kicker {margin-bottom:0}
+.hl-home-flow ol {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,3.5vw,44px);margin-top:14px}
+.hl-home-flow li {display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start;min-width:0}
+.hl-home-flow li>span {
+  display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#2c211d;color:#fff3e7;
+  font-size:.8rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums
+}
+.hl-home-flow strong {display:block;font-size:1.02rem;line-height:1.35;color:var(--ink)}
+.hl-home-flow p {color:var(--muted);font-size:.93rem;line-height:1.5;margin-top:3px}
+@media(max-width:850px) {.hl-home-flow ol {grid-template-columns:minmax(0,1fr);gap:14px}}
+@media(max-width:580px) {
+  .hl-home-flow strong {font-size:1rem}
+  .hl-video-play {font-size:1rem}
+  .hl-video-play-icon {width:52px;height:52px}
+}
+
+/* Small, quick feedback on the things a visitor can press. */
+:is(.hl-biz-button,.hl-biz-secondary,.hl-biz-text,.hl-biz-button span,.hl-biz-secondary span,.hl-biz-text span) {transition:background-color .2s,color .2s,translate .2s}
+:is(.hl-biz-button,.hl-biz-secondary,.hl-biz-text):hover span[aria-hidden] {translate:3px 0}
+:is(.hl-biz-button,.hl-biz-secondary):active {translate:0 1px}
+.hl-home-card,.hl-pain-card {transition:box-shadow .25s,translate .25s}
+.hl-home-card:hover {box-shadow:0 20px 48px #4b2e1c1f;translate:0 -3px}
+@media(prefers-reduced-motion:reduce) {:is(.hl-home-card,.hl-home-card:hover,.hl-biz-button,.hl-biz-secondary,.hl-biz-button span,.hl-biz-secondary span,.hl-biz-text span,.hl-video-play-icon) {transition:none;translate:none;transform:none}}
+
+/* One quiet entrance for card groups. motion.js adds the class only when motion is welcome. */
+.hl-reveal-on :is(.hl-pain-card,.hl-home-card,.hl-faq-item,.hl-engagement-step,.hl-showcase,.hl-run-steps>li,.hl-deliverables>li) {transition:opacity .5s ease-out,transform .55s cubic-bezier(.2,.7,.2,1),box-shadow .25s,translate .25s}
+.hl-reveal-on :is(.hl-pain-card,.hl-home-card,.hl-faq-item,.hl-engagement-step,.hl-showcase,.hl-run-steps>li,.hl-deliverables>li):not(.is-in) {opacity:0;transform:translateY(14px)}
+@media print {.hl-reveal-on :is(.hl-pain-card,.hl-home-card,.hl-faq-item,.hl-engagement-step,.hl-showcase,.hl-run-steps>li,.hl-deliverables>li) {opacity:1;transform:none}}

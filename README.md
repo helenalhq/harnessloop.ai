@@ -48,8 +48,9 @@ Vercel's build environment must provide Python 3. Verify the actual build log an
 - JavaScript validates inputs and generates plain text locally; copy and mailto are user actions. Mailto opens a draft, never automatically sends it.
 - CSP additionally disallows form submissions and network connections from scripts. There are no analytics, remote fonts, third-party browser scripts or uploads.
 - The site stores nothing in browser storage: no cookies, no local storage. Language is chosen through stable URLs and the header link; in-site links keep the chosen language.
-- The home-page walkthrough video (`demo-55s-en/zh.mp4`, release assets of the `helenalhq/media` repository) is not downloaded until the visitor presses play; a local poster shows first. CSP `media-src` allows GitHub only for that element. The media repository and its `v1.0` release must stay public, and `source-tests.py` requires the release link to be registered in `sources.py`.
-- Motion has pause, manual steps, reduced-motion support and visibility suspension. The mobile menu closes with Escape or an outside click.
+- The home-page walkthrough video (`demo-55s-en/zh.mp4`, release assets of the `helenalhq/media` repository) is not downloaded until the visitor presses play; a local poster shows first. With JavaScript the poster gets our own play button (`video.js`); without it the browser's controls remain. If GitHub does not answer, a line below the player links to the release. CSP `media-src` allows GitHub only for that element. The media repository and its `v1.0` release must stay public, and `source-tests.py` requires the release link to be registered in `sources.py`.
+- Motion has pause, manual steps, reduced-motion support and visibility suspension. Cards fade in once on scroll (`motion.js`), only when the visitor has not asked for reduced motion; everything is visible without JavaScript and in print. The mobile menu closes with Escape or an outside click.
+- Typography is self-hosted: Instrument Sans (SIL Open Font License, see `dist/assets/fonts/`).
 - A static explanatory fallback is supplied when JavaScript is unavailable.
 
 ## Release verification (2026-11-26)

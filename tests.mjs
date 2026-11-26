@@ -68,6 +68,12 @@ for (const [base, homePath, homePromise, contactPromise] of [
   const poster=video[1].match(/poster="(\/[^"]+)"/);assert.ok(existsSync('dist'+poster[1]),'Video poster must ship with the site');
   assert.ok(home.includes('href="https://github.com/helenalhq/media/releases/tag/v1.0" target="_blank" rel="noopener noreferrer"'),'Offer the GitHub copy as fallback');
   assert.ok(/合成数据|synthetic data/.test(home),'The video uses synthetic data and must say so');
+  // The player sits in the hero with our play button and a fallback when GitHub does not answer.
+  const hero=home.split('class="hl-biz-hero"')[1].split('</section>')[0];
+  assert.match(hero,/class="hl-hero-media">\s*<div class="hl-video-frame"><video [^>]*data-play="/,'The video opens the page, inside the hero');
+  assert.match(hero,/<p class="hl-video-failed hidden">[^<]+<a href="https:\/\/github.com\/helenalhq\/media\/releases\/tag\/v1.0"/);
+  assert.doesNotMatch(home,/class="hl-home-video"/);
+  assert.match(home,/<section class="wrap hl-home-flow" aria-labelledby="hl-home-flow-title"><p class="hl-biz-kicker" id="hl-home-flow-title">[^<]+<\/p><ol>(<li><span aria-hidden="true">\d\d<\/span><div><strong>[^<]+<\/strong><p>[^<]+<\/p><\/div><\/li>){3}<\/ol><\/section>/);
   assert.ok(home.includes('class="hl-nav-contact" href="'+base+'contact/"'));
   const contact=readFileSync('dist'+base+'contact/index.html','utf8');
   assert.ok(contact.includes(contactPromise));
@@ -78,6 +84,18 @@ for (const [base, homePath, homePromise, contactPromise] of [
   }
 }
 const app=readFileSync('dist/assets/app.js','utf8');assert.ok(!/fetch\(|XMLHttpRequest|sendBeacon/.test(app));assert.match(app,/textContent=/);
+// Progressively added behaviour: both scripts stay silent until needed and store nothing.
+for(const file of ['video.js','motion.js']){
+  const code=readFileSync('dist/assets/'+file,'utf8');
+  assert.ok(!/fetch\(|XMLHttpRequest|sendBeacon|localStorage|sessionIndex|indexedDB|document\.cookie/.test(code),file+' must not track or fetch');
+}
+const motion=readFileSync('dist/assets/motion.js','utf8');
+assert.match(motion,/prefers-reduced-motion/);assert.match(motion,/IntersectionObserver/);assert.match(motion,/is-in/);
+const player=readFileSync('dist/assets/video.js','utf8');
+assert.match(player,/video\.controls\s*=\s*true/);assert.match(player,/video\.play\(\)/);assert.match(player,/'error'/);
+const css=readFileSync('dist/assets/business.css','utf8');
+assert.match(css,/\.hl-reveal-on :is\([^)]*\):not\(\.is-in\) \{opacity:0/,'Only motion.js decides what is hidden, and only before it is in view');
+assert.match(css,/@media print \{\.hl-reveal-on/);
 for(const lang of ['zh-CN','en']){
  const els=new Map(), buttons=[0,1,2].map(i=>({dataset:{stage:String(i)},setAttribute(k,v){this[k]=v},addEventListener(){},focus(){}}));
  for(const key of ['.menu','#navigation','#demo-output','#brief-form','#generate-brief','#brief','#brief-panel','#copy-status','#copy-brief','#email-brief','[data-language]'])els.set(key,{dataset:{language:'en'},handlers:{},addEventListener(k,f){this.handlers[k]=f},classList:{toggle(){},remove(){}},getAttribute(){return 'false'},setAttribute(k,v){this[k]=v}});
