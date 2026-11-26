@@ -18,9 +18,9 @@ DESCRIPTIONS={
 TITLES={
  '':['货代与报关的本地 AI 助手','Local AI for Freight Forwarding & Customs'],
  'demo':['交互演示：晨报、审批与留痕','Interactive Demo: Brief, Approval, Audit Trail'],
- 'solutions':['货代与医学文献 AI 助手示例','Examples: Freight & Medical Literature AI Assistants'],
+ 'solutions':['货代与医学文献 AI 助手示例','Examples: Freight & Medical AI Assistants'],
  'how-it-works':['工作原理：运行环与改进环','How It Works: Run Loop and Improvement Loop'],
- 'data-factory':['数据与知识工厂：合成示例演示','Data & Knowledge Factory: A Synthetic Walkthrough'],
+ 'data-factory':['数据与知识工厂：合成示例演示','Data & Knowledge Factory: Synthetic Demo'],
  'research':['实践笔记：设计方法与证据','Field Notes: Design Methods and Evidence'],
  'contact':['联系合作','Contact HarnessLoop'],
  'privacy':['隐私说明','Privacy Notice'],
@@ -37,7 +37,7 @@ def prepare(body,slug,en):
   steps_zh=['填写三项内容，生成本地简报。','在邮件客户端打开邮件草稿。','检查无误后，在邮件客户端点击发送。']
   steps=''.join('<li>'+step+'</li>' for step in (steps_en if en else steps_zh))
   limit=('This website does not submit or send messages. If no email app is configured, copy the brief into your webmail and send it to contact@harnessloop.ai.' if en else '本站不会提交表单或自动发邮件。如未配置邮件客户端，请复制简报到网页邮箱，发送至 contact@harnessloop.ai。')
-  explanation=f'<strong>{"How it works" if en else "如何联系"}</strong><ol>{steps}</ol><span class="notice-note">{limit}</span>'
+  explanation=f'<strong>{"Three steps" if en else "如何联系"}</strong><ol>{steps}</ol><span class="notice-note">{limit}</span>'
   body=body.replace('<div class="box"><h3>', '<div class="box"><div class="notice notice-steps">'+explanation+'</div><h3>',1)
   body=body.replace('<form class="form" id="brief-form">','<div class="form" id="brief-form" role="group" aria-label="'+('Local brief tool' if en else '本地简报工具')+'">').replace('</form>','</div>')
   body=body.replace('type="submit"','type="button" id="generate-brief"')

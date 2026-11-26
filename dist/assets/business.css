@@ -139,3 +139,8 @@ html[lang^="zh"] .hl-biz-hero h1,[lang^="zh"] .hl-biz-hero h1 {letter-spacing:-.
 .notice-steps ol {margin:6px 0 0;padding:0 0 0 1.35em;list-style:decimal;display:grid;gap:3px}
 .notice-steps li {font-size:.86rem;line-height:1.55}
 .notice-steps .notice-note {display:block;margin-top:8px;padding-top:8px;border-top:1px solid #d9bfae;font-size:.8rem;line-height:1.55}
+
+/* Legacy pages: the four system layers stack on narrow screens instead of squeezing into 75px columns. */
+.sysgrid {grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:850px) {.sysgrid {grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px) {.sysgrid {grid-template-columns:minmax(0,1fr);gap:22px}}
