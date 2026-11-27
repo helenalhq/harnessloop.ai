@@ -15,3 +15,7 @@ document.querySelector('#copy-email')?.addEventListener('click',async e=>{const 
 function closeMenu(){menu?.setAttribute('aria-expanded','false');document.querySelector('#navigation')?.classList.remove('open');}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu?.getAttribute('aria-expanded')==='true'){closeMenu();menu.focus();}});
 document.addEventListener('click',e=>{if(!e.target.closest('header'))closeMenu();});
+
+/* Frosted sticky header: a soft hairline shadow appears only once the page moves. */
+const siteHeader=document.querySelector('body>header');
+if(siteHeader){const shadow=()=>siteHeader.classList.toggle('is-scrolled',window.scrollY>8);shadow();addEventListener('scroll',shadow,{passive:true});}
